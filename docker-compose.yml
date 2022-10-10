@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  mongodb:
+    container_name: mongodb_tweeter
+    image: docker.io/bitnami/mongodb:latest
+    restart: always
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: ${MONGODB_HOSTNAME:-localhost}
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-admin}
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
+      MONGODB_REPLICA_SET_NAME: tweeter
+    ports:
+      - ${MONGODB_PORT:-27017}:27017
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+
+  mongoexpress:
+    container_name: mongoexpress_tweeter
+    image: mongo-express:0.54.0
+    restart: always
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_SERVER: mongodb_tweeter
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USER:-root}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD:-admin}
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+volumes:
+  mongodb_data:
