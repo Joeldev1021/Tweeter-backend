@@ -12,10 +12,11 @@ export const bootstrap = async () => {
     app.use(express.json())
     app.use(cors())
 
+    app.use('/', indexRoutes)
 
     mongoose.connect(process.env.MONGODB_URI!)
         .then(() => console.log('Connected to Mongo'))
-        .catch(() => console.log('Failed to connect to Mongo'))
+        .catch((err) => console.log('Failed to connect to Mongo', err))
 
     app.listen(PORT, () => {
         console.log(`Server running on port 🔥 ${PORT}`)
