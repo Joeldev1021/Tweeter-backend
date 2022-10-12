@@ -24,6 +24,7 @@ export const userRegisterUseCase = async (id: string, username: string, email: s
 
     if (userFoundEmail) throw new UserEmailAlreadyExists()
 
-    return UserRepository.create(userModel)
+    console.log(userModel)
+    return userModel
 
 }
