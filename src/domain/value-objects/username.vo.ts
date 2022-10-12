@@ -7,7 +7,7 @@ export class UsernameVO extends ValueObject<string>{
         return this.value === valueObject.value
     }
 
-    assertIsValid(value: string) {
+    public assertIsValid(value: string) {
         if (value.length < 5) throw new VOFormatException(UsernameVO.name, value)
     }
 }

@@ -2,6 +2,6 @@ import { ApplicationException } from "./application.exception";
 
 export class UserIdAlreadyExists extends ApplicationException {
     constructor() {
-        super('user already exists')
+        super('user id already exists')
     }
 }
