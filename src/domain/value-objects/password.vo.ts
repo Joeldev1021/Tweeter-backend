@@ -19,4 +19,7 @@ export class PasswordVO extends ValueObject<string>{
         const passwordHash = await bcrypt.hash(passwordPlain, 10)
         return new PasswordVO(passwordHash)
     }
+    public async compare(passwordPlain: PasswordVO) {
+        return bcrypt.compare(passwordPlain.value, this.value)
+    }
 }

@@ -1,9 +1,10 @@
 import express from 'express'
-import { UserRegsiterController } from "../controllers/user.register.controller"
+import { UserRegisterController } from "../controllers/user.register.controller"
+import { UserLoginController } from '../controllers/user.login.controller'
 
 const router = express.Router()
-const userRegisterContrller = new UserRegsiterController()
 
-router.post('/register', userRegisterContrller.execute)
+router.post('/register', UserRegisterController.execute)
+router.post('/login', UserLoginController.execute)
 
 export const authRoutes = router

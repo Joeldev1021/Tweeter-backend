@@ -1,17 +1,13 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import mongoose from "mongoose";
 import { userRegisterUseCase } from "../../application/use-cases/user.register.usecase";
 import { MissingFieldException } from "../errors/missing.fields.exception";
 import { UnnecesayFieldsExceptions } from "../errors/unnecesay.fields.exception";
-import { IUser, UserRequest } from "../interface/user.interface";
+import { IUserRegister, UserRequest } from "../interface/user.interface";
 
+export class UserRegisterController {
 
-
-
-
-export class UserRegsiterController {
-
-    async execute(req: UserRequest<IUser>, res: Response, next: NextFunction) {
+    static async execute(req: UserRequest<IUserRegister>, res: Response, next: NextFunction) {
         if (!req.body) throw new MissingFieldException()
         const { _id, email, password, username, ...rest } = req.body
         try {
@@ -22,7 +18,7 @@ export class UserRegsiterController {
                 throw new UnnecesayFieldsExceptions()
             }
 
-            const user = await userRegisterUseCase(_id, username, email, password)
+            const user = await userRegisterUseCase(_id, username, email, password!)
             res.json(user)
         } catch (error) {
             next(error)
