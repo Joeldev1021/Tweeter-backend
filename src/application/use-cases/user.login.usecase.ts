@@ -5,17 +5,22 @@ import UserRepository from "../../infrastruture/repositories/user.repository"
 import { InvalidLoginException } from "../errors/invalid.login.exception"
 import { UserIdNotFoundException } from "../errors/user.id.not.found.exception"
 
-export const userLoginUseCase = async (email: string, password: string) => {
+export class UserLoginUseCase {
 
-    const userEmail = new EmailVO(email)
-    const userPassword = new PasswordVO(password)
+    static async execute(email: string, password: string) {
 
-    const existsUser = await UserRepository.findByEmail(userEmail)
-    if (!existsUser) throw new UserIdNotFoundException()
+        const userEmail = new EmailVO(email)
+        const userPassword = new PasswordVO(password)
 
-    const passworMatch = existsUser.password.compare(userPassword)
-    if (!passworMatch) throw new InvalidLoginException()
+        const existsUser = await UserRepository.findByEmail(userEmail)
+        if (!existsUser) throw new UserIdNotFoundException()
 
-    return existsUser
+        const passworMatch = existsUser.password.compare(userPassword)
+        if (!passworMatch) throw new InvalidLoginException()
+
+        return existsUser
+    }
 }
+
+
 

@@ -5,7 +5,7 @@ import { UserSchema } from "../schema/user.schema";
 import { UsernameVO } from "../../domain/value-objects/username.vo";
 import { PasswordVO } from "../../domain/value-objects/password.vo";
 import { EmailVO } from "../../domain/value-objects/emial.vo";
-import { IUserRepository } from '../../domain/repository/user.repository'
+import { IUserRepository } from "../../domain/repository/user.repository";
 
 class UserRepository implements IUserRepository {
 

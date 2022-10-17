@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express"
-import { userLoginUseCase } from "../../application/use-cases/user.login.usecase"
+import { NextFunction, Response } from "express"
 import { MissingFieldException } from "../errors/missing.fields.exception"
 import { UnnecesayFieldsExceptions } from "../errors/unnecesay.fields.exception"
 import { IUserLogin, UserRequest } from "../interface/user.interface"
+import { UserLoginUseCase } from '../../application/use-cases/user.login.usecase'
 
 export class UserLoginController {
 
@@ -14,7 +14,7 @@ export class UserLoginController {
             if (Object.keys(rest).length > 0) {
                 throw new UnnecesayFieldsExceptions()
             }
-            const userResponse = await userLoginUseCase(email, password)
+            const userResponse = await UserLoginUseCase.execute(email, password)
             res.send(userResponse)
         } catch (error) {
             next(error)
