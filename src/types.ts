@@ -1,16 +1,6 @@
-/* const Controllers = {
-    UserLoginController: Symbol.for("UserLoginController"),
-    UserRegisterController: Symbol.for("UserRegisterController"),
-} */
-const TYPES = {
-    UserRegisterController: Symbol.for("UserRegisterController"),
-}
-
-export { TYPES }
-/* 
 const UseCases = {
-    UserLoginUseCase: Symbol.for("UserLoginUseCase:"),
     UserRegisterUseCase: Symbol.for("UserRegisterUseCase"),
+    UserLoginUseCase: Symbol.for("UserLoginUseCase"),
 }
 
 const Repositories = {
@@ -18,10 +8,11 @@ const Repositories = {
 }
 
 
-export const ContainerTypes = {
-    ...Controllers,
+const TYPES = {
     ...UseCases,
-    ...Repositories
-} */
+    ...Repositories,
+}
+
+export { TYPES }
 
 

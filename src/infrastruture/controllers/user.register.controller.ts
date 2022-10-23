@@ -2,20 +2,23 @@ import { NextFunction, Request, Response } from "express";
 import { UserRegisterUseCase } from "../../application/use-cases/user.register.usecase";
 import { MissingFieldException } from "../errors/missing.fields.exception";
 import { UnnecesayFieldsExceptions } from "../errors/unnecesay.fields.exception";
-import { injectable } from "inversify";
-import { IUserRegisterController } from "../../domain/interface/controller/user.register.controller";
-import { httpPost } from 'inversify-express-utils'
-//import { IUserRegister, UserRequest } from "../interface/user.interface";
-@injectable()
-export class UserRegisterController implements IUserRegisterController {
-    /* constructor(
-        @inject(ContainerTypes.UserRegisterUseCase)
+import { inject } from "inversify";
+import { controller, httpPost } from "inversify-express-utils";
+import { TYPES } from "../../types";
+import { UserRequest } from "../types/user.interface";
+import { IUser } from "../types/schemas/user-doc.interface";
+import { UserRegistertDtoType } from "../dtos/user-register.dto";
+
+@controller('/auth')
+export class UserRegisterController {
+    constructor(
+        @inject(TYPES.UserRegisterUseCase)
         private userRegisterUseCase: UserRegisterUseCase
     ) {
-    } */
+    }
     @httpPost('/register')
-    async execute(req: Request, res: Response, next: NextFunction): Promise<any> {
-        if (!req.body) throw new MissingFieldException()
+    async execute(req: UserRequest<UserRegistertDtoType>, res: Response, next: NextFunction) {
+
         const { _id, email, username, password, ...rest } = req.body
         try {
             if (!_id && !username && !email && !password) {
@@ -24,9 +27,8 @@ export class UserRegisterController implements IUserRegisterController {
             if (Object.keys(rest).length > 0) {
                 throw new UnnecesayFieldsExceptions()
             }
-
-            //const user = await UserRegisterUseCase(_id, username, email, password)
-            //res.json(user)
+            const user = await this.userRegisterUseCase.execute(_id, username, email, password)
+            res.json(user)
         } catch (error) {
             next(error)
         }
