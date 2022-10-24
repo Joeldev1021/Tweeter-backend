@@ -34,6 +34,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.24.48",
     "bcrypt": "^5.1.0",
     "class-validator": "^0.13.2",
     "cors": "^2.8.5",
@@ -42,6 +43,7 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "mongoose": "^6.6.5",
+    "reflect-metadata": "^0.1.13",
     "uuid": "^9.0.0"
   }
 }
