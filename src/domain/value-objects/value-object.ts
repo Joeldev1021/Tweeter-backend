@@ -6,5 +6,4 @@ export abstract class ValueObject<T> {
     public abstract assertIsValid(value: T): void
 
     public abstract equals(valueObject: ValueObject<T>): boolean
-
 }
