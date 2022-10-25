@@ -1,6 +1,6 @@
 import { Type, type Static } from '@sinclair/typebox'
 
-export const UserRegisterDto = Type.Object(
+const UserRegisterDto = Type.Object(
     {
         _id: Type.String(),
         username: Type.String(),
