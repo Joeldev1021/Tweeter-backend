@@ -2,7 +2,7 @@ import { LeanDocument, Types } from "mongoose";
 
 export interface ITweet extends Document {
     _id: string;
-    description: string;
+    tweet: string;
     image?: string;
     ownerId: string;
     likes?: string[];
