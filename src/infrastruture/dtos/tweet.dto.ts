@@ -2,7 +2,7 @@ import { Type, type Static } from '@sinclair/typebox'
 
 const Tweet = Type.Object(
     {
-        _id: Type.String(),
+        id: Type.String(),
         tweet: Type.String()
     }, {
     additionalProperties: false

@@ -17,7 +17,7 @@ services:
 
   mongoexpress:
     container_name: mongoexpress_tweeter
-    image: mongo-express:0.54.0
+    image: mongo-express:latest
     restart: always
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: root

@@ -5,7 +5,7 @@ import { UnnecesayFieldsExceptions } from "../errors/unnecesay.fields.exception"
 import { inject } from "inversify";
 import { controller, httpPost } from "inversify-express-utils";
 import { TYPES } from "../../types";
-import { UserRequest } from "../types/user.interface";
+import { UserRequest } from "../types";
 import { IUser } from "../types/schemas/user-doc.interface";
 import { UserRegistertDtoType } from "../dtos/user-register.dto";
 
@@ -19,15 +19,15 @@ export class UserRegisterController {
     @httpPost('/register')
     async execute(req: UserRequest<UserRegistertDtoType>, res: Response, next: NextFunction) {
 
-        const { _id, email, username, password, ...rest } = req.body
+        const { id, email, username, password, ...rest } = req.body
         try {
-            if (!_id && !username && !email && !password) {
+            if (!id && !username && !email && !password) {
                 throw new MissingFieldException()
             }
             if (Object.keys(rest).length > 0) {
                 throw new UnnecesayFieldsExceptions()
             }
-            const user = await this.userRegisterUseCase.execute(_id, username, email, password)
+            const user = await this.userRegisterUseCase.execute(id, username, email, password)
             res.json(user)
         } catch (error) {
             next(error)

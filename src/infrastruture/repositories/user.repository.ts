@@ -1,23 +1,24 @@
-import { IUser } from "../interface/user.interface";
 import { UserModel } from "../../domain/models/user.model";
 import { UuidVO } from "../../domain/value-objects/uuid.vo";
-import { UserSchema } from "../schema/user.schema";
-import { UsernameVO } from "../../domain/value-objects/username.vo";
-import { PasswordVO } from "../../domain/value-objects/password.vo";
-import { EmailVO } from "../../domain/value-objects/emial.vo";
+import { UserSchema } from "../schemas/user.schema";
+import { UsernameVO } from "../../domain/value-objects/user/username.vo";
+import { PasswordVO } from "../../domain/value-objects/user/password.vo";
+import { EmailVO } from "../../domain/value-objects/user/email.vo";
 import { IUserRepository } from "../../domain/repository/user.repository";
+import { IUser } from "../types/schemas/user-doc.interface";
+import { injectable } from "inversify";
 
-class UserRepository implements IUserRepository {
-
+@injectable()
+export class UserRepository implements IUserRepository {
 
     /**
      * It takes an object that implements the IUser interface and returns a UserModel object
-     * @param {IUser} user - IUser - This is the user object that we get from the database.
+     * @param {IUser} persistanceUser - IUser - This is the user object that we get from the database.
      * @returns A UserModel
      */
-
-    private toDomian(user: IUser): UserModel {
-        const { _id, username, email, password } = user
+    /* TODO */
+    private toDomain(persistanceUser: IUser): UserModel {
+        const { _id, username, email, password } = persistanceUser
         return new UserModel(
             new UuidVO(_id),
             new UsernameVO(username),
@@ -44,17 +45,17 @@ class UserRepository implements IUserRepository {
     }
 
     async create(user: UserModel): Promise<UserModel | undefined> {
-
         const userPersistance = this.toPersistance(user)
         const newUser = new UserSchema(userPersistance)
-        return this.toDomian(newUser)
+
+        return this.toDomain(await newUser.save())
     }
 
 
     async findById(id: UuidVO): Promise<UserModel | undefined> {
-        const userFound = await UserSchema.findById(id.value)
+        const userFound = await UserSchema.findById(id.value).exec()
         if (userFound)
-            return this.toDomian(userFound)
+            return this.toDomain(userFound)
     }
 
 
@@ -62,10 +63,13 @@ class UserRepository implements IUserRepository {
     async findByEmail(email: EmailVO): Promise<UserModel | undefined> {
         const userFound = await UserSchema.findOne({ email: email.value })
         if (userFound)
-            return this.toDomian(userFound)
+            return this.toDomain(userFound)
+    }
+
+    async findAll() {
+        const users = await UserSchema.find()
+        return users
     }
 
 }
 
-
-export default new UserRepository()

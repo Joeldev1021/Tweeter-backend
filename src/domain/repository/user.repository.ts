@@ -1,5 +1,5 @@
 import { UserModel } from "../models/user.model";
-import { EmailVO } from "../value-objects/emial.vo";
+import { EmailVO } from "../value-objects/user/email.vo";
 import { UuidVO } from "../value-objects/uuid.vo";
 
 export interface IUserRepository {

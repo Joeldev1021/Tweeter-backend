@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify"
 import { UserModel } from "../../domain/models/user.model"
-import { IUserRepository } from "../../domain/repository/user.repository"
 import { EmailVO } from "../../domain/value-objects/user/email.vo"
 import { PasswordVO } from "../../domain/value-objects/user/password.vo"
 import { UsernameVO } from "../../domain/value-objects/user/username.vo"
@@ -19,7 +18,8 @@ export class UserRegisterUseCase {
         this.userRepository = userRepository
     }
 
-    public async execute(id: string, username: string, email: string, password: string): Promise<UserModel> {
+    public async execute(id: string, username: string, email: string, password: string): Promise<UserModel | undefined> {
+
 
         const userId = new UuidVO(id)
         const userEmail = new EmailVO(email)
@@ -29,13 +29,13 @@ export class UserRegisterUseCase {
             await PasswordVO.create(password)
         )
         const userFound = await this.userRepository.findById(userId)
+        console.log(userFound)
         if (userFound) throw new UserIdAlreadyExists()
 
         const userFoundEmail = await this.userRepository.findByEmail(userEmail)
-
         if (userFoundEmail) throw new UserEmailAlreadyExists()
 
-        return userModel
+        return this.userRepository.create(userModel)
     }
 
 }
