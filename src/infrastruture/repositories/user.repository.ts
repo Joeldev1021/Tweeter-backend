@@ -53,7 +53,7 @@ export class UserRepository implements IUserRepository {
 
 
     async findById(id: UuidVO): Promise<UserModel | undefined> {
-        const userFound = await UserSchema.findById(id.value).exec()
+        const userFound = await UserSchema.findById(id.value, { 'password': 0 }).exec()
         if (userFound)
             return this.toDomain(userFound)
     }

@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from 'express'
-import { inject, injectable } from 'inversify';
+import { NextFunction, Response } from 'express'
+import { injectable } from 'inversify';
 import { BaseMiddleware } from 'inversify-express-utils'
-import { TYPES } from '../../types';
 import { InfrastructureUnauthorizedException } from '../errors/infrastruture.unauthorized.exception';
 import { verifyTokenAsync } from '../services/jwt.services';
-import { AuthRequest, UserRequest } from '../types/index'
+import { AuthRequest } from '../types/index'
 
 @injectable()
 export class AuthMiddleware extends BaseMiddleware {

@@ -15,11 +15,12 @@ export class TweetRepository implements ITweetRepository {
      * @param {ITweet} persistanceTweet - ITweet
      * @returns A TweetModel
      */
-    private toDomian(persistanceTweet: ITweet): TweetModel {
-        const { _id, tweet } = persistanceTweet
+    private toDomain(persistanceTweet: ITweet): TweetModel {
+        const { _id, tweet, ownerId } = persistanceTweet
         return new TweetModel(
             new UuidVO(_id),
-            new TweetVO(tweet)
+            new TweetVO(tweet),
+            new UuidVO(ownerId)
         )
     }
 
@@ -33,8 +34,9 @@ export class TweetRepository implements ITweetRepository {
 
     private toPersistance(domainTweet: TweetModel) {
         return {
-            _id: domainTweet.id.value,
-            tweet: domainTweet.tweet.value
+            id: domainTweet.id.value,
+            tweet: domainTweet.tweet.value,
+            ownerId: domainTweet.ownerId.value
         }
     }
 
@@ -44,10 +46,11 @@ export class TweetRepository implements ITweetRepository {
      * @param {TweetModel} tweet - TweetModel - this is the tweet object that we are going to create.
      * @returns A promise of a tweet model or undefined
      */
+    //TODO: save tweet 
     async create(tweet: TweetModel): Promise<TweetModel | undefined> {
 
         const tweetPersistance = this.toPersistance(tweet)
-        return this.toDomian(new TweetSchema(tweetPersistance))
+        return this.toDomain(new TweetSchema(tweetPersistance))
     }
 
     /**
@@ -59,7 +62,7 @@ export class TweetRepository implements ITweetRepository {
     async findById(id: UuidVO): Promise<TweetModel | undefined> {
         const tweetFound = await TweetSchema.findById(id.value)
         if (tweetFound)
-            return this.toDomian(tweetFound)
+            return this.toDomain(tweetFound)
     }
 
     /**
@@ -70,7 +73,7 @@ export class TweetRepository implements ITweetRepository {
     async delete(id: UuidVO): Promise<TweetModel | undefined> {
         const tweetDelete = await TweetSchema.findByIdAndDelete(id.value)
         if (tweetDelete)
-            return this.toDomian(tweetDelete)
+            return this.toDomain(tweetDelete)
     }
 
     /**
@@ -80,11 +83,21 @@ export class TweetRepository implements ITweetRepository {
      * @returns The tweetUpdate is being returned.
      */
     async update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | undefined> {
-        const tweetUpdate = await TweetSchema.findByIdAndUpdate(id.value, tweet.tweet)
+        const tweetUpdate = await TweetSchema.findByIdAndUpdate(id.value, { tweet: tweet.tweet.value })
         if (tweetUpdate)
-            return this.toDomian(tweetUpdate)
+            return this.toDomain(tweetUpdate)
+    }
+
+    async findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | undefined> {
+        const tweets = await TweetSchema.find({ onwerId: onwerId })
+        if (tweets)
+            return tweets.map(tweet => this.toDomain(tweet))
+    }
+
+    async findAll(): Promise<TweetModel[] | undefined> {
+        const tweets = await TweetSchema.find();
+        if (tweets)
+            return tweets.map(tweet => this.toDomain(tweet))
     }
 
 }
-
-
