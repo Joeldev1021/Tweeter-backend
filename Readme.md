@@ -1,4 +1,4 @@
-## Tweete
+## Tweeter
 This project is of  [DevChallenge-Twitter-Clone](https://devchallenges.io/challenges/rleoQc34THclWx1cFFKH)
 
 
