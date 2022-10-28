@@ -7,17 +7,14 @@ export class TweetModel {
      * The constructor function is a public function that takes in an id, tweet
      * and sets them to the class properties
      * @param {UuidVO} id - UuidVO
-     * @param {TweetVO} tweet- PasswordVO
+     * @param {TweetVO} tweet - TweetVO 
+     * @param {ownerId} ownerId - UuidVO
      */
     constructor(
         public readonly id: UuidVO,
         public tweet: TweetVO,
+        public ownerId: UuidVO,
     ) { }
 
-    static createUser(
-        id: UuidVO,
-        tweet: TweetVO,
-    ) {
-        return new TweetModel(id, tweet)
-    }
+
 }

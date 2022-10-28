@@ -4,10 +4,10 @@ import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
-import { TweetIdAlreadyExist } from "../../errors/tweeter/tweet.id.already.exists.exception"
+import { TweetNotFoundException } from "../../errors/tweeter/tweet.not.found.exception"
 
 @injectable()
-export class TweetCreateUseCase {
+export class TweetDeleteByIdUseCase {
     private tweetRepository: TweetRepository
     constructor(
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository
@@ -15,17 +15,23 @@ export class TweetCreateUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(_id: string, tweet: string) {
-        const tweetId = new UuidVO(_id)
-
-        const findTweet = await this.tweetRepository.findById(tweetId)
-        if (findTweet) throw new TweetIdAlreadyExist()
+    public async execute(id: string, tweet: string, userId: string) {
+        const tweetId = new UuidVO(id)
+        const onwerId = new UuidVO(userId)
 
         const tweetModel = new TweetModel(
             tweetId,
-            new TweetVO(tweet)
+            new TweetVO(tweet),
+            onwerId,
         )
+
+        const tweetFound = await this.tweetRepository.findById(tweetId)
+        if (!tweetFound) throw new TweetNotFoundException()
+
+        if (tweetFound.ownerId.value === onwerId.value) {
+            const tweet = await this.tweetRepository.update(tweetId, tweetModel)
+            return tweet
+        }
 
     }
 }
-
