@@ -95,7 +95,7 @@ export class UuidVO extends ValueObject<string> {
     }
 }
 ```
-#####the application should have these functions
+##### The application should have these functions
 
    * User story: I can see my profile or others' profile
 
