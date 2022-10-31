@@ -5,7 +5,6 @@ import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
 import { TweetNotFoundException } from "../../errors/tweeter/tweet.not.found.exception"
-
 @injectable()
 export class TweetDeleteByIdUseCase {
     private tweetRepository: TweetRepository
@@ -15,22 +14,16 @@ export class TweetDeleteByIdUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: string, tweet: string, userId: string) {
+    public async execute(id: string, userId: string): Promise<TweetModel | undefined> {
+
         const tweetId = new UuidVO(id)
         const onwerId = new UuidVO(userId)
-
-        const tweetModel = new TweetModel(
-            tweetId,
-            new TweetVO(tweet),
-            onwerId,
-        )
 
         const tweetFound = await this.tweetRepository.findById(tweetId)
         if (!tweetFound) throw new TweetNotFoundException()
 
         if (tweetFound.ownerId.value === onwerId.value) {
-            const tweet = await this.tweetRepository.update(tweetId, tweetModel)
-            return tweet
+            return this.tweetRepository.delete(tweetId)
         }
 
     }

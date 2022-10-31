@@ -1,7 +1,7 @@
 import { Container } from 'inversify'
-import { UserLoginUseCase } from './application/use-cases/user.login.usecase';
+import { UserLoginUseCase } from './application/use-cases/auth/user.login.usecase';
 import { UserProfileUseCase } from './application/use-cases/user.profile.usecase';
-import { UserRegisterUseCase } from './application/use-cases/user.register.usecase';
+import { UserRegisterUseCase } from './application/use-cases/auth/user.register.usecase';
 import { IUserRepository } from './domain/repository/user.repository';
 import { AuthMiddleware } from './infrastruture/middlewares/auth.middleware';
 import { UserRepository } from './infrastruture/repositories/user.repository';

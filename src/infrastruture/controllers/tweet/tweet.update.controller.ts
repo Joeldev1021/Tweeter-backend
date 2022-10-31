@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express"
 import { inject } from "inversify"
-import { controller, httpDelete } from "inversify-express-utils"
+import { controller, httpDelete, httpPut } from "inversify-express-utils"
 import { TweetUpdateByIdUseCase } from "../../../application/use-cases/tweet/tweet.update.usecase"
 import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
@@ -9,21 +9,18 @@ import { TweetDtoType } from "../../dtos/tweet.dto"
 import { TweetRequest } from "../../types"
 
 @controller('/tweeter')
-export class TweetDeleteByIdController {
+export class TweetUpdateByIdController {
     constructor(
         @inject(TYPES.TweetUpdateByIdUseCase)
         private tweetUpdateByIdUseCase: TweetUpdateByIdUseCase
     ) {
     }
-    @httpDelete('/:id', TYPES.AuthMiddleware)
+    @httpPut('/:id', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
-        const id = req.params.id
-
+        const { tweet, id } = req.body
         try {
-            const tweetFound = await this.tweetUpdateByIdUseCase.execute(
-                new UuidVO(id),
-                new TweetVO(req.body.tweet),
-                new UuidVO(req.userId))
+            const tweetFound = await this.tweetUpdateByIdUseCase.execute(new UuidVO(id), new TweetVO(tweet), new UuidVO(req.userId))
+
             res.status(200).send(tweetFound)
         } catch (error) {
             next(error)

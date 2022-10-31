@@ -6,9 +6,7 @@ import dotenv from 'dotenv'
 import { InversifyExpressServer } from 'inversify-express-utils'
 import { container } from './container';
 /*============== routes=========== */
-import './infrastruture/controllers/user.register.controller'
-import './infrastruture/controllers/user.login.controller'
-import './infrastruture/controllers/tweet/tweet.create.controller'
+import './infrastruture/routes/index'
 /*============== routes=========== */
 dotenv.config()
 
