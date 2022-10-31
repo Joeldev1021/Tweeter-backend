@@ -1,7 +1,7 @@
-import { Schema, model, Model } from 'mongoose'
+import { Schema, model, type Model } from 'mongoose'
 import { ITweet, ITweetDoc } from '../types/schemas/tweeter-doc.interface'
 
-const schema = new Schema({
+const schema = new Schema<ITweet>({
     _id: { type: String, id: false, required: true },
     tweet: { type: String, required: true },
     image: { type: String, required: false },

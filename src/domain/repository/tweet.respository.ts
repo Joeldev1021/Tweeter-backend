@@ -22,4 +22,9 @@ export interface ITweetRepository {
     delete(id: UuidVO): Promise<TweetModel | undefined>
 
     update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | undefined>
+
+    findAll(): Promise<TweetModel[] | undefined>
+
+    findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | undefined>
+
 }

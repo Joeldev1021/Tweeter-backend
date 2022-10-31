@@ -2,7 +2,7 @@ import { Schema, model, type Model } from 'mongoose';
 import { ITweetDoc } from '../types/schemas/tweeter-doc.interface';
 import { IUser, IUserDoc } from '../types/schemas/user-doc.interface';
 
-const schema = new Schema({
+const schema = new Schema<IUser>({
     _id: { type: String, id: false, required: true },
     username: { type: String, unique: true, required: true },
     email: { type: String, required: true },
