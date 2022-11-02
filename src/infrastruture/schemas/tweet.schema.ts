@@ -5,9 +5,9 @@ const schema = new Schema<ITweet>({
     _id: { type: String, id: false, required: true },
     tweet: { type: String, required: true },
     image: { type: String, required: false },
-    ownerId: { type: String, required: true },
-    likes: [{ type: String, required: false }],
-    reply: [{ type: String, required: false }],
+    ownerId: { type: String, required: true, ref: "User" },
+    likes: [{ type: String, required: false, ref: "User" }],
+    reply: [{ type: String, required: false, ref: "Reply" }],
 })
 
 export const TweetSchema = model<ITweet>('Tweet', schema)

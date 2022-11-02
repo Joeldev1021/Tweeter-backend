@@ -50,7 +50,9 @@ export class TweetRepository implements ITweetRepository {
     async create(tweet: TweetModel): Promise<TweetModel | undefined> {
 
         const tweetPersistance = this.toPersistance(tweet)
-        return this.toDomain(new TweetSchema(tweetPersistance))
+        const newTweet = new TweetSchema(tweetPersistance)
+
+        return this.toDomain(await newTweet.save())
     }
 
     /**

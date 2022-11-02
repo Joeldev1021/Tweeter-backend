@@ -20,11 +20,9 @@ export class TweetUpdateByIdController {
         const { tweet, id } = req.body
         try {
             const tweetFound = await this.tweetUpdateByIdUseCase.execute(new UuidVO(id), new TweetVO(tweet), new UuidVO(req.userId))
-
             res.status(200).send(tweetFound)
         } catch (error) {
             next(error)
         }
-
     }
 }

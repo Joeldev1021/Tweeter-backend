@@ -7,6 +7,6 @@ export class TweetVO extends ValueObject<string> {
         return this.value === valueObject.value;
     }
     public assertIsValid(value: string) {
-        if (value.length < 5) throw new VOFormatException(TweetVO.name, value)
+        if (value.length < 3) throw new VOFormatException(TweetVO.name, value)
     }
 }
