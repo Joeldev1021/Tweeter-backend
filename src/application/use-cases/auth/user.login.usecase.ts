@@ -5,12 +5,13 @@ import { UserRepository } from "../../../infrastruture/repositories/user.reposit
 import { TYPES } from "../../../types"
 import { InvalidLoginException } from "../../errors/invalid.login.exception"
 import { UserNotFoundException } from "../../errors/user.not.found.exception"
-import { signTokenAsync } from '../../../infrastruture/services/jwt.services'
+import { JwtService } from '../../../infrastruture/services/jwt.services'
 
 @injectable()
 export class UserLoginUseCase {
-    public userRepository: UserRepository
+    public userRepository: UserRepository;
     constructor(
+        @inject(TYPES.JwtService) private readonly _jwtService: JwtService,
         @inject(TYPES.UserRepository) userRepository: UserRepository
     ) {
         this.userRepository = userRepository
@@ -25,8 +26,7 @@ export class UserLoginUseCase {
         const passworMatch = existsUser.password.compare(password)
         if (!passworMatch) throw new InvalidLoginException()
 
-        const token = await signTokenAsync({ id: existsUser.id.value }, { expiresIn: '1d' })
-
+        const token = await this._jwtService.signToken({ id: existsUser.id.value }, { expiresIn: '1d' })
         return { token }
     }
 }

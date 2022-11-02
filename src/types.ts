@@ -24,15 +24,20 @@ const Repositories = {
     ReplyRepository: Symbol.for("ReplyRepository")
 }
 
-const Middleware = {
+const Middlewares = {
     AuthMiddleware: Symbol.for("AuthMiddleware"),
+}
+
+const Services = {
+    JwtService: Symbol.for("JwtService"),
 }
 
 
 const TYPES = {
     ...UseCases,
     ...Repositories,
-    ...Middleware,
+    ...Middlewares,
+    ...Services
 }
 
 export { TYPES }

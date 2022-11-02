@@ -17,6 +17,7 @@ import { TYPES } from './types';
 import { ReplyCreateUseCase } from './application/use-cases/reply/reply.create.usecase';
 import { IReplyRepository } from './domain/repository/reply.repository';
 import { ReplyRepository } from './infrastruture/repositories/reply.repository';
+import { JwtService } from './infrastruture/services/jwt.services';
 
 const container = new Container();
 
@@ -44,8 +45,9 @@ container.bind<ReplyFindAllUseCase>(TYPES.ReplyFindAllUseCase).to(ReplyFindAllUs
 container.bind<ReplyFindByIdUseCase>(TYPES.ReplyFindByIdUseCase).to(ReplyFindByIdUseCase)
 container.bind<ReplyDeleteByIdUseCase>(TYPES.ReplyDeleteByIdUseCase).to(ReplyDeleteByIdUseCase)
 */
-
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)
+container.bind<JwtService>(TYPES.JwtService).to(JwtService)
+
 
 export { container }

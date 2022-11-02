@@ -1,4 +1,4 @@
-import { Schema, model, type Model } from 'mongoose'
+import mongoose, { Schema, model, type Model } from 'mongoose'
 import { ITweet, ITweetDoc } from '../types/schemas/tweeter-doc.interface'
 
 const schema = new Schema<ITweet>({
@@ -10,5 +10,5 @@ const schema = new Schema<ITweet>({
     reply: [{ type: String, required: false, ref: "Reply" }],
 })
 
-export const TweetSchema = model<ITweet>('Tweet', schema)
+export const TweetSchema = model<ITweet>('Tweets', schema)
 //export const TweetSchema: Model<ITweetDoc> = model('Tweet', schema)

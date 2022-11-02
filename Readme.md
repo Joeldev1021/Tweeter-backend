@@ -19,20 +19,27 @@ This project is of  [DevChallenge-Twitter-Clone](https://devchallenges.io/challe
 Directory structure based on Domain driver design 
 
 ```tree
-
+.
 ├── src
+│   ├── application
+│   │   ├── errors
+│   │   └── usecases
 │   ├── domain 
 │   │   ├── contans
 │   │   ├── errors
 │   │   ├── repository
 │   │   └── value-objects
-│   ├── application
-│   │   ├── errors
-│   │   └── usecases
 │   └── infrastruture
 │       ├── controllers 
-│       │   ├── user-login.controller.ts
-│       │   ├── user-register.controller.ts
+│       │   ├── auth
+│       │   │   ├── user-login.controller.ts
+│       │   │   └── user-register.controller.ts
+│       │   ├── tweet
+│       │   │   ├── tweet-create.controller.ts
+│       │   │   ├── tweet-delete.controller.ts
+│       │   │   ├── tweet-update.controller.ts
+│       │   │   ├── tweet-find-by-id.controller.ts
+│       │   │   └── tweet-find-all.controller.ts
 │       │   └── user-profile.controller.ts
 │       ├── dtos
 │       │   ├── tweet.dto.ts
@@ -54,7 +61,6 @@ Directory structure based on Domain driver design
 ├── containers.ts
 ├── index.ts
 └── types.ts
-
 ```
 
 ### Model 

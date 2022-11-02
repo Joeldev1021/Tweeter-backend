@@ -1,9 +1,9 @@
-/* auth controller */
+/*============ auth controller============= */
 import '../controllers/auth/user.register.controller'
 import '../controllers/auth/user.login.controller'
 import '../controllers/user.profile.controller'
 
-/* tweet controller */
+/*============= tweet controller========== */
 
 import '../controllers/tweet/tweet.create.controller'
 import '../controllers/tweet/tweet.delete.controller'
