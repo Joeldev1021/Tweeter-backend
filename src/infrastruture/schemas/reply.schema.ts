@@ -11,4 +11,4 @@ const schema = new Schema<IReply>({
     replyId: [{ type: String, required: false, ref: "Reply" }],
 })
 
-export const ReplySchema = model<IReply>('Tweet', schema)
+export const ReplySchema = model<IReply>('Reply', schema)

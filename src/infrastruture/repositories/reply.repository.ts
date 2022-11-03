@@ -1,9 +1,7 @@
 import { injectable } from "inversify"
 import { ReplyModel } from "../../domain/models/reply.model"
-import { TweetModel } from "../../domain/models/tweet.model"
 import { IReplyRepository } from "../../domain/repository/reply.repository"
 import { ReplyVO } from "../../domain/value-objects/tweet/reply.vo"
-import { TweetVO } from "../../domain/value-objects/tweet/tweet.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { ReplySchema } from "../schemas/reply.schema"
 import { IReply } from "../types/schemas/reply.interface"
@@ -24,7 +22,7 @@ export class ReplyRepository implements IReplyRepository {
             new UuidVO(_id),
             new ReplyVO(reply),
             new UuidVO(tweetId),
-            new UuidVO(ownerId)
+            new UuidVO(ownerId),
         )
     }
 
@@ -36,7 +34,7 @@ export class ReplyRepository implements IReplyRepository {
      */
     private toPersistance(domainReply: ReplyModel) {
         return {
-            id: domainReply.id.value,
+            _id: domainReply.id.value,
             reply: domainReply.reply.value,
             tweetId: domainReply.tweetId.value,
             ownerId: domainReply.ownerId.value

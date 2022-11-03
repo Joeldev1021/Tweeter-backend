@@ -1,8 +1,6 @@
 import { inject, injectable } from "inversify"
 import { ReplyModel } from "../../../domain/models/reply.model"
-import { TweetModel } from "../../../domain/models/tweet.model"
 import { ReplyVO } from "../../../domain/value-objects/tweet/reply.vo"
-import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { ReplyRepository } from "../../../infrastruture/repositories/reply.repository"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
@@ -17,8 +15,8 @@ export class ReplyCreateUseCase {
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository,
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
     ) {
-        this.tweetRepository = tweetRepository,
-            this.replyRepository = replyRepository
+        this.tweetRepository = tweetRepository;
+        this.replyRepository = replyRepository;
     }
 
     public async execute(id: UuidVO, reply: ReplyVO, tweeId: UuidVO, ownerId: UuidVO): Promise<ReplyModel | undefined> {

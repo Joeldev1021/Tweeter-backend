@@ -20,7 +20,8 @@ export class TweetRepository implements ITweetRepository {
         return new TweetModel(
             new UuidVO(_id),
             new TweetVO(tweet),
-            new UuidVO(ownerId)
+            new UuidVO(ownerId),
+            null
         )
     }
 

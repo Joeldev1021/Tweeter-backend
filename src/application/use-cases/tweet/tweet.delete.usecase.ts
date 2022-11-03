@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify"
 import { TweetModel } from "../../../domain/models/tweet.model"
-import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
@@ -14,16 +13,13 @@ export class TweetDeleteByIdUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: string, userId: string): Promise<TweetModel | undefined> {
+    public async execute(id: UuidVO, ownerId: UuidVO): Promise<TweetModel | undefined> {
 
-        const tweetId = new UuidVO(id)
-        const onwerId = new UuidVO(userId)
-
-        const tweetFound = await this.tweetRepository.findById(tweetId)
+        const tweetFound = await this.tweetRepository.findById(id)
         if (!tweetFound) throw new TweetNotFoundException()
 
-        if (tweetFound.ownerId.value === onwerId.value) {
-            return this.tweetRepository.delete(tweetId)
+        if (ownerId.value === tweetFound.ownerId.value) {
+            return this.tweetRepository.delete(id)
         }
 
     }

@@ -24,7 +24,7 @@ export class TweetUpdateByIdUseCase {
 
         if (tweetFound.ownerId.value === onwerId.value) {
 
-            return this.tweetRepository.update(id, new TweetModel(id, tweet, onwerId))
+            return this.tweetRepository.update(id, new TweetModel(id, tweet, onwerId, null))
         }
 
     }

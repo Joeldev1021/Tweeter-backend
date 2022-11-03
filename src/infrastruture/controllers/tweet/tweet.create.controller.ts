@@ -16,7 +16,7 @@ export class TweetCreateController {
         private tweetCreateUseCase: TweetCreateUseCase
     ) {
     }
-    @httpPost('/create', TYPES.AuthMiddleware)
+    @httpPost('/', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
         const { id, tweet, ...rest } = req.body
         try {

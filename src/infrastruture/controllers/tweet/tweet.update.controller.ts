@@ -19,8 +19,8 @@ export class TweetUpdateByIdController {
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
         const { tweet, id } = req.body
         try {
-            const tweetFound = await this.tweetUpdateByIdUseCase.execute(new UuidVO(id), new TweetVO(tweet), new UuidVO(req.userId))
-            res.status(200).send(tweetFound)
+            const tweetUpdate = await this.tweetUpdateByIdUseCase.execute(new UuidVO(id), new TweetVO(tweet), new UuidVO(req.userId))
+            res.status(200).send(tweetUpdate)
         } catch (error) {
             next(error)
         }

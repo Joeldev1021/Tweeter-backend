@@ -7,6 +7,7 @@ const UseCases = {
     TweetCreateUseCase: Symbol.for("TweetCreateUseCase"),
     TweetFindAllUseCase: Symbol.for("TweetFindAllUseCase"),
     TweetFindByIdUseCase: Symbol.for("TweetFindByIdUseCase"),
+    TweetFindByOwnerIdUseCase: Symbol.for("TweetFindByOwnerIdUseCase"),
     TweetUpdateByIdUseCase: Symbol.for("TweetUpdateByIdUseCase"),
     TweetDeleteByIdUseCase: Symbol.for("TweetDeleteByIdUseCase"),
 
