@@ -5,7 +5,7 @@ import { TweetFindByIdUseCase } from "../../../application/use-cases/tweet/tweet
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TYPES } from "../../../types"
 
-@controller('/tweeter')
+@controller('/tweet')
 export class TweetFindByIdController {
     constructor(
         @inject(TYPES.TweetFindByIdUseCase)

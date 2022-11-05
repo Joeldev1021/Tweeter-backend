@@ -6,7 +6,6 @@ import { inject } from "inversify";
 import { controller, httpPost } from "inversify-express-utils";
 import { TYPES } from "../../../types";
 import { UserRequest } from "../../types";
-import { IUser } from "../../types/schemas/user-doc.interface";
 import { UserRegistertDtoType } from "../../dtos/user-register.dto";
 import { UuidVO } from "../../../domain/value-objects/uuid.vo";
 import { EmailVO } from "../../../domain/value-objects/user/email.vo";
@@ -23,7 +22,7 @@ export class UserRegisterController {
     @httpPost('/register')
     async execute(req: UserRequest<UserRegistertDtoType>, res: Response, next: NextFunction) {
 
-        const { id, email, username, password, ...rest } = req.body
+        const { id, username, email, password, ...rest } = req.body
         try {
             if (!id && !username && !email && !password) {
                 throw new MissingFieldException()
@@ -33,11 +32,12 @@ export class UserRegisterController {
             }
             const user = await this.userRegisterUseCase.execute(
                 new UuidVO(id),
-                new EmailVO(email),
                 new UsernameVO(username,),
+                new EmailVO(email),
                 await PasswordVO.create(password),
             )
-            res.json(user)
+
+            res.status(201).send()
         } catch (error) {
             next(error)
         }

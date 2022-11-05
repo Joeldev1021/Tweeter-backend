@@ -7,7 +7,7 @@ import { TYPES } from "../../../types"
 import { TweetDtoType } from "../../dtos/tweet.dto"
 import { TweetRequest } from "../../types"
 
-@controller('/tweeter')
+@controller('/tweet')
 export class TweetFindByIdController {
     constructor(
         @inject(TYPES.TweetFindByOwnerIdUseCase)

@@ -22,10 +22,10 @@ export class UserModel {
 
     static createUser(
         id: UuidVO,
-        name: UsernameVO,
+        username: UsernameVO,
         email: EmailVO,
         password: PasswordVO
     ) {
-        return new UserModel(id, name, email, password)
+        return new UserModel(id, username, email, password)
     }
 }

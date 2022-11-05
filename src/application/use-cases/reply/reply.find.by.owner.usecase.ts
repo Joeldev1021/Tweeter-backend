@@ -15,9 +15,9 @@ export class ReplyFindByOwnerIdUseCase {
         this.replyRepository = replyRepository
     }
 
-    public async execute(ownerId: UuidVO): Promise<ReplyModel | undefined> {
+    public async execute(ownerId: UuidVO): Promise<ReplyModel[] | undefined> {
 
-        const replyFound = await this.replyRepository.findById(ownerId)
+        const replyFound = await this.replyRepository.findByOwnerId(ownerId)
         if (!replyFound) throw new TweetNotFoundException()
 
         return replyFound

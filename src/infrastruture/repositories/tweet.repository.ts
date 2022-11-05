@@ -98,6 +98,7 @@ export class TweetRepository implements ITweetRepository {
     }
 
     async findAll(): Promise<TweetModel[] | undefined> {
+        //const tweets = await TweetSchema.find().skip(1).limit(10);
         const tweets = await TweetSchema.find();
         if (tweets)
             return tweets.map(tweet => this.toDomain(tweet))

@@ -4,7 +4,7 @@ import { controller, httpGet } from "inversify-express-utils"
 import { TweetFindAllUseCase } from "../../../application/use-cases/tweet/tweet.find.all.usecase"
 import { TYPES } from "../../../types"
 
-@controller('/tweeter')
+@controller('/tweet')
 export class TweetFindAllController {
     constructor(
         @inject(TYPES.TweetFindAllUseCase)

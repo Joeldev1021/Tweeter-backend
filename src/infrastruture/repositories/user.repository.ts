@@ -47,7 +47,6 @@ export class UserRepository implements IUserRepository {
     async create(user: UserModel): Promise<UserModel | undefined> {
         const userPersistance = this.toPersistance(user)
         const newUser = new UserSchema(userPersistance)
-
         return this.toDomain(await newUser.save())
     }
 

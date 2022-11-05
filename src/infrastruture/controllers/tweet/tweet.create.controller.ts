@@ -9,7 +9,7 @@ import { TweetDtoType } from "../../dtos/tweet.dto"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
 
-@controller('/tweeter')
+@controller('/tweet')
 export class TweetCreateController {
     constructor(
         @inject(TYPES.TweetCreateUseCase)

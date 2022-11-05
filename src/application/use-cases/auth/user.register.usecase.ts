@@ -5,11 +5,9 @@ import { PasswordVO } from "../../../domain/value-objects/user/password.vo"
 import { UsernameVO } from "../../../domain/value-objects/user/username.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { UserRepository } from "../../../infrastruture/repositories/user.repository"
-import { JwtService } from "../../../infrastruture/services/jwt.services"
 import { TYPES } from "../../../types"
 import { UserEmailAlreadyExists } from "../../errors/user.email.already.exists.exception"
-import { UserIdAlreadyExists } from "../../errors/user.id.already.exists"//import { IUser } from "../../infrastruture/interface/user.interface"
-
+import { UserIdAlreadyExists } from "../../errors/user.id.already.exists"
 @injectable()
 export class UserRegisterUseCase {
     private userRepository: UserRepository
@@ -21,15 +19,11 @@ export class UserRegisterUseCase {
 
     public async execute(id: UuidVO, username: UsernameVO, email: EmailVO, password: PasswordVO): Promise<UserModel | undefined> {
 
-
         const userFound = await this.userRepository.findById(id)
-        console.log(userFound)
         if (userFound) throw new UserIdAlreadyExists()
 
         const userFoundEmail = await this.userRepository.findByEmail(email)
         if (userFoundEmail) throw new UserEmailAlreadyExists()
-
-
 
         return this.userRepository.create(new UserModel(id, username, email, password))
     }

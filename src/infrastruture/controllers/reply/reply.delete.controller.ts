@@ -7,14 +7,14 @@ import { TYPES } from "../../../types"
 import { TweetDtoType } from "../../dtos/tweet.dto"
 import { TweetRequest } from "../../types"
 
-@controller('/tweeter/reply')
+@controller('/tweet')
 export class ReplyDeleteByIdController {
     constructor(
         @inject(TYPES.ReplyDeleteByIdUseCase)
         private replyDeleteByIdUseCase: ReplyDeleteByIdUseCase
     ) {
     }
-    @httpDelete('/:id', TYPES.AuthMiddleware)
+    @httpDelete('/reply/:id', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
         const id = req.params.id
 
