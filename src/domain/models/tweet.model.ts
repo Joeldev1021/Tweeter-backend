@@ -17,7 +17,8 @@ export class TweetModel {
         public readonly id: UuidVO,
         public tweet: TweetVO,
         public ownerId: UuidVO,
-        public image: ImageVO | null
+        public image: ImageVO | null,
+        public likes: UuidVO[] | []
     ) { }
 
 

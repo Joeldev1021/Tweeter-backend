@@ -44,30 +44,31 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    async create(user: UserModel): Promise<UserModel | undefined> {
-        const userPersistance = this.toPersistance(user)
-        const newUser = new UserSchema(userPersistance)
-        return this.toDomain(await newUser.save())
+    async create(userModel: UserModel): Promise<UserModel | null> {
+        const userPersistance = this.toPersistance(userModel)
+        const user = new UserSchema(userPersistance)
+        const userSave = await user.save()
+        return this.toDomain(userSave)
     }
 
 
-    async findById(id: UuidVO): Promise<UserModel | undefined> {
-        const userFound = await UserSchema.findById(id.value, { 'password': 0 }).exec()
-        if (userFound)
-            return this.toDomain(userFound)
+    async findById(id: UuidVO): Promise<UserModel | null> {
+        const userFound = await UserSchema.findById(id.value)
+        if (!userFound) return null
+        const userDomain = this.toDomain(userFound)
+        return userDomain
     }
 
 
 
-    async findByEmail(email: EmailVO): Promise<UserModel | undefined> {
+    async findByEmail(email: EmailVO): Promise<UserModel | null> {
         const userFound = await UserSchema.findOne({ email: email.value })
-        if (userFound)
-            return this.toDomain(userFound)
+        if (!userFound) return null
+        return this.toDomain(userFound)
     }
 
     async findAll() {
-        const users = await UserSchema.find()
-        return users
+        return UserSchema.find()
     }
 
 }

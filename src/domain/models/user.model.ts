@@ -17,14 +17,16 @@ export class UserModel {
         public readonly id: UuidVO,
         public username: UsernameVO,
         public email: EmailVO,
-        public password: PasswordVO,
+        public password: PasswordVO
+        //public followers: UuidVO[] | null
     ) { }
 
     static createUser(
         id: UuidVO,
         username: UsernameVO,
         email: EmailVO,
-        password: PasswordVO
+        password: PasswordVO,
+        //followers: UuidVO[] | null
     ) {
         return new UserModel(id, username, email, password)
     }

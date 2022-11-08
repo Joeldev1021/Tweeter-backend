@@ -9,14 +9,14 @@ export interface IUserRepository {
     * @param {UuidVO} id - UuidVO
     * @returns A {UserModel}
     */
-    findById(id: UuidVO): Promise<UserModel | undefined>
+    findById(id: UuidVO): Promise<UserModel | null>
 
     /**
      * It finds a user by email and returns a domain object
      * @param {EmailVO} email - EmailVO
-     * @returns A UserModel or undefined
+     * @returns A UserModel ornull 
      */
-    findByEmail(email: EmailVO): Promise<UserModel | undefined>
+    findByEmail(email: EmailVO): Promise<UserModel | null>
 
     /**
      * It takes a user object, converts it to a user persistance object, creates a new user schema
@@ -24,7 +24,7 @@ export interface IUserRepository {
      * @param {UserModel} user - UserModel - this is the user object that we are passing in.
      * @returns The user is being returned.
      */
-    create(user: UserModel): Promise<UserModel | undefined>
+    create(user: UserModel): Promise<UserModel | null>
 
 
 }

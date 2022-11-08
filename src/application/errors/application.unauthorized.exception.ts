@@ -1,6 +1,6 @@
 import { ApplicationException } from "./application.exception";
 
-export class AppplicationUnauthorized extends ApplicationException {
+export class AppplicationUnauthorizedException extends ApplicationException {
     constructor() {
         super("not authorized")
     }

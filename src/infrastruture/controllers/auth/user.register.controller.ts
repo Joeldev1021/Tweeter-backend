@@ -21,25 +21,24 @@ export class UserRegisterController {
     }
     @httpPost('/register')
     async execute(req: UserRequest<UserRegistertDtoType>, res: Response, next: NextFunction) {
-
         const { id, username, email, password, ...rest } = req.body
         try {
-            if (!id && !username && !email && !password) {
+            if (!id || !username || !email || !password) {
                 throw new MissingFieldException()
             }
             if (Object.keys(rest).length > 0) {
                 throw new UnnecesayFieldsExceptions()
             }
-            const user = await this.userRegisterUseCase.execute(
+            await this.userRegisterUseCase.execute(
                 new UuidVO(id),
-                new UsernameVO(username,),
+                new UsernameVO(username),
                 new EmailVO(email),
                 await PasswordVO.create(password),
             )
-
             res.status(201).send()
         } catch (error) {
-            next(error)
+            throw error
+
         }
     }
 }

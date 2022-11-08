@@ -1,6 +1,5 @@
 import { ApplicationException } from "./application.exception";
-
-export class UserEmailAlreadyExists extends ApplicationException {
+export class UserEmailAlreadyExistsException extends ApplicationException {
     constructor() {
         super('email already exists')
     }

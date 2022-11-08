@@ -27,4 +27,6 @@ export interface ITweetRepository {
 
     findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | undefined>
 
+    like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined>
+
 }

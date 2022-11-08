@@ -16,12 +16,14 @@ export class TweetRepository implements ITweetRepository {
      * @returns A TweetModel
      */
     private toDomain(persistanceTweet: ITweet): TweetModel {
-        const { _id, tweet, ownerId } = persistanceTweet
+        const { _id, tweet, ownerId, likes } = persistanceTweet
+        const likesArray = likes ? likes?.map(like => new UuidVO(like)) : []
         return new TweetModel(
             new UuidVO(_id),
             new TweetVO(tweet),
             new UuidVO(ownerId),
-            null
+            null,
+            likesArray
         )
     }
 
@@ -102,6 +104,20 @@ export class TweetRepository implements ITweetRepository {
         const tweets = await TweetSchema.find();
         if (tweets)
             return tweets.map(tweet => this.toDomain(tweet))
+    }
+
+    //TODO: refactor this like function
+    async like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined> {
+        const tweet = await TweetSchema.findById(tweetId.value)
+
+        if (tweet?.likes?.includes(userId.value)) {
+            tweet.likes.filter(like => like !== userId.value)
+            tweet.save()
+        } else {
+            tweet?.likes?.push(userId.value)
+            tweet?.save()
+        }
+        return this.toDomain(tweet!)
     }
 
 }

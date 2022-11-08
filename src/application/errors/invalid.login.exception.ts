@@ -1,6 +1,6 @@
 import { ApplicationException } from "./application.exception";
 
-export class InvalidLoginexception extends ApplicationException {
+export class InvalidLoginException extends ApplicationException {
     constructor() {
         super("invalid credentials")
     }

@@ -20,7 +20,7 @@ export class TweetCreateUseCase {
         const findTweet = await this.tweetRepository.findById(id)
         if (findTweet) throw new TweetIdAlreadyExist()
 
-        return this.tweetRepository.create(new TweetModel(id, tweet, ownerId, null)
+        return this.tweetRepository.create(new TweetModel(id, tweet, ownerId, null, [])
         )
     }
 }

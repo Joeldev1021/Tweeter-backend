@@ -19,6 +19,7 @@ import { IReplyRepository } from './domain/repository/reply.repository';
 import { ReplyRepository } from './infrastruture/repositories/reply.repository';
 import { JwtService } from './infrastruture/services/jwt.services';
 import { TweetFindByOwnerIdUseCase } from './application/use-cases/tweet/tweet.find.by.id.owner';
+import { TweetLikeUseCase } from './application/use-cases/tweet/tweet.like.usecase';
 
 const container = new Container();
 
@@ -39,6 +40,7 @@ container.bind<TweetFindByIdUseCase>(TYPES.TweetFindByIdUseCase).to(TweetFindByI
 container.bind<TweetFindByOwnerIdUseCase>(TYPES.TweetFindByOwnerIdUseCase).to(TweetFindByOwnerIdUseCase)
 container.bind<TweetUpdateByIdUseCase>(TYPES.TweetUpdateByIdUseCase).to(TweetUpdateByIdUseCase)
 container.bind<TweetDeleteByIdUseCase>(TYPES.TweetDeleteByIdUseCase).to(TweetDeleteByIdUseCase)
+container.bind<TweetLikeUseCase>(TYPES.TweetLikeUseCase).to(TweetLikeUseCase)
 
 /* ========== reply usecase =========== */
 container.bind<ReplyCreateUseCase>(TYPES.ReplyCreateUseCase).to(ReplyCreateUseCase)

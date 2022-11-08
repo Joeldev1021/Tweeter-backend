@@ -5,7 +5,7 @@ import { UserRepository } from "../../../infrastruture/repositories/user.reposit
 import { TYPES } from "../../../types"
 import { UserNotFoundException } from "../../errors/user.not.found.exception"
 import { JwtService } from '../../../infrastruture/services/jwt.services'
-import { InvalidLoginexception } from "../../errors/invalid.login.exception"
+import { InvalidLoginException } from "../../errors/invalid.login.exception"
 
 @injectable()
 export class UserLoginUseCase {
@@ -17,14 +17,14 @@ export class UserLoginUseCase {
         this.userRepository = userRepository
     }
 
-    public async execute(email: EmailVO, password: PasswordVO): Promise<{ token: string }> {
+    public async execute(email: EmailVO, password: PasswordVO): Promise<{ token: string } | null> {
 
 
         const existsUser = await this.userRepository.findByEmail(email)
         if (!existsUser) throw new UserNotFoundException()
 
         const passworMatch = existsUser.password.compare(password)
-        if (!passworMatch) throw new InvalidLoginexception()
+        if (!passworMatch) throw new InvalidLoginException()
 
         const token = await this._jwtService.signToken({ id: existsUser.id.value }, { expiresIn: '1d' })
         return { token }
