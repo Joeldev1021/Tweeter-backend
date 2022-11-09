@@ -17,21 +17,21 @@ export class UserLoginController {
         private userLoginUseCase: UserLoginUseCase
     ) { }
 
-    @httpPost('/login', TYPES.AuthMiddleware)
+    @httpPost('/login')
     async execute(req: UserRequest<UserLogintDtoType>, res: Response, next: NextFunction) {
 
         try {
             const { email, password, ...rest } = req.body
             if (!email || !password) throw new MissingFieldException()
 
-            if (Object.keys(rest).length > 0) {
+            if (Object.keys(rest).length > 0)
                 throw new UnnecesayFieldsExceptions()
-            }
-            const token = await this.userLoginUseCase.execute(new EmailVO(email), new PasswordVO(password))
-            res.status(200)
-        } catch (error) {
-            next(error)
-        }
 
+            const token = await this.userLoginUseCase.execute(new EmailVO(email), new PasswordVO(password))
+
+            res.status(200).send()
+        } catch (error) {
+            throw error
+        }
     }
 } 

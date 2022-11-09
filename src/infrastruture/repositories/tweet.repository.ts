@@ -17,13 +17,13 @@ export class TweetRepository implements ITweetRepository {
      */
     private toDomain(persistanceTweet: ITweet): TweetModel {
         const { _id, tweet, ownerId, likes } = persistanceTweet
-        const likesArray = likes ? likes?.map(like => new UuidVO(like)) : []
+        const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : []
         return new TweetModel(
             new UuidVO(_id),
             new TweetVO(tweet),
             new UuidVO(ownerId),
             null,
-            likesArray
+            likesArrayVO
         )
     }
 
@@ -36,10 +36,13 @@ export class TweetRepository implements ITweetRepository {
      */
 
     private toPersistance(domainTweet: TweetModel) {
+        const { id, tweet, ownerId, likes } = domainTweet
+        const likesValues = likes ? likes.map(like => like.value) : []
         return {
-            id: domainTweet.id.value,
-            tweet: domainTweet.tweet.value,
-            ownerId: domainTweet.ownerId.value
+            id: id.value,
+            tweet: tweet.value,
+            ownerId: ownerId.value,
+            likes: likesValues
         }
     }
 
@@ -106,10 +109,8 @@ export class TweetRepository implements ITweetRepository {
             return tweets.map(tweet => this.toDomain(tweet))
     }
 
-    //TODO: refactor this like function
     async like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined> {
-        const tweet = await TweetSchema.findById(tweetId.value)
-
+        const tweet = await TweetSchema.findById(tweetId)
         if (tweet?.likes?.includes(userId.value)) {
             tweet.likes.filter(like => like !== userId.value)
             tweet.save()

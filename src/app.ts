@@ -8,15 +8,9 @@ import { container } from './container';
 /*============== routes=========== */
 import './infrastruture/routes/index'
 import { errorMiddleware } from "./infrastruture/middlewares/error.middleware";
-//import { connectDb } from "./connectDb";
+import { connectDb } from "./connectDb";
 /*============== routes=========== */
 dotenv.config()
-//export const app = express();
-
-const myError = (err: any, req: any, res: any, next: any) => {
-    console.error("error");
-    return res.status(500).send('Something broke!');
-};
 
 
 const PORT = process.env.PORT || 3000
@@ -30,15 +24,11 @@ server.setConfig((app) => {
     app.use(express.json())
 });
 
-if (process.env.NODE_ENV !== 'test') {
-    mongoose.connect(process.env.MONGODB_URI!,)
-        .then(() => console.log('Connected to Mongo'))
-        .catch((err) => console.log('Failed to connect to Mongo', err))
-}
-
 server.setErrorConfig((app) => {
     app.use(errorMiddleware);
 });
+
+connectDb()
 
 const appServer = server.build()
 const serverListen = appServer.listen(PORT, () => {

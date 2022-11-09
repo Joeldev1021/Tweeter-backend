@@ -18,8 +18,9 @@ export class TweetLikeUseCase {
     public async execute(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined> {
 
         const tweetFound = await this.tweetRepository.findById(tweetId)
+
         if (!tweetFound) throw new TweetNotFoundException()
 
-        return tweetFound
+        return this.tweetRepository.like(tweetId, userId)
     }
 }

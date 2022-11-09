@@ -3,7 +3,6 @@ import { EmailVO } from "../../../domain/value-objects/user/email.vo"
 import { PasswordVO } from "../../../domain/value-objects/user/password.vo"
 import { UserRepository } from "../../../infrastruture/repositories/user.repository"
 import { TYPES } from "../../../types"
-import { UserNotFoundException } from "../../errors/user.not.found.exception"
 import { JwtService } from '../../../infrastruture/services/jwt.services'
 import { InvalidLoginException } from "../../errors/invalid.login.exception"
 
@@ -21,9 +20,9 @@ export class UserLoginUseCase {
 
 
         const existsUser = await this.userRepository.findByEmail(email)
-        if (!existsUser) throw new UserNotFoundException()
+        if (!existsUser) throw new InvalidLoginException()
 
-        const passworMatch = existsUser.password.compare(password)
+        const passworMatch = await existsUser.password.compare(password)
         if (!passworMatch) throw new InvalidLoginException()
 
         const token = await this._jwtService.signToken({ id: existsUser.id.value }, { expiresIn: '1d' })

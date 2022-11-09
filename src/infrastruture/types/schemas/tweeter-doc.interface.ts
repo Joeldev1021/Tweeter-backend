@@ -5,8 +5,8 @@ export interface ITweet {
     tweet: string;
     ownerId: string;
     image?: string;
-    likes?: Array<string>
-    reply?: Array<string>
+    likes?: string[]
+    reply?: string[]
 }
 
 export interface ITweetDoc extends LeanDocument<ITweet> { }
