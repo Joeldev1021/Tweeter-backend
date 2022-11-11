@@ -52,7 +52,6 @@ export class TweetRepository implements ITweetRepository {
      * @param {TweetModel} tweet - TweetModel - this is the tweet object that we are going to create.
      * @returns A promise of a tweet model or undefined
      */
-    //TODO: save tweet 
     async create(tweet: TweetModel): Promise<TweetModel | undefined> {
 
         const tweetPersistance = this.toPersistance(tweet)
@@ -96,12 +95,21 @@ export class TweetRepository implements ITweetRepository {
             return this.toDomain(tweetUpdate)
     }
 
+    /**
+     * It returns a list of tweets that belong to a user
+     * @param {UuidVO} onwerId - UuidVO
+     * @returns A list of tweets
+     */
     async findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | undefined> {
         const tweets = await TweetSchema.find({ onwerId: onwerId })
         if (tweets)
             return tweets.map(tweet => this.toDomain(tweet))
     }
 
+    /**
+     * It returns all the tweets in the database.
+     * @returns An array of TweetModel objects.
+     */
     async findAll(): Promise<TweetModel[] | undefined> {
         //const tweets = await TweetSchema.find().skip(1).limit(10);
         const tweets = await TweetSchema.find();
@@ -109,6 +117,13 @@ export class TweetRepository implements ITweetRepository {
             return tweets.map(tweet => this.toDomain(tweet))
     }
 
+    /**
+     * It finds a tweet by its id, checks if the user has already liked it, if so, it removes the like,
+     * if not, it adds the like
+     * @param {UuidVO} tweetId - UuidVO - The tweet's id
+     * @param {UuidVO} userId - UuidVO
+     * @returns A tweet model
+     */
     async like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined> {
         const tweet = await TweetSchema.findById(tweetId)
         if (tweet?.likes?.includes(userId.value)) {
@@ -119,6 +134,24 @@ export class TweetRepository implements ITweetRepository {
             tweet?.save()
         }
         return this.toDomain(tweet!)
+    }
+
+    /**
+     * It finds a tweet by its id, populates the reply field, and returns the tweet
+     * @param {UuidVO} tweetId - UuidVO - This is the tweet id that we want to find the replies for.
+     * @returns The tweet with the replies
+     */
+    async findAllReply(tweetId: UuidVO): Promise<TweetModel | undefined> {
+        const tweetReplys = await TweetSchema.findById(tweetId.value).populate([{
+            path: "reply",
+            populate: {
+                path: "ownerId",
+                select: ["username", "avatar"]
+            }
+        }])
+
+        if (tweetReplys)
+            return this.toDomain(tweetReplys)
     }
 
 }

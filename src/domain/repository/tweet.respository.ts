@@ -29,4 +29,5 @@ export interface ITweetRepository {
 
     like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined>
 
+    findAllReply(tweetId: UuidVO): Promise<TweetModel | undefined>
 }
