@@ -11,11 +11,13 @@ const UseCases = {
     TweetUpdateByIdUseCase: Symbol.for("TweetUpdateByIdUseCase"),
     TweetDeleteByIdUseCase: Symbol.for("TweetDeleteByIdUseCase"),
     TweetLikeUseCase: Symbol.for("TweetLikeUseCase"),
+    TweetFindAllReplyUseCase: Symbol.for("TweetFindAllReplyUseCase"),
 
     ReplyCreateUseCase: Symbol.for("ReplyCreateUseCase"),
     ReplyFindAllUseCase: Symbol.for("ReplyFindAllUseCase"),
     ReplyFindByIdUseCase: Symbol.for("ReplyFindByIdUseCase"),
     ReplyDeleteByIdUseCase: Symbol.for("ReplyDeleteByIdUseCase"),
+    ReplyFindByOwnerIdUseCase: Symbol.for("ReplyFindByOwnerIdUseCase"),
 
 
 }

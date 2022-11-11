@@ -20,6 +20,10 @@ import { ReplyRepository } from './infrastruture/repositories/reply.repository';
 import { JwtService } from './infrastruture/services/jwt.services';
 import { TweetFindByOwnerIdUseCase } from './application/use-cases/tweet/tweet.find.by.id.owner';
 import { TweetLikeUseCase } from './application/use-cases/tweet/tweet.like.usecase';
+import { ReplyFindByIdUseCase } from './application/use-cases/reply/reply.find.by.id.usecase';
+import { ReplyDeleteByIdUseCase } from './application/use-cases/reply/reply.delete.usecase';
+import { ReplyFindByOwnerIdUseCase } from './application/use-cases/reply/reply.find.by.owner.usecase';
+import { TweetFindAllReplyUseCase } from './application/use-cases/tweet/tweet.find.all.reply.usecase';
 
 const container = new Container();
 
@@ -41,14 +45,16 @@ container.bind<TweetFindByOwnerIdUseCase>(TYPES.TweetFindByOwnerIdUseCase).to(Tw
 container.bind<TweetUpdateByIdUseCase>(TYPES.TweetUpdateByIdUseCase).to(TweetUpdateByIdUseCase)
 container.bind<TweetDeleteByIdUseCase>(TYPES.TweetDeleteByIdUseCase).to(TweetDeleteByIdUseCase)
 container.bind<TweetLikeUseCase>(TYPES.TweetLikeUseCase).to(TweetLikeUseCase)
+container.bind<TweetFindAllReplyUseCase>(TYPES.TweetFindAllReplyUseCase).to(TweetFindAllReplyUseCase)
 
 /* ========== reply usecase =========== */
 container.bind<ReplyCreateUseCase>(TYPES.ReplyCreateUseCase).to(ReplyCreateUseCase)
-/*
-container.bind<ReplyFindAllUseCase>(TYPES.ReplyFindAllUseCase).to(ReplyFindAllUseCase)
+
+/* container.bind<ReplyFindAllUseCase>(TYPES.ReplyFindAllUseCase).to(ReplyFindAllUseCase) */
 container.bind<ReplyFindByIdUseCase>(TYPES.ReplyFindByIdUseCase).to(ReplyFindByIdUseCase)
 container.bind<ReplyDeleteByIdUseCase>(TYPES.ReplyDeleteByIdUseCase).to(ReplyDeleteByIdUseCase)
-*/
+container.bind<ReplyFindByOwnerIdUseCase>(TYPES.ReplyFindByOwnerIdUseCase).to(ReplyFindByOwnerIdUseCase)
+
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)
 container.bind<JwtService>(TYPES.JwtService).to(JwtService)

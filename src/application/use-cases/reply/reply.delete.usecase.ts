@@ -3,7 +3,7 @@ import { ReplyModel } from "../../../domain/models/reply.model"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { ReplyRepository } from "../../../infrastruture/repositories/reply.repository"
 import { TYPES } from "../../../types"
-import { AppplicationUnauthorized } from "../../errors/application.unauthorized.exception"
+import { AppplicationUnauthorizedException } from "../../errors/application.unauthorized.exception"
 import { TweetNotFoundException } from "../../errors/tweeter/tweet.not.found.exception"
 
 @injectable()
@@ -20,7 +20,7 @@ export class ReplyDeleteByIdUseCase {
         const foundReply = await this.replyRepository.findById(id)
         if (!foundReply) throw new TweetNotFoundException()
 
-        if (id.value !== ownerId.value) throw new AppplicationUnauthorized()
+        if (id.value !== ownerId.value) throw new AppplicationUnauthorizedException()
 
         return this.replyRepository.delete(id)
 

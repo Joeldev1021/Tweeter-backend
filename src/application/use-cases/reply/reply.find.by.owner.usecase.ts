@@ -5,7 +5,6 @@ import { ReplyRepository } from "../../../infrastruture/repositories/reply.repos
 import { TYPES } from "../../../types"
 import { TweetNotFoundException } from "../../errors/tweeter/tweet.not.found.exception"
 
-//TODO: owner ID
 @injectable()
 export class ReplyFindByOwnerIdUseCase {
     private replyRepository: ReplyRepository
