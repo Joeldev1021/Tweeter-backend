@@ -7,7 +7,7 @@ export class ImageVO extends ValueObject<string> {
     public equals(valueObject: ImageVO): boolean {
         return this.value === valueObject.value;
     }
-    public assertIsValid(value: FORMAT_IMAGE) {
+    protected assertIsValid(value: FORMAT_IMAGE) {
         Object.values(FORMAT_IMAGE).includes(value)
     }
 }

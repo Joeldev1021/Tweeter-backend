@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify"
 import { TweetModel } from "../../../domain/models/tweet.model"
-import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
+import { CreatedAtVO } from "../../../domain/value-objects/created-at.vo"
+import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
@@ -15,13 +16,13 @@ export class TweetCreateUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: UuidVO, tweet: TweetVO, ownerId: UuidVO): Promise<TweetModel | undefined> {
+    public async execute(id: UuidVO, tweet: ContentVO, ownerId: UuidVO): Promise<TweetModel | undefined> {
 
         const findTweet = await this.tweetRepository.findById(id)
         if (findTweet) throw new TweetIdAlreadyExist()
-
-        return this.tweetRepository.create(new TweetModel(id, tweet, ownerId, null, [])
-        )
+        const tweetSave = this.tweetRepository.create(new TweetModel(id, tweet, ownerId, null, [], new CreatedAtVO(new Date())))
+        console.log(tweetSave)
+        return tweetSave
     }
 }
 

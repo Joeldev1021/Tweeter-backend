@@ -3,7 +3,7 @@ import { IReply } from '../types/schemas/reply.interface'
 
 const schema = new Schema<IReply>({
     _id: { type: String, id: false, required: true },
-    reply: { type: String, required: true },
+    content: { type: String, required: true },
     tweetId: { type: String, required: true, ref: "Tweet" },
     image: { type: String, required: false },
     ownerId: { type: String, required: true, ref: "User" },

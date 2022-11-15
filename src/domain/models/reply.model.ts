@@ -1,4 +1,4 @@
-import { ReplyVO } from "../value-objects/tweet/reply.vo";
+import { ContentVO } from "../value-objects/tweet/content.vo";
 import { UuidVO } from "../value-objects/uuid.vo";
 
 export class ReplyModel {
@@ -8,13 +8,13 @@ export class ReplyModel {
      * and sets them to the class properties
      * @param {UuidVO} id - UuidVO
      * @param {UuidVO} tweetId - UuidVO
-     * @param {ReplyVO} reply - TweetVO 
+     * @param {ReplyVO} reply - ContentVO 
      * @param {ownerId} ownerId - UuidVO
      */
     constructor(
         public readonly id: UuidVO,
+        public content: ContentVO,
         public tweetId: UuidVO,
-        public reply: ReplyVO,
         public ownerId: UuidVO,
     ) { }
 

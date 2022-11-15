@@ -10,7 +10,7 @@ export class PasswordVO extends ValueObject<string>{
     }
 
 
-    public assertIsValid(value: string) {
+    protected assertIsValid(value: string) {
         if (value.length < 5) throw new VOFormatException(PasswordVO.name, value)
     }
 

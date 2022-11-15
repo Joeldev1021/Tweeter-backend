@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify"
 import { ReplyModel } from "../../../domain/models/reply.model"
-import { ReplyVO } from "../../../domain/value-objects/tweet/reply.vo"
+import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { ReplyRepository } from "../../../infrastruture/repositories/reply.repository"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
@@ -19,12 +19,12 @@ export class ReplyCreateUseCase {
         this.replyRepository = replyRepository;
     }
 
-    public async execute(id: UuidVO, reply: ReplyVO, tweeId: UuidVO, ownerId: UuidVO): Promise<ReplyModel | undefined> {
+    public async execute(id: UuidVO, content: ContentVO, tweeId: UuidVO, ownerId: UuidVO): Promise<ReplyModel | undefined> {
 
         const foundTweet = await this.tweetRepository.findById(id)
         if (!foundTweet) throw new TweetNotFoundException()
 
-        return this.replyRepository.create(new ReplyModel(id, reply, tweeId, ownerId))
+        return this.replyRepository.create(new ReplyModel(id, content, tweeId, ownerId))
 
     }
 }

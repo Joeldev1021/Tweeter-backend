@@ -3,7 +3,7 @@ export abstract class ValueObject<T> {
         this.assertIsValid(value)
     }
 
-    public abstract assertIsValid(value: T): void
+    protected abstract assertIsValid(value: T): void
 
     public abstract equals(valueObject: ValueObject<T>): boolean
 }

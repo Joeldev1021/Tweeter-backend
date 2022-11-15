@@ -8,7 +8,7 @@ export class EmailVO extends ValueObject<string>{
         return this.value === valueObject.value
     }
 
-    public assertIsValid(value: string) {
+    protected assertIsValid(value: string) {
         if (!isEmail(value)) throw new VOFormatException(EmailVO.name, value)
     }
 

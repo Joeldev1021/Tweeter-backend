@@ -29,7 +29,7 @@ export class UserLoginController {
 
             const token = await this.userLoginUseCase.execute(new EmailVO(email), new PasswordVO(password))
 
-            res.status(200).send()
+            res.status(200).json(token)
         } catch (error) {
             throw error
         }

@@ -26,6 +26,7 @@ export class UserModel {
         username: UsernameVO,
         email: EmailVO,
         password: PasswordVO,
+
         //followers: UuidVO[] | null
     ) {
         return new UserModel(id, username, email, password)

@@ -1,7 +1,7 @@
 import { injectable } from "inversify"
 import { ReplyModel } from "../../domain/models/reply.model"
 import { IReplyRepository } from "../../domain/repository/reply.repository"
-import { ReplyVO } from "../../domain/value-objects/tweet/reply.vo"
+import { ContentVO } from "../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { ReplySchema } from "../schemas/reply.schema"
 import { IReply } from "../types/schemas/reply.interface"
@@ -17,10 +17,10 @@ export class ReplyRepository implements IReplyRepository {
      * @returns A ReplyModel
      */
     private toDomain(persistanceReply: IReply): ReplyModel {
-        const { _id, reply, tweetId, ownerId } = persistanceReply
+        const { _id, content, tweetId, ownerId } = persistanceReply
         return new ReplyModel(
             new UuidVO(_id),
-            new ReplyVO(reply),
+            new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
         )
@@ -35,7 +35,7 @@ export class ReplyRepository implements IReplyRepository {
     private toPersistance(domainReply: ReplyModel) {
         return {
             _id: domainReply.id.value,
-            reply: domainReply.reply.value,
+            content: domainReply.content.value,
             tweetId: domainReply.tweetId.value,
             ownerId: domainReply.ownerId.value
         }
@@ -79,17 +79,7 @@ export class ReplyRepository implements IReplyRepository {
             return this.toDomain(replyDelete)
     }
 
-    /**
-     * It updates a reply by id.
-     * @param {UuidVO} id - UuidVO - The id of the reply to be updated
-     * @param { ReplyModel} reply -  ReplyModel - The reply object that will be updated.
-     * @returns The replyUpdate is being returned.
-     */
-    async update(id: UuidVO, reply: ReplyModel): Promise<ReplyModel | undefined> {
-        const replyUpdate = await ReplySchema.findByIdAndUpdate(id.value, { reply: reply.reply.value })
-        if (replyUpdate)
-            return this.toDomain(replyUpdate)
-    }
+
     /**
      * It finds all the replys that have the same ownerId as the one passed in.
      * @param {UuidVO} onwerId - UuidVO

@@ -4,8 +4,8 @@
   "main": "app.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "NODE_ENV=development nodemon src/app.ts",
-    "start": "NODE_ENV=production node index.ts",
+    "dev": "NODE_ENV=development nodemon src/bootstrap.ts",
+    "start": "NODE_ENV=production node src/bootstrap.ts",
     "lint": "eslint --ext .ts .",
     "docker:up": "docker-compose -p tweeter up -d",
     "docker:down": "docker-compose -p tweeter down",

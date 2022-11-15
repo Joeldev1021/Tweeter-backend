@@ -1,7 +1,8 @@
 import { injectable } from "inversify"
 import { TweetModel } from "../../domain/models/tweet.model"
 import { ITweetRepository } from "../../domain/repository/tweet.respository"
-import { TweetVO } from "../../domain/value-objects/tweet/tweet.vo"
+import { CreatedAtVO } from "../../domain/value-objects/created-at.vo"
+import { ContentVO } from "../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { TweetSchema } from "../schemas/tweet.schema"
 import { ITweet } from "../types/schemas/tweeter-doc.interface"
@@ -16,18 +17,17 @@ export class TweetRepository implements ITweetRepository {
      * @returns A TweetModel
      */
     private toDomain(persistanceTweet: ITweet): TweetModel {
-        const { _id, tweet, ownerId, likes } = persistanceTweet
+        const { _id, content, ownerId, likes, createdAt } = persistanceTweet
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : []
         return new TweetModel(
             new UuidVO(_id),
-            new TweetVO(tweet),
+            new ContentVO(content),
             new UuidVO(ownerId),
             null,
-            likesArrayVO
+            likesArrayVO,
+            new CreatedAtVO(createdAt)
         )
     }
-
-
     /**
      * It takes a TweetModel and returns a TweetPersistance
      * @param {TweetModel} domainTweet - TweetModel - this is the domain model that we want to convert to a
@@ -36,13 +36,14 @@ export class TweetRepository implements ITweetRepository {
      */
 
     private toPersistance(domainTweet: TweetModel) {
-        const { id, tweet, ownerId, likes } = domainTweet
+        const { id, content, ownerId, likes, createdAt } = domainTweet
         const likesValues = likes ? likes.map(like => like.value) : []
         return {
-            id: id.value,
-            tweet: tweet.value,
+            _id: id.value,
+            content: content.value,
             ownerId: ownerId.value,
-            likes: likesValues
+            likes: likesValues,
+            createdAt: createdAt.value
         }
     }
 
@@ -53,10 +54,8 @@ export class TweetRepository implements ITweetRepository {
      * @returns A promise of a tweet model or undefined
      */
     async create(tweet: TweetModel): Promise<TweetModel | undefined> {
-
         const tweetPersistance = this.toPersistance(tweet)
         const newTweet = new TweetSchema(tweetPersistance)
-
         return this.toDomain(await newTweet.save())
     }
 
@@ -90,7 +89,7 @@ export class TweetRepository implements ITweetRepository {
      * @returns The tweetUpdate is being returned.
      */
     async update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | undefined> {
-        const tweetUpdate = await TweetSchema.findByIdAndUpdate(id.value, { tweet: tweet.tweet.value })
+        const tweetUpdate = await TweetSchema.findByIdAndUpdate(id.value, { tweet: tweet.content.value })
         if (tweetUpdate)
             return this.toDomain(tweetUpdate)
     }

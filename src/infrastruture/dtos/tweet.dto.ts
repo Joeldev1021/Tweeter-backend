@@ -3,7 +3,7 @@ import { Type, type Static } from '@sinclair/typebox'
 const Tweet = Type.Object(
     {
         id: Type.String(),
-        tweet: Type.String()
+        content: Type.String()
     }, {
     additionalProperties: false
 }

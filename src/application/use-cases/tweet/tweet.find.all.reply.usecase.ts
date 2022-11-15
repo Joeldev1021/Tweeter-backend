@@ -17,7 +17,7 @@ export class TweetFindAllReplyUseCase {
 
     public async execute(tweetId: UuidVO): Promise<TweetModel | undefined> {
 
-        const replyFound = await this.tweetRepository.findById(tweetId)
+        const replyFound = await this.tweetRepository.findAllReply(tweetId)
         if (!replyFound) throw new TweetNotFoundException()
 
         return replyFound

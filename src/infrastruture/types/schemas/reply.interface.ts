@@ -1,7 +1,7 @@
 
 export interface IReply {
     _id: string;
-    reply: string;
+    content: string;
     tweetId: string;
     ownerId: string;
     image?: string;

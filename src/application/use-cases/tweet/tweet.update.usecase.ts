@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify"
 import { TweetModel } from "../../../domain/models/tweet.model"
-import { TweetVO } from "../../../domain/value-objects/tweet/tweet.vo"
+import { CreatedAtVO } from "../../../domain/value-objects/created-at.vo"
+import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
@@ -16,7 +17,7 @@ export class TweetUpdateByIdUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: UuidVO, tweet: TweetVO, onwerId: UuidVO): Promise<TweetModel | undefined> {
+    public async execute(id: UuidVO, tweet: ContentVO, onwerId: UuidVO): Promise<TweetModel | undefined> {
 
 
         const tweetFound = await this.tweetRepository.findById(id)
@@ -24,7 +25,7 @@ export class TweetUpdateByIdUseCase {
 
         if (tweetFound.ownerId.value === onwerId.value) {
 
-            return this.tweetRepository.update(id, new TweetModel(id, tweet, onwerId, null, []))
+            return this.tweetRepository.update(id, new TweetModel(id, tweet, onwerId, null, [], new CreatedAtVO(new Date())))
         }
 
     }

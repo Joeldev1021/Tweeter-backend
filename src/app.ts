@@ -12,30 +12,28 @@ import { connectDb } from "./connectDb";
 /*============== routes=========== */
 dotenv.config()
 
+export const startApp = () => {
 
-const PORT = process.env.PORT || 3000
-const app = express()
-app.use(cors())
+    const app = express()
+    app.use(cors())
 
-const server = new InversifyExpressServer(container)
+    const server = new InversifyExpressServer(container)
 
-server.setConfig((app) => {
-    app.use(express.urlencoded({ extended: false }))
-    app.use(express.json())
-});
+    server.setConfig((app) => {
+        app.use(express.urlencoded({ extended: false }))
+        app.use(express.json())
+    });
 
-server.setErrorConfig((app) => {
-    app.use(errorMiddleware);
-});
+    server.setErrorConfig((app) => {
+        app.use(errorMiddleware);
+    });
 
-connectDb()
+    connectDb()
 
-const appServer = server.build()
-const serverListen = appServer.listen(PORT, () => {
-    console.log(`Server running on port 🔥 ${PORT}`)
-})
-
-export {
-    appServer,
-    serverListen
+    const appServer = server.build()
+    /*     const serverListen = appServer.listen(PORT, () => {
+            console.log(`Server running on port 🔥 ${PORT}`)
+        })
+     */
+    return appServer
 }

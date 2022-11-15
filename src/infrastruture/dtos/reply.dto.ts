@@ -3,7 +3,7 @@ import { Type, type Static } from '@sinclair/typebox'
 const Reply = Type.Object(
     {
         id: Type.String(),
-        reply: Type.String()
+        content: Type.String()
     }, {
     additionalProperties: false
 }

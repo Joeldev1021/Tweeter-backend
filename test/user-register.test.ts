@@ -1,18 +1,29 @@
 import { connectDb, clear, closeDb } from './utils/setup-tests'
 import supertest from 'supertest'
 import { generateRandomUser } from './utils/generate.random.user'
-import { appServer, serverListen } from '../src/app'
+import { Server, IncomingMessage, ServerResponse } from 'http'
+import { startApp } from '../src/app'
+import { Application } from 'express'
 
-export const api = supertest(appServer)
+export let api: supertest.SuperTest<supertest.Test>
+let app: Application
+let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
-beforeAll(async () => await connectDb())
+beforeAll(async () => {
+    app = startApp();
+    server = app.listen(5000, () => console.log('server listenning in port 🔥 ', 5000))
+    api = supertest(app)
+    await connectDb()
+})
+
 beforeEach(async () => await clear())
 afterAll(async () => {
     await closeDb()
-    serverListen.close()
+    server.close()
 })
 
 describe('Register test', () => {
+
     it('should register new user', async () => {
         const user = generateRandomUser()
         await api.post('/auth/register').send(user).set('Accept', 'application/json').expect(201)
