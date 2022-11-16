@@ -22,7 +22,7 @@ export class TweetDeleteByIdController {
                 new UuidVO(id),
                 new UuidVO(req.userId)
             )
-            res.status(200).send(tweetDelete)
+            res.status(201).send()
         } catch (error) {
             next(error)
         }

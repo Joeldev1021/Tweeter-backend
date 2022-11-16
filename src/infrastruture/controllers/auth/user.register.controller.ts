@@ -38,7 +38,7 @@ export class UserRegisterController {
             res.status(201).send()
         } catch (error) {
             throw error
-
         }
+
     }
 }

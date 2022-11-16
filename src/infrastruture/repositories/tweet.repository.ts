@@ -10,7 +10,6 @@ import { ITweet } from "../types/schemas/tweeter-doc.interface"
 @injectable()
 export class TweetRepository implements ITweetRepository {
 
-
     /**
      * It takes a tweet from the database and converts it into a TweetModel
      * @param {ITweet} persistanceTweet - ITweet
@@ -152,5 +151,4 @@ export class TweetRepository implements ITweetRepository {
         if (tweetReplys)
             return this.toDomain(tweetReplys)
     }
-
 }

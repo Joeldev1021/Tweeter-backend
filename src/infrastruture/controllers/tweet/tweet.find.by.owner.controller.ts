@@ -8,7 +8,7 @@ import { TweetDtoType } from "../../dtos/tweet.dto"
 import { TweetRequest } from "../../types"
 
 @controller('/tweet')
-export class TweetFindByIdController {
+export class TweetFindByOwnerIdController {
     constructor(
         @inject(TYPES.TweetFindByOwnerIdUseCase)
         private TweetFindByOwnerIdUseCase: TweetFindByOwnerIdUseCase
@@ -16,7 +16,6 @@ export class TweetFindByIdController {
     }
     @httpGet('/owner', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
-
         try {
 
             const tweetFound = await this.TweetFindByOwnerIdUseCase.execute(new UuidVO(req.userId))
