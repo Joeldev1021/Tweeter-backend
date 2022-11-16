@@ -2,6 +2,9 @@
   "name": "tweeter-backend",
   "version": "1.0.0",
   "main": "app.js",
+  "_moduleAliases": {
+    "@domain": "src/domain"
+  },
   "scripts": {
     "tsc": "tsc",
     "dev": "NODE_ENV=development nodemon src/bootstrap.ts",
@@ -44,6 +47,7 @@
     "supertest": "^6.3.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.7.1",
     "typescript": "^4.8.4"
   },
   "dependencies": {
@@ -56,6 +60,7 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^6.6.5",
     "reflect-metadata": "^0.1.13",
     "uuid": "^9.0.0",

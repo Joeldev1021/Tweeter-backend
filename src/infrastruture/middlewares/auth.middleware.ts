@@ -20,13 +20,13 @@ export class AuthMiddleware extends BaseMiddleware {
         next: NextFunction
     ) {
         const token = req.headers.authorization
-        if (!token) throw new InfrastructureUnauthorizedException();
         try {
+            if (!token) throw new InfrastructureUnauthorizedException();
             const jwtPayload = await this._jwtService.verifyToken(token)
             req.userId = jwtPayload.id
             next()
         } catch (error) {
-            throw new InfrastructureUnauthorizedException()
+            next(error)
         }
     }
 

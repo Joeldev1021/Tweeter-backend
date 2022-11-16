@@ -24,6 +24,9 @@ Directory structure based on Domain driver design
 │   ├── application
 │   │   ├── errors
 │   │   └── usecases
+│   │       ├── auth
+│   │       ├── tweet
+│   │       └── reply
 │   ├── domain 
 │   │   ├── contans
 │   │   ├── errors
@@ -32,19 +35,10 @@ Directory structure based on Domain driver design
 │   └── infrastruture
 │       ├── controllers 
 │       │   ├── auth
-│       │   │   ├── user-login.controller.ts
-│       │   │   └── user-register.controller.ts
 │       │   ├── tweet
-│       │   │   ├── tweet-create.controller.ts
-│       │   │   ├── tweet-delete.controller.ts
-│       │   │   ├── tweet-update.controller.ts
-│       │   │   ├── tweet-find-by-id.controller.ts
-│       │   │   └── tweet-find-all.controller.ts
+│       │   ├── reply
 │       │   └── user-profile.controller.ts
 │       ├── dtos
-│       │   ├── tweet.dto.ts
-│       │   ├── user-login.dto.ts
-│       │   └── user-register.dto.ts
 │       ├── errors
 │       ├── middlewares
 │       │   ├── error.middleware.ts
@@ -60,7 +54,8 @@ Directory structure based on Domain driver design
 ├── app.ts
 ├── containers.ts
 ├── index.ts
-└── types.ts
+├── types.ts
+└── test
 ```
 
 ### Model 

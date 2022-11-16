@@ -1,4 +1,6 @@
 import { Container } from 'inversify'
+import { TYPES } from './types';
+
 import { UserLoginUseCase } from './application/use-cases/auth/user.login.usecase';
 import { UserProfileUseCase } from './application/use-cases/user.profile.usecase';
 import { UserRegisterUseCase } from './application/use-cases/auth/user.register.usecase';
@@ -13,7 +15,6 @@ import { TweetDeleteByIdUseCase } from './application/use-cases/tweet/tweet.dele
 import { TweetFindAllUseCase } from './application/use-cases/tweet/tweet.find.all.usecase';
 import { TweetFindByIdUseCase } from './application/use-cases/tweet/tweet.find.by.id.usecase';
 import { TweetUpdateByIdUseCase } from './application/use-cases/tweet/tweet.update.usecase';
-import { TYPES } from './types';
 import { ReplyCreateUseCase } from './application/use-cases/reply/reply.create.usecase';
 import { IReplyRepository } from './domain/repository/reply.repository';
 import { ReplyRepository } from './infrastruture/repositories/reply.repository';
