@@ -9,6 +9,8 @@ const schema = new Schema<IReply>({
     ownerId: { type: String, required: true, ref: "User" },
     likes: [{ type: String, required: false, ref: 'User' }],
     replyId: [{ type: String, required: false, ref: "Reply" }],
+}, {
+    versionKey: false
 })
 
 export const ReplySchema = model<IReply>('Reply', schema)

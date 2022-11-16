@@ -8,6 +8,8 @@ const schema = new Schema<IUser>({
     email: { type: String, required: true },
     password: { type: String, required: true },
     followersId: [{ type: String, required: false }]
+}, {
+    versionKey: false
 })
 
 

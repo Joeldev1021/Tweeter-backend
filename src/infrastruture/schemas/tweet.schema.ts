@@ -9,6 +9,8 @@ const schema = new Schema<ITweet>({
     likes: [{ type: String, required: false, ref: "User" }],
     reply: [{ type: String, required: false, ref: "Reply" }],
     createdAt: { type: Date, required: true }
+}, {
+    versionKey: false
 })
 
 export const TweetSchema = model<ITweet>('Tweet', schema)
