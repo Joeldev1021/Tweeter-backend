@@ -49,10 +49,9 @@ export class ReplyRepository implements IReplyRepository {
      */
 
     async create(reply: ReplyModel): Promise<ReplyModel | undefined> {
-
         const replyPersistance = this.toPersistance(reply)
         const newReply = new ReplySchema(replyPersistance)
-
+        console.log(newReply)
         return this.toDomain(await newReply.save())
     }
 

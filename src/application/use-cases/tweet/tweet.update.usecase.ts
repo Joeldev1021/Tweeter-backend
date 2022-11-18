@@ -17,7 +17,7 @@ export class TweetUpdateByIdUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: UuidVO, tweet: ContentVO, onwerId: UuidVO): Promise<TweetModel | undefined> {
+    public async execute(id: UuidVO, content: ContentVO, onwerId: UuidVO): Promise<TweetModel | undefined> {
 
 
         const tweetFound = await this.tweetRepository.findById(id)
@@ -25,7 +25,7 @@ export class TweetUpdateByIdUseCase {
 
         if (tweetFound.ownerId.value === onwerId.value) {
 
-            return this.tweetRepository.update(id, new TweetModel(id, tweet, onwerId, null, [], new CreatedAtVO(new Date())))
+            return this.tweetRepository.update(id, content)
         }
 
     }

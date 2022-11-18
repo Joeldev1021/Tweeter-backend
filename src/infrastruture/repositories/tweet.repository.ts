@@ -87,8 +87,8 @@ export class TweetRepository implements ITweetRepository {
      * @param {TweetModel} tweet - TweetModel - The tweet object that will be updated.
      * @returns The tweetUpdate is being returned.
      */
-    async update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | undefined> {
-        const tweetUpdate = await TweetSchema.findByIdAndUpdate(id.value, { tweet: tweet.content.value })
+    async update(id: UuidVO, content: ContentVO): Promise<TweetModel | undefined> {
+        const tweetUpdate = await TweetSchema.findOneAndUpdate({ _id: id.value }, { content: content.value }, { new: true })
         if (tweetUpdate)
             return this.toDomain(tweetUpdate)
     }
@@ -116,22 +116,22 @@ export class TweetRepository implements ITweetRepository {
     }
 
     /**
-     * It finds a tweet by its id, checks if the user has already liked it, if so, it removes the like,
+     * It finds a tweet by id, checks if the user has already liked it, if so, it removes the like,
      * if not, it adds the like
      * @param {UuidVO} tweetId - UuidVO - The tweet's id
      * @param {UuidVO} userId - UuidVO
      * @returns A tweet model
      */
     async like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined> {
-        const tweet = await TweetSchema.findById(tweetId)
-        if (tweet?.likes?.includes(userId.value)) {
-            tweet.likes.filter(like => like !== userId.value)
-            tweet.save()
-        } else {
-            tweet?.likes?.push(userId.value)
-            tweet?.save()
+        const tweet = await TweetSchema.findById(tweetId.value)
+        if (tweet) {
+            if (tweet?.likes?.includes(userId.value)) {
+                tweet.likes = tweet.likes.filter(like => like !== userId.value)
+            } else {
+                tweet?.likes?.push(userId.value)
+            }
+            return this.toDomain(await tweet.save()!)
         }
-        return this.toDomain(tweet!)
     }
 
     /**

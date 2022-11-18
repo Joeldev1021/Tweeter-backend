@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { inject } from "inversify"
-import { controller, httpGet } from "inversify-express-utils"
+import { controller, httpPost } from "inversify-express-utils"
 import { TweetLikeUseCase } from "../../../application/use-cases/tweet/tweet.like.usecase"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TYPES } from "../../../types"
@@ -13,15 +13,14 @@ export class TweetLikeController {
         private TweetLikeUseCase: TweetLikeUseCase
     ) {
     }
-    @httpGet('/:id', TYPES.AuthMiddleware)
+    @httpPost('/like/:id', TYPES.AuthMiddleware)
     async execute(req: AuthRequest<Request>, res: Response, next: NextFunction) {
         const TweetId = req.params.id
 
         try {
 
             const tweetFound = await this.TweetLikeUseCase.execute(new UuidVO(TweetId), new UuidVO(req.userId))
-
-            res.status(200).send(tweetFound)
+            res.status(200).send()
         } catch (error) {
             next(error)
         }

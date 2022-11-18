@@ -18,6 +18,7 @@ export class ReplyCreateController {
     }
     @httpPost('/reply/:id', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<ReplyDtoType>, res: Response, next: NextFunction) {
+        console.log('reply')
         const tweetId = req.params.id
         const { id, content, ...rest } = req.body
         try {

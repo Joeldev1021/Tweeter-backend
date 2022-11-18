@@ -88,6 +88,35 @@ describe('test for tweet', () => {
     })
 
 
+    describe('update tweet test', () => {
+        it('update tweet successfuly', async () => {
+            const tweet = generateTweetRandom()
+            const tweetUpdate = {
+                ...tweet,
+                content: 'tweet update'
+            }
+            await api.post('/tweet').set('Authorization', token).send(tweet)
+            const response = await api.put(`/tweet/${tweet.id}`).set('Authorization', token).send(tweetUpdate)
+            expect(response.body.content).toEqual(tweetUpdate.content)
+        })
 
+    })
+
+    describe('like tweet test', () => {
+        it('add like tweet successfuly', async () => {
+            const tweet = generateTweetRandom()
+
+            await api.post('/tweet').set('Authorization', token).send(tweet)
+            await api.post(`/tweet/like/${tweet.id}`).set('Authorization', token).expect(200)
+        })
+
+        it('remove like tweet', async () => {
+            const tweet = generateTweetRandom()
+
+            await api.post('/tweet').set('Authorization', token).send(tweet)
+            await api.post(`/tweet/like/${tweet.id}`).set('Authorization', token)
+            await api.post(`/tweet/like/${tweet.id}`).set('Authorization', token).expect(200)
+        })
+    })
 
 }) 

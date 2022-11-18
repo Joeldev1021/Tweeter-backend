@@ -1,3 +1,4 @@
+import { ContentVO } from "@domain/value-objects/tweet/content.vo";
 import { TweetModel } from "../models/tweet.model";
 import { UuidVO } from "../value-objects/uuid.vo";
 
@@ -21,7 +22,7 @@ export interface ITweetRepository {
     /* Deleting a tweet by id. */
     delete(id: UuidVO): Promise<TweetModel | undefined>
 
-    update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | undefined>
+    update(id: UuidVO, content: ContentVO): Promise<TweetModel | undefined>
 
     findAll(): Promise<TweetModel[] | undefined>
 
