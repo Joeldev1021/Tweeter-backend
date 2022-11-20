@@ -17,12 +17,14 @@ export class ReplyRepository implements IReplyRepository {
      * @returns A ReplyModel
      */
     private toDomain(persistanceReply: IReply): ReplyModel {
-        const { _id, content, tweetId, ownerId } = persistanceReply
+        const { _id, content, tweetId, ownerId, likes } = persistanceReply
+        const arrayVO = likes ? likes.map(like => new UuidVO(like)) : []
         return new ReplyModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
+            arrayVO
         )
     }
 
@@ -33,11 +35,14 @@ export class ReplyRepository implements IReplyRepository {
      * @returns a new object with the same properties as the domainReply object.
      */
     private toPersistance(domainReply: ReplyModel) {
+        const { id, content, tweetId, ownerId, likes } = domainReply
+        const likesValues = likes ? likes.map(like => like.value) : []
         return {
-            _id: domainReply.id.value,
-            content: domainReply.content.value,
-            tweetId: domainReply.tweetId.value,
-            ownerId: domainReply.ownerId.value
+            _id: id.value,
+            content: content.value,
+            tweetId: tweetId.value,
+            ownerId: ownerId.value,
+            likes: likesValues
         }
     }
     /**
@@ -51,7 +56,6 @@ export class ReplyRepository implements IReplyRepository {
     async create(reply: ReplyModel): Promise<ReplyModel | undefined> {
         const replyPersistance = this.toPersistance(reply)
         const newReply = new ReplySchema(replyPersistance)
-        console.log(newReply)
         return this.toDomain(await newReply.save())
     }
 
@@ -101,5 +105,23 @@ export class ReplyRepository implements IReplyRepository {
             return replys.map(reply => this.toDomain(reply))
     }
 
+    /**
+     * It finds a tweet by id, checks if the user has already liked it, if so, it removes the like,
+     * if not, it adds the like
+     * @param {UuidVO} replyId - UuidVO - The tweet's id
+     * @param {UuidVO} userId - UuidVO
+     * @returns A tweet model
+     */
+    async like(replyId: UuidVO, userId: UuidVO): Promise<ReplyModel | undefined> {
+        const reply = await ReplySchema.findById(replyId.value)
+        if (reply) {
+            if (reply?.likes?.includes(userId.value)) {
+                reply.likes = reply.likes.filter(like => like !== userId.value)
+            } else {
+                reply?.likes?.push(userId.value)
+            }
+            return this.toDomain(await reply.save()!)
+        }
+    }
 }
 

@@ -8,7 +8,7 @@ export class ReplyModel {
      * and sets them to the class properties
      * @param {UuidVO} id - UuidVO
      * @param {UuidVO} tweetId - UuidVO
-     * @param {ReplyVO} reply - ContentVO 
+     * @param {ReplyVO} content - ContentVO 
      * @param {ownerId} ownerId - UuidVO
      */
     constructor(
@@ -16,6 +16,7 @@ export class ReplyModel {
         public content: ContentVO,
         public tweetId: UuidVO,
         public ownerId: UuidVO,
+        public likes: UuidVO[] | []
     ) { }
 
 

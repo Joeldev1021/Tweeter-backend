@@ -17,3 +17,6 @@ import '../controllers/tweet/tweet.like.controller'
 /*============= reply controller========== */
 
 import '../controllers/reply/reply.create.controller'
+import '../controllers/reply/reply.delete.controller'
+import '../controllers/reply/reply.find.by.id.controller'
+import '../controllers/reply/reply.find.by.owner.controller'

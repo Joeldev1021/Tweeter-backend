@@ -20,11 +20,10 @@ export class ReplyCreateUseCase {
     }
 
     public async execute(id: UuidVO, content: ContentVO, tweeId: UuidVO, ownerId: UuidVO): Promise<ReplyModel | undefined> {
-
-        const foundTweet = await this.tweetRepository.findById(id)
+        const foundTweet = await this.tweetRepository.findById(tweeId)
         if (!foundTweet) throw new TweetNotFoundException()
 
-        return this.replyRepository.create(new ReplyModel(id, content, tweeId, ownerId))
+        return this.replyRepository.create(new ReplyModel(id, content, tweeId, ownerId, []))
 
     }
 }

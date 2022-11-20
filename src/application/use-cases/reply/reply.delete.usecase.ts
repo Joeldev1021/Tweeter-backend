@@ -20,7 +20,7 @@ export class ReplyDeleteByIdUseCase {
         const foundReply = await this.replyRepository.findById(id)
         if (!foundReply) throw new TweetNotFoundException()
 
-        if (id.value !== ownerId.value) throw new AppplicationUnauthorizedException()
+        if (foundReply.ownerId.value !== ownerId.value) throw new AppplicationUnauthorizedException()
 
         return this.replyRepository.delete(id)
 

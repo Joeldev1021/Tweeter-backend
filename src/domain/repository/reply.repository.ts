@@ -24,4 +24,7 @@ export interface IReplyRepository {
 
     findByOwnerId(onwerId: UuidVO): Promise<ReplyModel[] | undefined>
 
+    like(tweetId: UuidVO, userId: UuidVO): Promise<ReplyModel | undefined>
+
+
 }

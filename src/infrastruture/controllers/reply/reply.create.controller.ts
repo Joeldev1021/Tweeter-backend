@@ -9,16 +9,15 @@ import { ReplyDtoType } from "../../dtos/reply.dto"
 import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
 import { ReplyCreateUseCase } from "../../../application/use-cases/reply/reply.create.usecase"
 
-@controller('/tweet')
+@controller('/reply')
 export class ReplyCreateController {
     constructor(
-        @inject(TYPES.TweetCreateUseCase)
+        @inject(TYPES.ReplyCreateUseCase)
         private replyCreateUseCase: ReplyCreateUseCase
     ) {
     }
-    @httpPost('/reply/:id', TYPES.AuthMiddleware)
+    @httpPost('/:id', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<ReplyDtoType>, res: Response, next: NextFunction) {
-        console.log('reply')
         const tweetId = req.params.id
         const { id, content, ...rest } = req.body
         try {

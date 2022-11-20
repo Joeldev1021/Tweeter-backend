@@ -18,7 +18,7 @@ const UseCases = {
     ReplyFindByIdUseCase: Symbol.for("ReplyFindByIdUseCase"),
     ReplyDeleteByIdUseCase: Symbol.for("ReplyDeleteByIdUseCase"),
     ReplyFindByOwnerIdUseCase: Symbol.for("ReplyFindByOwnerIdUseCase"),
-
+    ReplyLikeUseCase: Symbol.for("ReplyLikeUseCase"),
 
 }
 

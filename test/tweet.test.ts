@@ -17,6 +17,7 @@ describe('test for tweet', () => {
         await api.post('/auth/register').send(userRegister)
         const { body } = await api.post('/auth/login').send(userLogin)
         token = body.token
+
     })
     describe('create tweet test', () => {
         it('create tweet successfully', async () => {

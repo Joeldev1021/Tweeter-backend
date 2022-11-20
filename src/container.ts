@@ -25,6 +25,7 @@ import { ReplyFindByIdUseCase } from './application/use-cases/reply/reply.find.b
 import { ReplyDeleteByIdUseCase } from './application/use-cases/reply/reply.delete.usecase';
 import { ReplyFindByOwnerIdUseCase } from './application/use-cases/reply/reply.find.by.owner.usecase';
 import { TweetFindAllReplyUseCase } from './application/use-cases/tweet/tweet.find.all.reply.usecase';
+import { ReplyLikeUseCase } from './application/use-cases/reply/reply.like.usecase';
 
 const container = new Container();
 
@@ -50,11 +51,11 @@ container.bind<TweetFindAllReplyUseCase>(TYPES.TweetFindAllReplyUseCase).to(Twee
 
 /* ========== reply usecase =========== */
 container.bind<ReplyCreateUseCase>(TYPES.ReplyCreateUseCase).to(ReplyCreateUseCase)
-
 /* container.bind<ReplyFindAllUseCase>(TYPES.ReplyFindAllUseCase).to(ReplyFindAllUseCase) */
 container.bind<ReplyFindByIdUseCase>(TYPES.ReplyFindByIdUseCase).to(ReplyFindByIdUseCase)
 container.bind<ReplyDeleteByIdUseCase>(TYPES.ReplyDeleteByIdUseCase).to(ReplyDeleteByIdUseCase)
 container.bind<ReplyFindByOwnerIdUseCase>(TYPES.ReplyFindByOwnerIdUseCase).to(ReplyFindByOwnerIdUseCase)
+container.bind<ReplyLikeUseCase>(TYPES.ReplyLikeUseCase).to(ReplyLikeUseCase)
 
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)

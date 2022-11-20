@@ -5,14 +5,14 @@ import { ReplyFindByIdUseCase } from "../../../application/use-cases/reply/reply
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TYPES } from "../../../types"
 
-@controller('/tweet')
+@controller('/reply')
 export class ReplyFindByIdController {
     constructor(
         @inject(TYPES.ReplyFindByIdUseCase)
         private replyFindByIdUseCase: ReplyFindByIdUseCase
     ) {
     }
-    @httpGet('/reply/:id', TYPES.AuthMiddleware)
+    @httpGet('/:id', TYPES.AuthMiddleware)
     async execute(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id
         try {
