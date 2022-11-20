@@ -26,7 +26,8 @@ Directory structure based on Domain driver design
 │   │   └── usecases
 │   │       ├── auth
 │   │       ├── tweet
-│   │       └── reply
+│   │       ├── reply
+|   |       └──  user
 │   ├── domain 
 │   │   ├── contans
 │   │   ├── errors
@@ -37,7 +38,7 @@ Directory structure based on Domain driver design
 │       │   ├── auth
 │       │   ├── tweet
 │       │   ├── reply
-│       │   └── user-profile.controller.ts
+│       │   └── user
 │       ├── dtos
 │       ├── errors
 │       ├── middlewares
@@ -60,7 +61,7 @@ Directory structure based on Domain driver design
 
 ### Model 
 
-To represent an Moddel in Typescript
+To represent an User Model 
 
 ```ts
 export class UserModel {
@@ -96,6 +97,42 @@ export class UuidVO extends ValueObject<string> {
     }
 }
 ```
+## Getting Started :rocket:
+
+1. Clone the repository: 
+``` bash
+git clone https://github.com/Joeldev1021/Tweeter-backend.git 
+```
+2. Install dependencies ⛏️
+``` bash
+npm install
+```
+3. Environments .env :
+``` bash
+PORT=3500
+JWT_SECRET_KEY='YOU_SECRET_KEY'
+MONGODB_HOSTNAME='localhost'
+MONGODB_PORT='27017'
+MONGODB_USER='root'
+MONGODB_PASSWORD='root'
+MONGODB_DATABASE_NAME='tweeter'
+MONGODB_URI=mongodb://root:root@localhost:27017/tweeter?authSource=admin
+
+```
+
+4. Docker componse:
+
+``` bash
+npm run docker:up 
+npm run docker:down
+```
+5. Run Backend 🔥 :
+``` bash
+npm run dev 
+```
+
+
+
 ##### The application should have these functions
 
    * User story: I can see my profile or others' profile
