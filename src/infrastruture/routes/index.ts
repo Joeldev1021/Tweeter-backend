@@ -3,7 +3,6 @@ import '../controllers/auth/user.register.controller'
 import '../controllers/auth/user.login.controller'
 import '../controllers/user/user.profile.controller'
 
-
 /*============= tweet controller========== */
 
 import '../controllers/tweet/tweet.create.controller'
@@ -20,3 +19,4 @@ import '../controllers/reply/reply.create.controller'
 import '../controllers/reply/reply.delete.controller'
 import '../controllers/reply/reply.find.by.id.controller'
 import '../controllers/reply/reply.find.by.owner.controller'
+import '../controllers/reply/reply.like.controller'

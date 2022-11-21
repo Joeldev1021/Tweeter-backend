@@ -16,7 +16,6 @@ export class ReplyFindByOwnerIdController {
     }
     @httpGet('/owner', TYPES.AuthMiddleware)
     async execute(req: TweetRequest<TweetDtoType>, res: Response, next: NextFunction) {
-        console.log('owner - ', req.userId)
         try {
 
             const replyFound = await this.replyFindByOwnerIdUseCase.execute(new UuidVO(req.userId))

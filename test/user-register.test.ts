@@ -17,6 +17,7 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => await clear())
+
 afterAll(async () => {
     await closeDb()
     server.close()
@@ -24,12 +25,12 @@ afterAll(async () => {
 
 describe('Register test', () => {
 
-    it('should register new user', async () => {
+    test('should register new user', async () => {
         const user = generateRandomUser()
         await api.post('/auth/register').send(user).set('Accept', 'application/json').expect(201)
     });
 
-    it('register failed Duplicate-ID', async () => {
+    test('register failed Duplicate-ID', async () => {
         const user = generateRandomUser();
         const userFail = {
             ...generateRandomUser(),
@@ -40,7 +41,7 @@ describe('Register test', () => {
         await api.post('/auth/register').send(userFail).expect(409)
     })
 
-    it('register failed ID-malformed', async () => {
+    test('register failed ID-malformed', async () => {
         const userFail = {
             ...generateRandomUser(),
             id: '1234'
@@ -48,7 +49,7 @@ describe('Register test', () => {
         await api.post('/auth/register').send(userFail).expect(400)
     })
 
-    it('register failed invalid-email format', async () => {
+    test('register failed invalid-email format', async () => {
         const userFail = {
             ...generateRandomUser(),
             email: 'test'
@@ -56,7 +57,7 @@ describe('Register test', () => {
         await api.post('/auth/register').send(userFail).expect(400)
     })
 
-    it('register failed invalid-username format', async () => {
+    test('register failed invalid-username format', async () => {
         const userFail = {
             ...generateRandomUser(),
             username: 'jo'
@@ -65,7 +66,7 @@ describe('Register test', () => {
     })
 
 
-    it('register failed unnecesary field', async () => {
+    test('register failed unnecesary field', async () => {
         const userFail = {
             ...generateRandomUser(),
             error: 'error'
@@ -73,7 +74,7 @@ describe('Register test', () => {
         await api.post('/auth/register').send(userFail).expect(400)
     })
 
-    it('register failed missing field', async () => {
+    test('register failed missing field', async () => {
         const { id, email, password } = generateRandomUser()
         const userFail = {
             id,

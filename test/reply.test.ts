@@ -2,7 +2,7 @@ import { api } from "./user-register.test"
 import { generateRandomUser, generateTweetRandom } from "./utils/generate.random.user"
 
 
-describe('test for reply', () => {
+describe('TEST FOR REPLY', () => {
 
     let token: string
     let tweet = generateTweetRandom()
@@ -78,7 +78,7 @@ describe('test for reply', () => {
 
     })
 
-    describe('like reply tesh', () => {
+    describe('POST like reply test', () => {
         /* create tweet before test reply */
         const reply = generateTweetRandom()
         beforeEach(async () => {
@@ -92,7 +92,7 @@ describe('test for reply', () => {
             await api.post(`/reply/like/${reply.id}`).set('Authorization', token).expect(200)
         })
 
-        it('remove like tweet', async () => {
+        it('remove like reply tweet', async () => {
 
             await api.post(`/reply/like/${reply.id}`).set('Authorization', token)
             await api.post(`/reply/like/${reply.id}`).set('Authorization', token).expect(200)

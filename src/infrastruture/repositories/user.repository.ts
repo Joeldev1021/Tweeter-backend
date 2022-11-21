@@ -35,11 +35,12 @@ export class UserRepository implements IUserRepository {
      */
 
     private toPersistance(domainUser: UserModel): IUser {
+
         return {
             _id: domainUser.id.value,
             username: domainUser.username.value,
             email: domainUser.email.value,
-            password: domainUser.password.value
+            password: domainUser.password?.value
 
         }
     }
@@ -69,6 +70,12 @@ export class UserRepository implements IUserRepository {
 
     async findAll() {
         return UserSchema.find()
+    }
+
+    async findByUsername(username: UsernameVO): Promise<UserModel | null> {
+        const userFound = await UserSchema.findOne({ username: username.value })
+        if (!userFound) return null
+        return this.toDomain(userFound)
     }
 
 }

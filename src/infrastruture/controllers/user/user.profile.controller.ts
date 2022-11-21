@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { UserRegisterUseCase } from "../../../application/use-cases/auth/user.register.usecase";
-import { MissingFieldException } from "../../errors/missing.fields.exception";
-import { UnnecesayFieldsExceptions } from "../../errors/unnecesay.fields.exception";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
 import { TYPES } from "../../../types";
-import { UserProfileUseCase } from "../../../application/use-cases/user.profile.usecase";
-import { UuidVO } from "../../../domain/value-objects/uuid.vo";
+import { UserProfileUseCase } from "../../../application/use-cases/user/user.profile.usecase";
+import { AuthRequest } from "infrastruture/types";
+import { UsernameVO } from "../../../domain/value-objects/user/username.vo";
 
 @controller('/user')
 export class UserProfileController {
@@ -15,12 +13,12 @@ export class UserProfileController {
         private userProfileUseCase: UserProfileUseCase
     ) {
     }
-    @httpGet('/profile/:id')
-    async execute(req: Request, res: Response, next: NextFunction) {
-        const { id } = req.params;
+    @httpGet('/:username', TYPES.AuthMiddleware)
+    async execute(req: AuthRequest<Request>, res: Response, next: NextFunction) {
+        const { username } = req.params;
         try {
-            const user = await this.userProfileUseCase.execute(new UuidVO(id))
-            res.json(user)
+            const user = await this.userProfileUseCase.execute(new UsernameVO(username))
+            res.status(200).send(user)
         } catch (error) {
             next(error)
         }

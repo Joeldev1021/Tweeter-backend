@@ -8,6 +8,6 @@ export class UsernameVO extends ValueObject<string>{
     }
 
     protected assertIsValid(value: string) {
-        if (value.length < 5) throw new VOFormatException(UsernameVO.name, value)
+        if (value.length < 3) throw new VOFormatException(UsernameVO.name, value)
     }
 }

@@ -1,3 +1,4 @@
+import { UsernameVO } from "@domain/value-objects/user/username.vo";
 import { UserModel } from "../models/user.model";
 import { EmailVO } from "../value-objects/user/email.vo";
 import { UuidVO } from "../value-objects/uuid.vo";
@@ -25,6 +26,15 @@ export interface IUserRepository {
      * @returns The user is being returned.
      */
     create(user: UserModel): Promise<UserModel | null>
+
+
+    /**
+     * It finds a user by username and returns a domain object
+     * @param {UsernameVO} username - UsernameVO
+     * @returns A UserModel ornull 
+     */
+    findByUsername(username: UsernameVO): Promise<UserModel | null>
+
 
 
 }

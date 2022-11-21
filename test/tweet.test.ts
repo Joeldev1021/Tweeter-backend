@@ -2,7 +2,7 @@ import { api } from "./user-register.test"
 import { generateRandomUser, generateTweetRandom } from "./utils/generate.random.user"
 
 
-describe('test for tweet', () => {
+describe('TEST FOR TWEET', () => {
 
     let token: string
 

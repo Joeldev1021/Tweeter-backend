@@ -16,7 +16,6 @@ export class ReplyLikeController {
     @httpPost('/like/:id', TYPES.AuthMiddleware)
     async execute(req: AuthRequest<Request>, res: Response, next: NextFunction) {
         const replyId = req.params.id
-
         try {
 
             const replyFound = await this.replyLikeUseCase.execute(new UuidVO(replyId), new UuidVO(req.userId))

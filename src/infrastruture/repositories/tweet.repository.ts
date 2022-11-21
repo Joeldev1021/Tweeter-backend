@@ -98,10 +98,10 @@ export class TweetRepository implements ITweetRepository {
      * @param {UuidVO} onwerId - UuidVO
      * @returns A list of tweets
      */
-    async findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | undefined> {
-        const tweets = await TweetSchema.find({ onwerId: onwerId })
-        if (tweets)
-            return tweets.map(tweet => this.toDomain(tweet))
+    async findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | null> {
+        const tweets = await TweetSchema.find({ ownerId: onwerId.value }).exec()
+        if (!tweets) return null
+        return tweets.map(tweet => this.toDomain(tweet))
     }
 
     /**
