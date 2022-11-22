@@ -1,7 +1,7 @@
 /*============ auth controller============= */
 import '../controllers/auth/user.register.controller'
 import '../controllers/auth/user.login.controller'
-import '../controllers/user/user.profile.controller'
+import '../controllers/profile/user.profile.controller'
 
 /*============= tweet controller========== */
 

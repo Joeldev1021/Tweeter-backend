@@ -18,3 +18,4 @@ export interface TweetRequest<T> extends Request {
 export type JwtPayload = {
     id: string
 }
+

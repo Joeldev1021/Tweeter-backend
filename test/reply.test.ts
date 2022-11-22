@@ -6,6 +6,7 @@ describe('TEST FOR REPLY', () => {
 
     let token: string
     let tweet = generateTweetRandom()
+    let reply = generateTweetRandom()
 
     beforeAll(async () => {
         /* register user before test  */
@@ -27,13 +28,11 @@ describe('TEST FOR REPLY', () => {
         })
 
         it('create reply successfully', async () => {
-            const reply = generateTweetRandom()
 
             await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply).expect(201)
         })
 
         it('create reply failed - tweet not found ', async () => {
-            const reply = generateTweetRandom()
             const tweetFail = generateTweetRandom()
 
             await api.post('/tweet').set('Authorization', token).send(tweet)
@@ -49,7 +48,6 @@ describe('TEST FOR REPLY', () => {
         })
 
         it('DELETE reply successfully', async () => {
-            const reply = generateTweetRandom()
 
             await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply)
             await api.delete(`/reply/${reply.id}`).set('Authorization', token).send(reply).expect(201)
@@ -64,13 +62,11 @@ describe('TEST FOR REPLY', () => {
         })
 
         it('find reply by ID successfully', async () => {
-            const reply = generateTweetRandom()
 
             await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply)
             await api.get(`/reply/${reply.id}`).set('Authorization', token).expect(200)
         })
         it('find reply by owner successfully', async () => {
-            const reply = generateTweetRandom()
 
             await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply)
             await api.get(`/reply/owner`).set('Authorization', token).expect(200)
@@ -80,7 +76,6 @@ describe('TEST FOR REPLY', () => {
 
     describe('POST like reply test', () => {
         /* create tweet before test reply */
-        const reply = generateTweetRandom()
         beforeEach(async () => {
             await api.post('/tweet').set('Authorization', token).send(tweet)
             await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply)

@@ -4,7 +4,7 @@ import { ContentVO } from "../value-objects/tweet/content.vo";
 import { ImageVO } from "../value-objects/tweet/image.vo";
 import { UuidVO } from "../value-objects/uuid.vo";
 
-export class TweetModel {
+export class TweetUserModel {
 
     /**
      * The constructor function is a public function that takes in an id, tweet
@@ -18,12 +18,17 @@ export class TweetModel {
     constructor(
         public readonly id: UuidVO,
         public content: ContentVO,
-        public ownerId: UuidVO,
+        public ownerId: {
+            username: UsernameVO,
+            avatar: string,
+        } | string,
         public image: ImageVO | null,
         public likes: UuidVO[] | [],
-        public createdAt: CreatedAtVO
+        public createdAt: CreatedAtVO,
 
+        //public replys: 
     ) { }
 
 
 }
+

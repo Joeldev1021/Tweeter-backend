@@ -3,6 +3,7 @@ const UseCases = {
     UserRegisterUseCase: Symbol.for("UserRegisterUseCase"),
     UserLoginUseCase: Symbol.for("UserLoginUseCase"),
     UserProfileUseCase: Symbol.for("UserProfileUseCase"),
+    ProfileFindByQueryFilterUseCase: Symbol.for("ProfileFindByQueryFilterUseCase"),
 
     TweetCreateUseCase: Symbol.for("TweetCreateUseCase"),
     TweetFindAllUseCase: Symbol.for("TweetFindAllUseCase"),

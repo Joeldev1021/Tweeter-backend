@@ -1,21 +1,23 @@
 import { injectable } from "inversify"
 import { TweetModel } from "../../domain/models/tweet.model"
+import { TweetUserModel } from "../../domain/models/tweet.with.reply.model"
 import { ITweetRepository } from "../../domain/repository/tweet.respository"
 import { CreatedAtVO } from "../../domain/value-objects/created-at.vo"
 import { ContentVO } from "../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { TweetSchema } from "../schemas/tweet.schema"
-import { ITweet } from "../types/schemas/tweeter-doc.interface"
+import { ITweetSchema } from "../types/schemas/tweeter-doc.interface"
+import { ITweetWithAuthor } from "../types/schemas/tweeter-doc.interface"
 
 @injectable()
 export class TweetRepository implements ITweetRepository {
 
     /**
      * It takes a tweet from the database and converts it into a TweetModel
-     * @param {ITweet} persistanceTweet - ITweet
+     * @param {ITweetSchema} persistanceTweet - ITweet
      * @returns A TweetModel
      */
-    private toDomain(persistanceTweet: ITweet): TweetModel {
+    private toDomain(persistanceTweet: ITweetSchema): TweetModel {
         const { _id, content, ownerId, likes, createdAt } = persistanceTweet
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : []
         return new TweetModel(

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
 import { TYPES } from "../../../types";
-import { UserProfileUseCase } from "../../../application/use-cases/user/user.profile.usecase";
+import { UserProfileUseCase } from "../../../application/use-cases/profile/user.profile.usecase";
 import { AuthRequest } from "infrastruture/types";
 import { UsernameVO } from "../../../domain/value-objects/user/username.vo";
 

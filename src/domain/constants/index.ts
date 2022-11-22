@@ -3,3 +3,10 @@ export enum FORMAT_IMAGE {
     PNG = "png",
     GIF = "gif"
 }
+
+export enum QUERY_FILTER {
+    tweets = 'tweet',
+    likes = 'likes',
+    replys = 'replys',
+    media = 'media'
+}

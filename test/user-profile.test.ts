@@ -17,9 +17,10 @@ describe('test for profile user', () => {
 
     describe('GET profile ', () => {
 
+        let tweet
         beforeEach(async () => {
             for (let index = 0; index < 3; index++) {
-                const tweet = generateTweetRandom()
+                tweet = generateTweetRandom()
                 await api.post('/tweet').set('Authorization', token).send(tweet)
             }
         })
@@ -29,7 +30,13 @@ describe('test for profile user', () => {
             await api.get(`/user/${userName}`).set('Authorization', token).expect(200)
         })
 
+        test('find profile  tweet with reply successfully', async () => {
+            const reply = generateRandomUser()
 
+            await api.post(`/reply/${tweet.id}`).set('Authorization', token).send(reply)
+            await api.get(`/user/${userName}?query=reply`).set('Authorization', token).expect(200)
+
+        })
 
     })
 

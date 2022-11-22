@@ -2,7 +2,7 @@ import { Container } from 'inversify'
 import { TYPES } from './types';
 
 import { UserLoginUseCase } from './application/use-cases/auth/user.login.usecase';
-import { UserProfileUseCase } from './application/use-cases/user/user.profile.usecase';
+import { UserProfileUseCase } from './application/use-cases/profile/user.profile.usecase';
 import { UserRegisterUseCase } from './application/use-cases/auth/user.register.usecase';
 import { IUserRepository } from './domain/repository/user.repository';
 import { AuthMiddleware } from './infrastruture/middlewares/auth.middleware';
@@ -26,6 +26,7 @@ import { ReplyDeleteByIdUseCase } from './application/use-cases/reply/reply.dele
 import { ReplyFindByOwnerIdUseCase } from './application/use-cases/reply/reply.find.by.owner.usecase';
 import { TweetFindAllReplyUseCase } from './application/use-cases/tweet/tweet.find.all.reply.usecase';
 import { ReplyLikeUseCase } from './application/use-cases/reply/reply.like.usecase';
+import { ProfileFindByQueryFilterUseCase } from './application/use-cases/profile/profile.find.query.filter.usecase';
 
 const container = new Container();
 
@@ -38,6 +39,7 @@ container.bind<IReplyRepository>(TYPES.ReplyRepository).to(ReplyRepository)
 container.bind<UserRegisterUseCase>(TYPES.UserRegisterUseCase).to(UserRegisterUseCase)
 container.bind<UserLoginUseCase>(TYPES.UserLoginUseCase).to(UserLoginUseCase)
 container.bind<UserProfileUseCase>(TYPES.UserProfileUseCase).to(UserProfileUseCase)
+container.bind<ProfileFindByQueryFilterUseCase>(TYPES.ProfileFindByQueryFilterUseCase).to(ProfileFindByQueryFilterUseCase)
 
 /* ========== tweet usecase =========== */
 container.bind<TweetCreateUseCase>(TYPES.TweetCreateUseCase).to(TweetCreateUseCase)
