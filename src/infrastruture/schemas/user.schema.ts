@@ -8,8 +8,14 @@ const schema = new Schema<IUser>({
     password: { type: String, required: true },
     followersId: [{ type: String, required: false }]
 }, {
-    versionKey: false
-})
+    toJSON: {
+        transform(doc, ret) {
+            delete ret.password;
+            delete ret.__v;
+        },
+    }
+}
+)
 
 
 export const UserSchema = model<IUser>('User', schema)

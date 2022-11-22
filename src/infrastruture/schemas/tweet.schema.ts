@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { ITweetSchema } from '../types/schemas/tweeter-doc.interface'
+import { ITweet } from '../types/schemas/tweeter-doc.interface'
 
-const schema = new Schema<ITweetSchema>({
+const schema = new Schema<ITweet>({
     _id: { type: String, id: false, required: true },
     content: { type: String, required: true },
     image: { type: String, required: false },
@@ -13,5 +13,5 @@ const schema = new Schema<ITweetSchema>({
     versionKey: false,
 })
 
-export const TweetSchema = model<ITweetSchema>('Tweet', schema)
+export const TweetSchema = model<ITweet>('Tweet', schema)
 //export const TweetSchema: Model<ITweetDoc> = model('Tweet', schema)

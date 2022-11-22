@@ -1,3 +1,4 @@
+import { JwtService } from "../../../infrastruture/services/jwt.services"
 import { inject, injectable } from "inversify"
 import { UserModel } from "../../../domain/models/user.model"
 import { EmailVO } from "../../../domain/value-objects/user/email.vo"
@@ -13,12 +14,13 @@ import { UserIdAlreadyExistsException } from "../../errors/user.id.already.exist
 export class UserRegisterUseCase {
     private userRepository: UserRepository
     constructor(
-        @inject(TYPES.UserRepository) userRepository: UserRepository
+        @inject(TYPES.UserRepository) userRepository: UserRepository,
+        @inject(TYPES.JwtService) private readonly _jwtService: JwtService,
     ) {
         this.userRepository = userRepository
     }
 
-    public async execute(id: UuidVO, username: UsernameVO, email: EmailVO, password: PasswordVO): Promise<UserModel | null> {
+    public async execute(id: UuidVO, username: UsernameVO, email: EmailVO, password: PasswordVO): Promise<{ token: string } | null> {
 
         const userFound = await this.userRepository.findById(id)
         if (userFound) throw new UserIdAlreadyExistsException()
@@ -26,7 +28,12 @@ export class UserRegisterUseCase {
         const userFoundEmail = await this.userRepository.findByEmail(email)
         if (userFoundEmail) throw new UserEmailAlreadyExistsException()
 
-        return this.userRepository.create(new UserModel(id, username, email, password))
+        const newUser = await this.userRepository.create(new UserModel(id, username, email, password))
+        if (!newUser) return null
+
+        const token = await this._jwtService.signToken({ id: newUser.id.value }, { expiresIn: '1d' })
+
+        return { token }
     }
 
 }

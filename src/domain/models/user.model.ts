@@ -25,10 +25,10 @@ export class UserModel {
         id: UuidVO,
         username: UsernameVO,
         email: EmailVO,
-        password: PasswordVO,
+        password: PasswordVO | null,
 
         //followers: UuidVO[] | null
     ) {
-        return new UserModel(id, username, email, password)
+        return new UserModel(id, username, email, password!)
     }
 }

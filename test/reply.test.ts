@@ -11,13 +11,8 @@ describe('TEST FOR REPLY', () => {
     beforeAll(async () => {
         /* register user before test  */
         const userRegister = generateRandomUser()
-        const { email, password } = userRegister
-        const userLogin = {
-            email,
-            password
-        }
-        await api.post('/auth/register').send(userRegister)
-        const { body } = await api.post('/auth/login').send(userLogin)
+
+        const { body } = await api.post('/auth/register').send(userRegister)
         token = body.token
     })
 

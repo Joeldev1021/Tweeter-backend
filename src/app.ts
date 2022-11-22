@@ -30,9 +30,6 @@ export const startApp = () => {
     connectDb()
 
     const appServer = server.build()
-    /*     const serverListen = appServer.listen(PORT, () => {
-            console.log(`Server running on port 🔥 ${PORT}`)
-        })
-     */
+
     return appServer
 }

@@ -8,14 +8,7 @@ describe('TEST FOR TWEET', () => {
 
     beforeAll(async () => {
         const userRegister = generateRandomUser()
-        const { email, password } = userRegister
-        const userLogin = {
-            email,
-            password
-        }
-
-        await api.post('/auth/register').send(userRegister)
-        const { body } = await api.post('/auth/login').send(userLogin)
+        const { body } = await api.post('/auth/register').send(userRegister)
         token = body.token
 
     })
@@ -75,7 +68,7 @@ describe('TEST FOR TWEET', () => {
             await api.get(`/tweet/owner`).set('Authorization', token).expect(200)
         })
 
-        it('find tweet all tweet id successfuly', async () => {
+        it('find tweet all tweet successfuly', async () => {
             const tweet = generateTweetRandom()
             const tweet2 = generateTweetRandom()
 
@@ -83,6 +76,7 @@ describe('TEST FOR TWEET', () => {
             await api.post('/tweet').set('Authorization', token).send(tweet2)
 
             const response = await api.get(`/tweet`).set('Authorization', token)
+
             expect(response.body).toHaveLength(2)
         })
 
@@ -119,5 +113,14 @@ describe('TEST FOR TWEET', () => {
             await api.post(`/tweet/like/${tweet.id}`).set('Authorization', token).expect(200)
         })
     })
-
+    describe('TEST TWEET WITH ALL REPLY', () => {
+        //todo test tweet find with all replys
+        /*   it('add like tweet successfuly', async () => {
+              const tweet = generateTweetRandom()
+  
+              await api.post('/tweet').set('Authorization', token).send(tweet)
+              await api.post(`/tweet/like/${tweet.id}`).set('Authorization', token).expect(200)
+          })
+          */
+    })
 }) 

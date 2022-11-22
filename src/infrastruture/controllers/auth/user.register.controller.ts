@@ -29,13 +29,14 @@ export class UserRegisterController {
             if (Object.keys(rest).length > 0) {
                 throw new UnnecesayFieldsExceptions()
             }
-            await this.userRegisterUseCase.execute(
+            const token = await this.userRegisterUseCase.execute(
                 new UuidVO(id),
                 new UsernameVO(username),
                 new EmailVO(email),
                 await PasswordVO.create(password),
             )
-            res.status(201).send()
+
+            res.status(201).send(token)
         } catch (error) {
             throw error
         }

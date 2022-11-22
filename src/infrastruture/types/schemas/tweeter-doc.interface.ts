@@ -1,5 +1,10 @@
 //TODO: refactor interface tweet with Replys 
-export interface ITweetSchema {
+
+interface IOnwer {
+    username: string;
+    avatar: string;
+}
+export interface ITweet {
     _id: string;
     content: string;
     ownerId: string;
@@ -9,25 +14,23 @@ export interface ITweetSchema {
     createdAt: Date;
 }
 
-export interface ITweetWithAuthor {
+export interface ITweetUser {
     _id: string;
     content: string;
-    ownerId: {
-        username: string;
-        avatar: string;
-    }
+    ownerId: IOnwer;
     image?: string;
     likes?: string[]
     reply?: string[]
     createdAt: Date;
 }
+
 interface ReplyUser {
     _id: string;
-    username: string;
     content: string;
+    ownerId: IOnwer;
     image?: string;
+    likes?: string[]
     createdAt: Date;
-    likes: string[]
     replyId: string[]
 }
 

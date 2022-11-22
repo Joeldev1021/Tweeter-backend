@@ -6,18 +6,18 @@ import { CreatedAtVO } from "../../domain/value-objects/created-at.vo"
 import { ContentVO } from "../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { TweetSchema } from "../schemas/tweet.schema"
-import { ITweetSchema } from "../types/schemas/tweeter-doc.interface"
-import { ITweetWithAuthor } from "../types/schemas/tweeter-doc.interface"
+import { ITweet } from "../types/schemas/tweeter-doc.interface"
+import { ITweetUser } from "../types/schemas/tweeter-doc.interface"
 
 @injectable()
 export class TweetRepository implements ITweetRepository {
 
     /**
      * It takes a tweet from the database and converts it into a TweetModel
-     * @param {ITweetSchema} persistanceTweet - ITweet
+     * @param {ITweet} persistanceTweet - ITweet
      * @returns A TweetModel
      */
-    private toDomain(persistanceTweet: ITweetSchema): TweetModel {
+    private toDomain(persistanceTweet: ITweet): TweetModel {
         const { _id, content, ownerId, likes, createdAt } = persistanceTweet
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : []
         return new TweetModel(
@@ -112,7 +112,8 @@ export class TweetRepository implements ITweetRepository {
      */
     async findAll(): Promise<TweetModel[] | undefined> {
         //const tweets = await TweetSchema.find().skip(1).limit(10);
-        const tweets = await TweetSchema.find();
+        const tweets = await TweetSchema.find()
+        console.log("test", tweets)
         if (tweets)
             return tweets.map(tweet => this.toDomain(tweet))
     }
@@ -142,6 +143,7 @@ export class TweetRepository implements ITweetRepository {
      * @returns The tweet with the replies
      */
     async findAllReply(tweetId: UuidVO): Promise<TweetModel | undefined> {
+        //todo need test
         const tweetReplys = await TweetSchema.findById(tweetId.value).populate([{
             path: "reply",
             populate: {
@@ -149,7 +151,6 @@ export class TweetRepository implements ITweetRepository {
                 select: ["username", "avatar"]
             }
         }])
-
         if (tweetReplys)
             return this.toDomain(tweetReplys)
     }
