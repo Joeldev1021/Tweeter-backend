@@ -8,6 +8,7 @@ import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { ReplyDtoType } from "../../dtos/reply.dto"
 import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
 import { ReplyCreateUseCase } from "../../../application/use-cases/reply/reply.create.usecase"
+import { CreatedAtVO } from "@domain/value-objects/created-at.vo"
 
 @controller('/reply')
 export class ReplyCreateController {

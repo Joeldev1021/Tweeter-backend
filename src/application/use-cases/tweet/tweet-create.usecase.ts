@@ -16,11 +16,11 @@ export class TweetCreateUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(id: UuidVO, tweet: ContentVO, ownerId: UuidVO): Promise<TweetModel | undefined> {
+    public async execute(id: UuidVO, content: ContentVO, ownerId: UuidVO): Promise<TweetModel | undefined> {
 
         const findTweet = await this.tweetRepository.findById(id)
         if (findTweet) throw new TweetIdAlreadyExist()
-        return await this.tweetRepository.create(new TweetModel(id, tweet, ownerId, null, [], new CreatedAtVO(new Date())))
+        return await this.tweetRepository.create(new TweetModel(id, content, ownerId, null, [], [], new CreatedAtVO(new Date())))
     }
 }
 

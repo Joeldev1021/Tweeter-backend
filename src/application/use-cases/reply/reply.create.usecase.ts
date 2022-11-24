@@ -1,3 +1,4 @@
+import { CreatedAtVO } from "@domain/value-objects/created-at.vo"
 import { inject, injectable } from "inversify"
 import { ReplyModel } from "../../../domain/models/reply.model"
 import { ContentVO } from "../../../domain/value-objects/tweet/content.vo"
@@ -23,7 +24,7 @@ export class ReplyCreateUseCase {
         const foundTweet = await this.tweetRepository.findById(tweeId)
         if (!foundTweet) throw new TweetNotFoundException()
 
-        return this.replyRepository.create(new ReplyModel(id, content, tweeId, ownerId, []))
+        return this.replyRepository.create(new ReplyModel(id, content, tweeId, ownerId, [], new CreatedAtVO(new Date)))
 
     }
 }

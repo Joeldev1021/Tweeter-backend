@@ -128,7 +128,7 @@ export class TweetRepository implements ITweetRepository {
             path: "reply",
             populate: {
                 path: "ownerId",
-                select: ["username", "avatar"]
+                select: ["username", "avatar", "createdAt"]
             }
         }])
         if (!tweets) return null

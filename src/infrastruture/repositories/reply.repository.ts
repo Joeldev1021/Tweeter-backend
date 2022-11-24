@@ -1,3 +1,4 @@
+import { CreatedAtVO } from "@domain/value-objects/created-at.vo"
 import { injectable } from "inversify"
 import { ReplyModel } from "../../domain/models/reply.model"
 import { IReplyRepository } from "../../domain/repository/reply.repository"
@@ -17,14 +18,16 @@ export class ReplyRepository implements IReplyRepository {
      * @returns A ReplyModel
      */
     private toDomain(persistanceReply: IReply): ReplyModel {
-        const { _id, content, tweetId, ownerId, likes } = persistanceReply
+        const { _id, content, tweetId, ownerId, likes, createdAt } = persistanceReply
         const arrayVO = likes ? likes.map(like => new UuidVO(like)) : []
         return new ReplyModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
-            arrayVO
+            arrayVO,
+            //todo -> missing replys
+            new CreatedAtVO(createdAt)
         )
     }
 
@@ -35,14 +38,15 @@ export class ReplyRepository implements IReplyRepository {
      * @returns a new object with the same properties as the domainReply object.
      */
     private toPersistance(domainReply: ReplyModel) {
-        const { id, content, tweetId, ownerId, likes } = domainReply
+        const { id, content, tweetId, ownerId, likes, createdAt } = domainReply
         const likesValues = likes ? likes.map(like => like.value) : []
         return {
             _id: id.value,
             content: content.value,
             tweetId: tweetId.value,
             ownerId: ownerId.value,
-            likes: likesValues
+            likes: likesValues,
+            createdAt: createdAt.value
         }
     }
     /**
@@ -98,6 +102,16 @@ export class ReplyRepository implements IReplyRepository {
      * It returns a list of all the replys in the database
      * @returns ReplyModel[] | undefined
      */
+    async findByTweetId(tweetId: UuidVO): Promise<ReplyModel[] | undefined> {
+        //todo populate with user
+        const replys = await ReplySchema.find({ tweetId: tweetId.value }).populate({
+            path: "ownerId",
+            select: ['username', 'avatar', 'createAt']
+        })
+
+        if (replys)
+            return replys.map(reply => this.toDomain(reply))
+    }
 
     async findAll(): Promise<ReplyModel[] | undefined> {
         const replys = await ReplySchema.find();
@@ -123,5 +137,6 @@ export class ReplyRepository implements IReplyRepository {
             return this.toDomain(await reply.save()!)
         }
     }
+
 }
 

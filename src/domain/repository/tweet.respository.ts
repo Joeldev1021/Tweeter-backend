@@ -1,5 +1,5 @@
 import { ContentVO } from "@domain/value-objects/tweet/content.vo";
-import { TweetModel } from "../models/tweet.model";
+import { TweetModel, TweetWithUserModel } from "../models/tweet.model";
 import { UuidVO } from "../value-objects/uuid.vo";
 
 export interface ITweetRepository {
@@ -9,7 +9,7 @@ export interface ITweetRepository {
     * @param {UuidVO} id - UuidVO
     * @returns A {TweeModel}
     */
-    findById(id: UuidVO): Promise<TweetModel | undefined>
+    findById(id: UuidVO): Promise<TweetWithUserModel | undefined>
 
 
     /**
@@ -24,11 +24,13 @@ export interface ITweetRepository {
 
     update(id: UuidVO, content: ContentVO): Promise<TweetModel | undefined>
 
-    findAll(): Promise<TweetModel[] | undefined>
+    findById(id: UuidVO): Promise<TweetWithUserModel | undefined>
 
-    findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | null>
+    findAll(): Promise<TweetWithUserModel[] | undefined>
+
+    findByOwnerId(onwerId: UuidVO): Promise<TweetWithUserModel[] | null>
 
     like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined>
 
-    findAllReply(tweetId: UuidVO): Promise<TweetModel | undefined>
+    findAllReply(tweetId: UuidVO): Promise<TweetWithUserModel | undefined>
 }

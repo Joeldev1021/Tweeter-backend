@@ -7,7 +7,7 @@ const schema = new Schema<ITweet>({
     image: { type: String, required: false },
     ownerId: { type: String, required: true, ref: "User" },
     likes: [{ type: String, required: false, ref: "User" }],
-    reply: [{ type: String, required: false, ref: "Reply" }],
+    replys: [{ type: String, required: false, ref: "Reply" }],
     createdAt: { type: Date, required: true }
 }, {
     versionKey: false,

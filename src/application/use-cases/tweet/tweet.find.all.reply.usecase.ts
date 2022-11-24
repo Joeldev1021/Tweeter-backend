@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { TweetModel } from "../../../domain/models/tweet.model"
+import { TweetModel, TweetWithUserModel } from "../../../domain/models/tweet.model"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TweetRepository } from "../../../infrastruture/repositories/tweet.repository"
 import { TYPES } from "../../../types"
@@ -15,7 +15,7 @@ export class TweetFindAllReplyUseCase {
         this.tweetRepository = tweetRepository
     }
 
-    public async execute(tweetId: UuidVO): Promise<TweetModel | undefined> {
+    public async execute(tweetId: UuidVO): Promise<TweetWithUserModel | undefined> {
 
         const tweet = await this.tweetRepository.findAllReply(tweetId)
         if (!tweet) throw new TweetNotFoundException()
