@@ -1,3 +1,5 @@
+import { UsernameVO } from "@domain/value-objects/user/username.vo";
+import { UuidVO } from "@domain/value-objects/uuid.vo";
 import { Request } from "express";
 
 
@@ -19,3 +21,8 @@ export type JwtPayload = {
     id: string
 }
 
+export interface OwnerData {
+    id: UuidVO;
+    username: UsernameVO;
+    avatar: string;
+}

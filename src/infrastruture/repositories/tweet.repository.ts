@@ -1,13 +1,13 @@
+import { UsernameVO } from "@domain/value-objects/user/username.vo"
 import { injectable } from "inversify"
-import { TweetModel } from "../../domain/models/tweet.model"
-import { TweetUserModel } from "../../domain/models/tweet.with.reply.model"
+import { TweetModel, TweetWithUserModel } from "../../domain/models/tweet.model"
 import { ITweetRepository } from "../../domain/repository/tweet.respository"
 import { CreatedAtVO } from "../../domain/value-objects/created-at.vo"
 import { ContentVO } from "../../domain/value-objects/tweet/content.vo"
 import { UuidVO } from "../../domain/value-objects/uuid.vo"
 import { TweetSchema } from "../schemas/tweet.schema"
-import { ITweet } from "../types/schemas/tweeter-doc.interface"
-import { ITweetUser } from "../types/schemas/tweeter-doc.interface"
+import { ITweet, ITweetWithReplys, ITweetUser } from "../types/schemas/tweeter-doc.interface"
+
 
 @injectable()
 export class TweetRepository implements ITweetRepository {
@@ -17,16 +17,38 @@ export class TweetRepository implements ITweetRepository {
      * @param {ITweet} persistanceTweet - ITweet
      * @returns A TweetModel
      */
-    private toDomain(persistanceTweet: ITweet): TweetModel {
-        const { _id, content, ownerId, likes, createdAt } = persistanceTweet
+    private toDomainWithUser(persistanceTweet: ITweet | ITweetUser): TweetWithUserModel {
+        const { _id, content, likes, createdAt, ownerId, replys } = persistanceTweet as ITweetUser
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : []
+        const replysIdVO = replys ? replys.map(rp => new UuidVO(rp)) : []
+        const OwnerData = {
+            id: new UuidVO(ownerId!.id),
+            username: new UsernameVO(ownerId!.username),
+            avatar: ''
+        }
+        return new TweetWithUserModel(
+            new UuidVO(_id),
+            new ContentVO(content),
+            null,//image
+            replysIdVO,
+            likesArrayVO,
+            new CreatedAtVO(createdAt),
+            OwnerData,
+        )
+    }
+
+    private toDomain(persistanceTweet: ITweet): TweetModel {
+        const { _id, content, likes, createdAt, ownerId, replys } = persistanceTweet
+        const likesArrayVO = likes ? likes?.map((like: string) => new UuidVO(like)) : []
+        const ReplyArrayVO = replys ? replys?.map((reply: string) => new UuidVO(reply)) : []
         return new TweetModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(ownerId),
-            null,
+            null,//image
+            ReplyArrayVO,
             likesArrayVO,
-            new CreatedAtVO(createdAt)
+            new CreatedAtVO(createdAt),
         )
     }
     /**
@@ -66,10 +88,11 @@ export class TweetRepository implements ITweetRepository {
      * @returns TweetModel | undefined
      */
 
-    async findById(id: UuidVO): Promise<TweetModel | undefined> {
+    async findById(id: UuidVO): Promise<TweetWithUserModel | undefined> {
+        //todo- the tweet should get 10 first replys
         const tweetFound = await TweetSchema.findById(id.value)
         if (tweetFound)
-            return this.toDomain(tweetFound)
+            return this.toDomainWithUser(tweetFound)
     }
 
     /**
@@ -100,22 +123,30 @@ export class TweetRepository implements ITweetRepository {
      * @param {UuidVO} onwerId - UuidVO
      * @returns A list of tweets
      */
-    async findByOwnerId(onwerId: UuidVO): Promise<TweetModel[] | null> {
-        const tweets = await TweetSchema.find({ ownerId: onwerId.value }).exec()
+    async findByOwnerId(onwerId: UuidVO): Promise<TweetWithUserModel[] | null> {
+        const tweets = await TweetSchema.find({ ownerId: onwerId.value }).populate([{
+            path: "reply",
+            populate: {
+                path: "ownerId",
+                select: ["username", "avatar"]
+            }
+        }])
         if (!tweets) return null
-        return tweets.map(tweet => this.toDomain(tweet))
+        return tweets.map(tweet => this.toDomainWithUser(tweet))
     }
 
     /**
      * It returns all the tweets in the database.
      * @returns An array of TweetModel objects.
      */
-    async findAll(): Promise<TweetModel[] | undefined> {
+    async findAll(): Promise<TweetWithUserModel[] | undefined> {
         //const tweets = await TweetSchema.find().skip(1).limit(10);
-        const tweets = await TweetSchema.find()
-        console.log("test", tweets)
+        const tweets = await TweetSchema.find().populate({
+            path: "ownerId",
+            select: ['username', 'avatar', 'createAt']
+        })
         if (tweets)
-            return tweets.map(tweet => this.toDomain(tweet))
+            return tweets.map(tweet => this.toDomainWithUser(tweet))
     }
 
     /**
@@ -142,8 +173,9 @@ export class TweetRepository implements ITweetRepository {
      * @param {UuidVO} tweetId - UuidVO - This is the tweet id that we want to find the replies for.
      * @returns The tweet with the replies
      */
-    async findAllReply(tweetId: UuidVO): Promise<TweetModel | undefined> {
+    async findAllReply(tweetId: UuidVO): Promise<TweetWithUserModel | undefined> {
         //todo need test
+        /*//todo this function should delete, because we will find reply by tweet-ID */
         const tweetReplys = await TweetSchema.findById(tweetId.value).populate([{
             path: "reply",
             populate: {
@@ -152,6 +184,6 @@ export class TweetRepository implements ITweetRepository {
             }
         }])
         if (tweetReplys)
-            return this.toDomain(tweetReplys)
+            return this.toDomainWithUser(tweetReplys)
     }
 }
