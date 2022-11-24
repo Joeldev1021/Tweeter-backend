@@ -7,5 +7,6 @@ export interface IReply {
     image?: string;
     likes?: Array<string>
     replyId?: Array<string>
+    createdAt: Date
 }
 

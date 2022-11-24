@@ -69,6 +69,9 @@ describe('TEST FOR TWEET', () => {
         })
 
         it('find tweet all tweet successfuly', async () => {
+            const userRegister = generateRandomUser()
+            const { body } = await api.post('/auth/register').send(userRegister)
+            const token = body.token
             const tweet = generateTweetRandom()
             const tweet2 = generateTweetRandom()
 

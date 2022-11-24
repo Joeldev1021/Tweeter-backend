@@ -39,6 +39,4 @@ describe('test for profile user', () => {
 
     })
 
-
-
 })
