@@ -24,10 +24,9 @@ import { TweetLikeUseCase } from './application/use-cases/tweet/tweet.like.useca
 import { ReplyFindByIdUseCase } from './application/use-cases/reply/reply.find.by.id.usecase';
 import { ReplyDeleteByIdUseCase } from './application/use-cases/reply/reply.delete.usecase';
 import { ReplyFindByOwnerIdUseCase } from './application/use-cases/reply/reply.find.by.owner.usecase';
-import { TweetFindAllReplyUseCase } from './application/use-cases/tweet/tweet.find.all.reply.usecase';
 import { ReplyLikeUseCase } from './application/use-cases/reply/reply.like.usecase';
 import { ProfileFindByQueryFilterUseCase } from './application/use-cases/profile/profile.find.query.filter.usecase';
-import { ReplyFindByTweetIdUseCase } from 'application/use-cases/reply/reply.find.by.tweet.controller';
+import { ReplyFindByTweetIdUseCase } from './application/use-cases/reply/reply.find.by.tweet.usecase';
 
 const container = new Container();
 
@@ -50,7 +49,6 @@ container.bind<TweetFindByOwnerIdUseCase>(TYPES.TweetFindByOwnerIdUseCase).to(Tw
 container.bind<TweetUpdateByIdUseCase>(TYPES.TweetUpdateByIdUseCase).to(TweetUpdateByIdUseCase)
 container.bind<TweetDeleteByIdUseCase>(TYPES.TweetDeleteByIdUseCase).to(TweetDeleteByIdUseCase)
 container.bind<TweetLikeUseCase>(TYPES.TweetLikeUseCase).to(TweetLikeUseCase)
-container.bind<TweetFindAllReplyUseCase>(TYPES.TweetFindAllReplyUseCase).to(TweetFindAllReplyUseCase)
 
 /* ========== reply usecase =========== */
 container.bind<ReplyCreateUseCase>(TYPES.ReplyCreateUseCase).to(ReplyCreateUseCase)

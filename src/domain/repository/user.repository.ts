@@ -1,4 +1,4 @@
-import { UsernameVO } from "@domain/value-objects/user/username.vo";
+import { UsernameVO } from "../../domain/value-objects/user/username.vo";
 import { UserModel } from "../models/user.model";
 import { EmailVO } from "../value-objects/user/email.vo";
 import { UuidVO } from "../value-objects/uuid.vo";

@@ -1,7 +1,7 @@
-import { ApplicationException } from "../application.exception";
+import { ApplicationException } from '../application.exception';
 
 export class TweetIdAlreadyExist extends ApplicationException {
-    constructor() {
-        super("tweet with id already exists")
-    }
+  constructor() {
+    super('tweet with id already exists');
+  }
 }

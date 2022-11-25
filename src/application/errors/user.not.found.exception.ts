@@ -1,7 +1,7 @@
-import { ApplicationException } from "./application.exception";
+import { ApplicationException } from './application.exception';
 
 export class UserNotFoundException extends ApplicationException {
-    constructor() {
-        super('user not found')
-    }
+  constructor() {
+    super('user not found');
+  }
 }

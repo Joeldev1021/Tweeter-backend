@@ -1,4 +1,4 @@
-import { CreatedAtVO } from "@domain/value-objects/created-at.vo"
+import { CreatedAtVO } from "../../domain/value-objects/created-at.vo"
 import { injectable } from "inversify"
 import { ReplyModel } from "../../domain/models/reply.model"
 import { IReplyRepository } from "../../domain/repository/reply.repository"
@@ -9,7 +9,6 @@ import { IReply } from "../types/schemas/reply.interface"
 
 @injectable()
 export class ReplyRepository implements IReplyRepository {
-
 
     /**
      * It takes a reply from the database and converts it into a reply that can be used by the
@@ -57,7 +56,7 @@ export class ReplyRepository implements IReplyRepository {
      * @returns The new reply that was created.
      */
 
-    async create(reply: ReplyModel): Promise<ReplyModel | undefined> {
+    async create(reply: ReplyModel): Promise<ReplyModel | null> {
         const replyPersistance = this.toPersistance(reply)
         const newReply = new ReplySchema(replyPersistance)
         return this.toDomain(await newReply.save())
@@ -66,13 +65,13 @@ export class ReplyRepository implements IReplyRepository {
     /**
      * > It finds a reply by its id and returns it as a domain model
      * @param {UuidVO} id - UuidVO - The id of the reply we want to find.
-     * @returns  ReplyModel | undefined
+     * @returns  ReplyModel |null 
      */
 
-    async findById(id: UuidVO): Promise<ReplyModel | undefined> {
+    async findById(id: UuidVO): Promise<ReplyModel | null> {
         const replyFound = await ReplySchema.findById(id.value)
-        if (replyFound)
-            return this.toDomain(replyFound)
+        if (!replyFound) return null
+        return this.toDomain(replyFound)
     }
 
     /**
@@ -80,43 +79,42 @@ export class ReplyRepository implements IReplyRepository {
      * @param {UuidVO} id - UuidVO
      * @returns The reply that was deleted.
      */
-    async delete(id: UuidVO): Promise<ReplyModel | undefined> {
+    async delete(id: UuidVO): Promise<ReplyModel | null> {
         const replyDelete = await ReplySchema.findByIdAndDelete(id.value)
-        if (replyDelete)
-            return this.toDomain(replyDelete)
+        if (!replyDelete) return null
+        return this.toDomain(replyDelete)
     }
 
 
     /**
      * It finds all the replys that have the same ownerId as the one passed in.
      * @param {UuidVO} onwerId - UuidVO
-     * @returns ReplyModel[] | undefined
+     * @returns ReplyModel[] |null 
      */
 
-    async findByOwnerId(onwerId: UuidVO): Promise<ReplyModel[] | undefined> {
+    async findByOwnerId(onwerId: UuidVO): Promise<ReplyModel[]> {
         const replys = await ReplySchema.find({ onwerId: onwerId })
-        if (replys)
-            return replys.map(reply => this.toDomain(reply))
+        return replys.map(reply => this.toDomain(reply))
     }
     /**
      * It returns a list of all the replys in the database
-     * @returns ReplyModel[] | undefined
+     * @returns ReplyModel[] |null 
      */
-    async findByTweetId(tweetId: UuidVO): Promise<ReplyModel[] | undefined> {
+    async findByTweetId(tweetId: UuidVO): Promise<ReplyModel[] | null> {
         //todo populate with user
         const replys = await ReplySchema.find({ tweetId: tweetId.value }).populate({
             path: "ownerId",
             select: ['username', 'avatar', 'createAt']
         })
 
-        if (replys)
-            return replys.map(reply => this.toDomain(reply))
+        if (!replys) return null
+        return replys.map(reply => this.toDomain(reply))
     }
 
-    async findAll(): Promise<ReplyModel[] | undefined> {
+    async findAll(): Promise<ReplyModel[] | null> {
         const replys = await ReplySchema.find();
-        if (replys)
-            return replys.map(reply => this.toDomain(reply))
+        if (!replys) return null
+        return replys.map(reply => this.toDomain(reply))
     }
 
     /**
@@ -126,16 +124,16 @@ export class ReplyRepository implements IReplyRepository {
      * @param {UuidVO} userId - UuidVO
      * @returns A tweet model
      */
-    async like(replyId: UuidVO, userId: UuidVO): Promise<ReplyModel | undefined> {
+    async like(replyId: UuidVO, userId: UuidVO): Promise<ReplyModel | null> {
         const reply = await ReplySchema.findById(replyId.value)
-        if (reply) {
-            if (reply?.likes?.includes(userId.value)) {
-                reply.likes = reply.likes.filter(like => like !== userId.value)
-            } else {
-                reply?.likes?.push(userId.value)
-            }
-            return this.toDomain(await reply.save()!)
+        if (!reply) return null
+
+        if (reply?.likes?.includes(userId.value)) {
+            reply.likes = reply.likes.filter(like => like !== userId.value)
+        } else {
+            reply?.likes?.push(userId.value)
         }
+        return this.toDomain(await reply.save()!)
     }
 
 }

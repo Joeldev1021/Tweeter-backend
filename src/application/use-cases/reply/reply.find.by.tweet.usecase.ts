@@ -6,14 +6,14 @@ import { TYPES } from '../../../types';
 import { TweetNotFoundException } from '../../errors/tweeter/tweet.not.found.exception';
 
 @injectable()
-export class ReplyFindByIdUseCase {
+export class ReplyFindByTweetIdUseCase {
   private replyRepository: ReplyRepository;
   constructor(@inject(TYPES.ReplyRepository) replyRepository: ReplyRepository) {
     this.replyRepository = replyRepository;
   }
 
-  public async execute(id: UuidVO): Promise<ReplyModel | null> {
-    const replyFound = await this.replyRepository.findById(id);
+  public async execute(tweetId: UuidVO): Promise<ReplyModel[] | null> {
+    const replyFound = await this.replyRepository.findByTweetId(tweetId);
     if (!replyFound) throw new TweetNotFoundException();
 
     return replyFound;

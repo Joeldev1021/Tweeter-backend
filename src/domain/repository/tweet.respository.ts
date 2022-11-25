@@ -1,4 +1,4 @@
-import { ContentVO } from "@domain/value-objects/tweet/content.vo";
+import { ContentVO } from "../../domain/value-objects/tweet/content.vo";
 import { TweetModel, TweetWithUserModel } from "../models/tweet.model";
 import { UuidVO } from "../value-objects/uuid.vo";
 
@@ -9,7 +9,7 @@ export interface ITweetRepository {
     * @param {UuidVO} id - UuidVO
     * @returns A {TweeModel}
     */
-    findById(id: UuidVO): Promise<TweetWithUserModel | undefined>
+    findById(id: UuidVO): Promise<TweetWithUserModel | null>
 
 
     /**
@@ -17,20 +17,19 @@ export interface ITweetRepository {
     * @param {TweetModel}tweet -tweetModel 
     * @returns A {TweeModel}
     */
-    create(tweet: TweetModel): Promise<TweetModel | undefined>
+    create(tweet: TweetModel): Promise<TweetModel | null>
 
     /* Deleting a tweet by id. */
-    delete(id: UuidVO): Promise<TweetModel | undefined>
+    delete(id: UuidVO): Promise<TweetModel | null>
 
-    update(id: UuidVO, content: ContentVO): Promise<TweetModel | undefined>
+    update(id: UuidVO, content: ContentVO): Promise<TweetModel | null>
 
-    findById(id: UuidVO): Promise<TweetWithUserModel | undefined>
+    findById(id: UuidVO): Promise<TweetWithUserModel | null>
 
-    findAll(): Promise<TweetWithUserModel[] | undefined>
+    findAll(): Promise<TweetWithUserModel[] | null>
 
     findByOwnerId(onwerId: UuidVO): Promise<TweetWithUserModel[] | null>
 
-    like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | undefined>
+    like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | null>
 
-    findAllReply(tweetId: UuidVO): Promise<TweetWithUserModel | undefined>
 }

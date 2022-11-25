@@ -11,10 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@domain/*": ["./domain/*"]
-    }
+    "emitDecoratorMetadata": true
   }
 }

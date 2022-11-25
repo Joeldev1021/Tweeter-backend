@@ -1,4 +1,4 @@
-import { QUERY_FILTER } from '@domain/constants'
+import { QUERY_FILTER } from '../../domain/constants'
 import { validate } from 'uuid'
 import { VOFormatException } from '../errors/vo.format.exception'
 import { ValueObject } from './value-object'

@@ -1,11 +1,10 @@
-import { TweetFindAllReplyUseCase } from "../../../application/use-cases/tweet/tweet.find.all.reply.usecase"
-import { ReplyFindByTweetIdUseCase } from "application/use-cases/reply/reply.find.by.tweet.controller"
 import { NextFunction, Request, Response } from "express"
 import { controller, httpGet } from "inversify-express-utils"
 import { UuidVO } from "../../../domain/value-objects/uuid.vo"
 import { TYPES } from "../../../types"
 import { inject } from "inversify"
-import { TweetFindByIdUseCase } from "application/use-cases/tweet/tweet.find.by.id.usecase"
+import { TweetFindByIdUseCase } from "../../../application/use-cases/tweet/tweet.find.by.id.usecase"
+import { ReplyFindByTweetIdUseCase } from "../../../application/use-cases/reply/reply.find.by.tweet.usecase"
 @controller('/tweet')
 export class TweetFindAllReplyController {
     constructor(

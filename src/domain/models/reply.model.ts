@@ -1,5 +1,5 @@
-import { CreatedAtVO } from "@domain/value-objects/created-at.vo";
-import { OwnerData } from "infrastruture/types";
+import { CreatedAtVO } from "../../domain/value-objects/created-at.vo";
+import { OwnerData } from "../../infrastruture/types";
 import { ContentVO } from "../value-objects/tweet/content.vo";
 import { UuidVO } from "../value-objects/uuid.vo";
 

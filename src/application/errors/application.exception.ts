@@ -1,2 +1,1 @@
-
-export class ApplicationException extends Error { }
+export class ApplicationException extends Error {}
