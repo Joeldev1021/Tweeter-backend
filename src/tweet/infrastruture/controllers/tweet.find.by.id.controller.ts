@@ -6,14 +6,13 @@ import { TYPES } from '../../../types';
 import { TweetFindByIdUseCase } from '../../application/usecase/tweet.find.by.id.usecase';
 
 @controller('/tweet')
-export class TweetFindByIdWithReplysController {
+export class TweetFindByIdController {
     constructor(
         @inject(TYPES.TweetFindByIdUseCase)
         private TweetFindByIdUseCase: TweetFindByIdUseCase
     ) {}
     @httpGet('/:id', TYPES.AuthMiddleware)
     async execute(req: Request, res: Response, next: NextFunction) {
-        //todo => populate with replys and pagination
         const id = req.params.id;
         try {
             const tweet = await this.TweetFindByIdUseCase.execute(
