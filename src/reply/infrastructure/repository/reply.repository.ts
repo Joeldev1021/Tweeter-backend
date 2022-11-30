@@ -7,7 +7,7 @@ import { UsernameVO } from '../../../user/domain/value-objects/username.vo';
 import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
 import { ReplyModel, ReplyWithUserModel } from '../../domain/model/reply.model';
 import { IReplyRepository } from '../../domain/repository/reply.repository';
-import { IReply, IReplyUser } from '../interface/reply.interface';
+import { IReplyDoc, IReplyUser } from '../interface/reply.interface';
 import { ReplySchema } from '../schema/reply.schema';
 
 @injectable()
@@ -18,16 +18,16 @@ export class ReplyRepository implements IReplyRepository {
      * @param {IReply} persistanceReply - IReply
      * @returns A ReplyModel
      */
-    private toDomain(persistanceReply: IReply): ReplyModel {
+    private toDomain(persistanceReply: IReplyDoc): ReplyModel {
         const { _id, content, tweetId, ownerId, likes, createdAt } =
             persistanceReply;
         const arrayVO = likes ? likes.map(like => new UuidVO(like)) : [];
-        const owner = typeof ownerId == 'string' ? ownerId : '';
+
         return new ReplyModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
-            new UuidVO(owner),
+            new UuidVO(ownerId),
             arrayVO,
             [],
             //todo -> missing replys
@@ -64,7 +64,7 @@ export class ReplyRepository implements IReplyRepository {
      * to a persistance object.
      * @returns a new object with the same properties as the domainReply object.
      */
-    private toPersistance(domainReply: ReplyModel) {
+    private toPersistance(domainReply: ReplyModel): IReplyDoc {
         const { id, content, tweetId, ownerId, likes, createdAt } = domainReply;
         const likesValues = likes ? likes.map(like => like.value) : [];
         return {
@@ -131,14 +131,7 @@ export class ReplyRepository implements IReplyRepository {
         const replys = await ReplySchema.find({
             tweetId: tweetId.value,
         }).populate<{ ownerId: IUserDoc }>('ownerId');
-        /* .populate({
-            path: 'ownerId',
-            select: ['username', 'avatar'],
-            /* options: {
-                sort: 1,
-                limit: 10,
-            },
-        });*/
+
         if (!replys) return null;
         return replys.map(reply => this.toDomainWithUser(reply));
     }

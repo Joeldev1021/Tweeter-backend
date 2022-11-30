@@ -17,4 +17,4 @@ const schema = new Schema<IReplyDoc>(
     }
 );
 
-export const ReplySchema = model<IReply>('Reply', schema);
+export const ReplySchema = model<IReplyDoc>('Reply', schema);

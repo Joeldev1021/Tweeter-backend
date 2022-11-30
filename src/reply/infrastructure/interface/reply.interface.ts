@@ -5,7 +5,7 @@ export interface IReply {
     _id: string;
     content: string;
     tweetId: string;
-    ownerId: string | IUserDoc;
+    ownerId: string;
     image?: string;
     likes?: Array<string>;
     replyId?: Array<string>;
@@ -14,11 +14,6 @@ export interface IReply {
 
 export interface IReplyUser extends Omit<IReply, 'ownerId'> {
     ownerId: IUserDoc;
-    /* ownerId: {
-        id: string;
-        username: string;
-        // avatar: string;
-    }; */
 }
 
 export interface IReplyDoc extends LeanDocument<IReply> {}

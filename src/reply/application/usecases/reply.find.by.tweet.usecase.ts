@@ -16,7 +16,6 @@ export class ReplyFindByTweetIdUseCase {
 
     public async execute(tweetId: UuidVO): Promise<ReplyWithUserModel[]> {
         const replyFound = await this.replyRepository.findByTweetId(tweetId);
-        console.log(replyFound);
         if (!replyFound) throw new TweetNotFoundException();
 
         return replyFound;
