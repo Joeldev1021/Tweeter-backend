@@ -35,3 +35,6 @@ export const startApp = () => {
 
     return appServer;
 };
+
+///todo => find tweet by id should have replys and pagination
+//todo => find reply by tweet-id with owner-data

@@ -35,7 +35,8 @@ export class ReplyCreateUseCase {
                 content,
                 tweeId,
                 ownerId,
-                [],
+                [], //likes
+                [], //replys
                 new CreatedAtVO(new Date())
             )
         );

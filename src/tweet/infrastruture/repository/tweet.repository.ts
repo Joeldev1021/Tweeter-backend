@@ -10,6 +10,7 @@ import { ITweet, ITweetUser } from '../interfaces/tweet.interface';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
+import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 
 @injectable()
 export class TweetRepository implements ITweetRepository {
@@ -25,11 +26,7 @@ export class TweetRepository implements ITweetRepository {
             persistanceTweet as ITweetUser;
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : [];
         const replysIdVO = replys ? replys.map(rp => new UuidVO(rp)) : [];
-        const OwnerData = {
-            id: new UuidVO(ownerId!.id),
-            username: new UsernameVO(ownerId!.username),
-            avatar: '',
-        };
+
         return new TweetWithUserModel(
             new UuidVO(_id),
             new ContentVO(content),
@@ -37,27 +34,32 @@ export class TweetRepository implements ITweetRepository {
             replysIdVO,
             likesArrayVO,
             new CreatedAtVO(createdAt),
-            OwnerData
+            {
+                id: new UuidVO(ownerId.id),
+                username: new UsernameVO(ownerId.username),
+                avatar: ownerId.avatar,
+            }
         );
     }
 
     private toDomain(persistanceTweet: ITweet): TweetModel {
-        const { _id, content, likes, createdAt, ownerId, replys } =
-            persistanceTweet;
-        const likesArrayVO = likes
-            ? likes?.map((like: string) => new UuidVO(like))
+        /* array replys Id VO */
+        const likesArrayVO = persistanceTweet.likes
+            ? persistanceTweet.likes?.map((like: string) => new UuidVO(like))
             : [];
-        const ReplyArrayVO = replys
-            ? replys?.map((reply: string) => new UuidVO(reply))
+        /* array replys Id VO */
+        const ReplyArrayVO = persistanceTweet.replys
+            ? persistanceTweet.replys?.map((reply: string) => new UuidVO(reply))
             : [];
+
         return new TweetModel(
-            new UuidVO(_id),
-            new ContentVO(content),
-            new UuidVO(ownerId),
+            new UuidVO(persistanceTweet._id),
+            new ContentVO(persistanceTweet.content),
+            new UuidVO(persistanceTweet.ownerId),
             null, //image
             ReplyArrayVO,
             likesArrayVO,
-            new CreatedAtVO(createdAt)
+            new CreatedAtVO(persistanceTweet.createdAt)
         );
     }
     /**
@@ -97,9 +99,17 @@ export class TweetRepository implements ITweetRepository {
      * @returns TweetModel |null
      */
 
-    async findById(id: UuidVO): Promise<TweetWithUserModel | null> {
+    async findById(id: UuidVO): Promise<TweetModel | null> {
         //todo- the tweet should get 10 first replys
         const tweetFound = await TweetSchema.findById(id.value);
+        if (!tweetFound) return null;
+        return this.toDomain(tweetFound);
+    }
+
+    async findByIdWithOwner(id: UuidVO): Promise<TweetWithUserModel | null> {
+        const tweetFound = await TweetSchema.findById(id.value).populate(
+            'ownerId'
+        );
         if (!tweetFound) return null;
         return this.toDomainWithUser(tweetFound);
     }
@@ -118,7 +128,7 @@ export class TweetRepository implements ITweetRepository {
     /**
      * It updates a tweet by id.
      * @param {UuidVO} id - UuidVO - The id of the tweet to be updated
-     * @param {TweetModel} tweet - TweetModel - The tweet object that will be updated.
+     * @param {TweetModel} content - TweetModel - The tweet object that will be updated.
      * @returns The tweetUpdate is being returned.
      */
     async update(id: UuidVO, content: ContentVO): Promise<TweetModel | null> {
@@ -141,11 +151,8 @@ export class TweetRepository implements ITweetRepository {
             ownerId: onwerId.value,
         }).populate([
             {
-                path: 'reply',
-                populate: {
-                    path: 'ownerId',
-                    select: ['username', 'avatar', 'createdAt'],
-                },
+                path: 'ownerId',
+                select: ['username', 'avatar'],
             },
         ]);
         if (!tweets) return null;
@@ -160,7 +167,7 @@ export class TweetRepository implements ITweetRepository {
         //const tweets = await TweetSchema.find().skip(1).limit(10);
         const tweets = await TweetSchema.find().populate({
             path: 'ownerId',
-            select: ['username', 'avatar', 'createAt'],
+            select: ['username', 'avatar'],
         });
         if (!tweets) return null;
         return tweets.map(tweet => this.toDomainWithUser(tweet));

@@ -1,5 +1,5 @@
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ReplyModel } from '../model/reply.model';
+import { ReplyModel, ReplyWithUserModel } from '../model/reply.model';
 
 export interface IReplyRepository {
     /**
@@ -23,7 +23,7 @@ export interface IReplyRepository {
 
     findByOwnerId(onwerId: UuidVO): Promise<ReplyModel[]>;
 
-    findByTweetId(tweetId: UuidVO): Promise<ReplyModel[] | null>;
+    findByTweetId(tweetId: UuidVO): Promise<ReplyWithUserModel[] | null>;
 
     like(tweetId: UuidVO, userId: UuidVO): Promise<ReplyModel | null>;
 }

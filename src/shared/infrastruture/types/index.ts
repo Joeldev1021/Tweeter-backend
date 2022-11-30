@@ -20,8 +20,14 @@ export type JwtPayload = {
     id: string;
 };
 
-export interface OwnerData {
+export interface IOwnerDataVO {
     id: UuidVO;
     username: UsernameVO;
+    avatar: string;
+}
+
+export interface IOwnerData {
+    id: string;
+    username: string;
     avatar: string;
 }

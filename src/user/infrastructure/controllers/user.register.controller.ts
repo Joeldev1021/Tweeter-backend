@@ -9,6 +9,7 @@ import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserRegisterUseCase } from '../../application,/usecases/user.register.usecase';
+import { UnnecesayFieldsExceptions } from '../../../shared/infrastruture/errors/unnecesay.fields.exception';
 
 @controller('/auth')
 export class UserRegisterController {
@@ -22,8 +23,10 @@ export class UserRegisterController {
         res: Response,
         next: NextFunction
     ) {
-        const { id, username, email, password } = req.body;
+        const { id, username, email, password, ...rest } = req.body;
         try {
+            if (Object.keys(rest).length > 0)
+                throw new UnnecesayFieldsExceptions();
             const token = await this.userRegisterUseCase.execute(
                 new UuidVO(id),
                 new UsernameVO(username),

@@ -21,7 +21,7 @@ export class TweetDeleteByIdUseCase {
         const tweetFound = await this.tweetRepository.findById(id);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        if (ownerId.value !== tweetFound.ownerId.id.value)
+        if (ownerId.value !== tweetFound.ownerId.value)
             throw new AppplicationUnauthorizedException();
         return this.tweetRepository.delete(id);
     }

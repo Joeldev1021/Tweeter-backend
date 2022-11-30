@@ -24,7 +24,7 @@ export class TweetUpdateByIdUseCase {
         const tweetFound = await this.tweetRepository.findById(id);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        if (tweetFound.ownerId.id.value !== onwerId.value)
+        if (tweetFound.ownerId.value !== onwerId.value)
             throw new AppplicationUnauthorizedException();
 
         return this.tweetRepository.update(id, content);

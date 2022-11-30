@@ -14,10 +14,9 @@ import { JwtService } from './shared/infrastruture/services/jwt.services';
 import { UserRegisterUseCase } from './user/application,/usecases/user.register.usecase';
 import { UserLoginUseCase } from './user/application,/usecases/user.login.usecase';
 import { UserProfileUseCase } from './user/application,/usecases/user.profile.usecase';
-import { ProfileFindByQueryFilterUseCase } from './user/application,/usecases/profile.find.query.filter.usecase';
+import { ProfileFindByQueryFilterUseCase } from './user/application,/usecases/user.profile.find.query.filter.usecase';
 import { TweetCreateUseCase } from './tweet/application/usecase/tweet-create.usecase';
 import { TweetFindAllUseCase } from './tweet/application/usecase/tweet.find.all.usecase';
-import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { TweetFindByOwnerIdUseCase } from './tweet/application/usecase/tweet.find.by.id.owner.usecase';
 import { TweetUpdateByIdUseCase } from './tweet/application/usecase/tweet.update.usecase';
 import { TweetDeleteByIdUseCase } from './tweet/application/usecase/tweet.delete.usecase';
@@ -27,6 +26,7 @@ import { ReplyDeleteByIdUseCase } from './reply/application/usecases/reply.delet
 import { ReplyFindByOwnerIdUseCase } from './reply/application/usecases/reply.find.by.owner.usecase';
 import { ReplyLikeUseCase } from './reply/application/usecases/reply.like.usecase';
 import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.find.by.tweet.usecase';
+import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 
 const container = new Container();
 
