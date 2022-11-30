@@ -15,11 +15,10 @@ export class TweetFindByIdController {
     async execute(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
         try {
-            const tweetFound = await this.TweetFindByIdUseCase.execute(
+            const tweet = await this.TweetFindByIdUseCase.execute(
                 new UuidVO(id)
             );
-
-            res.status(200).send(tweetFound);
+            res.status(200).send(tweet);
         } catch (error) {
             next(error);
         }

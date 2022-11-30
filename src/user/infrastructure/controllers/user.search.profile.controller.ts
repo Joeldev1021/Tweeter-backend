@@ -1,3 +1,11 @@
+//todo => search profile
+/* 
+    const productDoc = await Product.find(
+      { name: { $regex: new RegExp(name), $options: 'is' }, isActive: true },
+      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
+    );
+
+ */
 import { NextFunction, Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
@@ -8,10 +16,11 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { QueryFilterVO } from '../../../shared/domain/value-objects/query-filter.vo';
 
 @controller('/user')
-export class ProfileFindQueryFilterController {
-    constructor() //@inject(TYPES.ProfileFindByQueryFilterUseCase)
-    //private profileFindByQueryFilterUseCase: ProfileFindByQueryFilterUseCase
-    {}
+export class userSearchProfileController {
+    constructor(
+        @inject(TYPES.ProfileFindByQueryFilterUseCase)
+        private profileFindByQueryFilterUseCase: ProfileFindByQueryFilterUseCase
+    ) {}
     @httpGet('/:id?query=query', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,

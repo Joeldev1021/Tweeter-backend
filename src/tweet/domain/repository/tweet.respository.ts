@@ -5,13 +5,6 @@ import { TweetModel, TweetWithUserModel } from '../models/tweet.model';
 export interface ITweetRepository {
     /**
      * It finds a user by id.
-     * @param {UuidVO} id - UuidVO
-     * @returns A {TweeModel}
-     */
-    findById(id: UuidVO): Promise<TweetWithUserModel | null>;
-
-    /**
-     * It finds a user by id.
      * @param {TweetModel}tweet -tweetModel
      * @returns A {TweeModel}
      */
@@ -22,7 +15,9 @@ export interface ITweetRepository {
 
     update(id: UuidVO, content: ContentVO): Promise<TweetModel | null>;
 
-    findById(id: UuidVO): Promise<TweetWithUserModel | null>;
+    findById(id: UuidVO): Promise<TweetModel | null>;
+
+    findByIdWithOwner(id: UuidVO): Promise<TweetWithUserModel | null>;
 
     findAll(): Promise<TweetWithUserModel[] | null>;
 

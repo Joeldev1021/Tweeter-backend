@@ -2,9 +2,12 @@ import { injectable } from 'inversify';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ReplyModel } from '../../domain/model/reply.model';
+import { IOwnerDataVO } from '../../../shared/infrastruture/types';
+import { UsernameVO } from '../../../user/domain/value-objects/username.vo';
+import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
+import { ReplyModel, ReplyWithUserModel } from '../../domain/model/reply.model';
 import { IReplyRepository } from '../../domain/repository/reply.repository';
-import { IReply } from '../interface/reply.interface';
+import { IReplyDoc, IReplyUser } from '../interface/reply.interface';
 import { ReplySchema } from '../schema/reply.schema';
 
 @injectable()
@@ -15,18 +18,43 @@ export class ReplyRepository implements IReplyRepository {
      * @param {IReply} persistanceReply - IReply
      * @returns A ReplyModel
      */
-    private toDomain(persistanceReply: IReply): ReplyModel {
+    private toDomain(persistanceReply: IReplyDoc): ReplyModel {
         const { _id, content, tweetId, ownerId, likes, createdAt } =
             persistanceReply;
         const arrayVO = likes ? likes.map(like => new UuidVO(like)) : [];
+
         return new ReplyModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
             arrayVO,
+            [],
             //todo -> missing replys
             new CreatedAtVO(createdAt)
+        );
+    }
+
+    private toDomainOwnerData(ownerData: IUserDoc): IOwnerDataVO {
+        return {
+            id: new UuidVO(ownerData._id),
+            username: new UsernameVO(ownerData.username),
+            avatar: '',
+        };
+    }
+
+    private toDomainWithUser(reply: IReplyUser): ReplyWithUserModel {
+        const arrayLikesVO = reply.likes?.map(like => new UuidVO(like));
+
+        const ownerData = this.toDomainOwnerData(reply.ownerId);
+
+        return new ReplyWithUserModel(
+            new UuidVO(reply._id),
+            new ContentVO(reply.content),
+            new UuidVO(reply.tweetId),
+            arrayLikesVO!,
+            ownerData,
+            new CreatedAtVO(reply.createdAt)
         );
     }
 
@@ -36,7 +64,7 @@ export class ReplyRepository implements IReplyRepository {
      * to a persistance object.
      * @returns a new object with the same properties as the domainReply object.
      */
-    private toPersistance(domainReply: ReplyModel) {
+    private toPersistance(domainReply: ReplyModel): IReplyDoc {
         const { id, content, tweetId, ownerId, likes, createdAt } = domainReply;
         const likesValues = likes ? likes.map(like => like.value) : [];
         return {
@@ -99,17 +127,13 @@ export class ReplyRepository implements IReplyRepository {
      * It returns a list of all the replys in the database
      * @returns ReplyModel[] |null
      */
-    async findByTweetId(tweetId: UuidVO): Promise<ReplyModel[] | null> {
-        //todo populate with user
+    async findByTweetId(tweetId: UuidVO): Promise<ReplyWithUserModel[] | null> {
         const replys = await ReplySchema.find({
             tweetId: tweetId.value,
-        }).populate({
-            path: 'ownerId',
-            select: ['username', 'avatar', 'createAt'],
-        });
+        }).populate<{ ownerId: IUserDoc }>('ownerId');
 
         if (!replys) return null;
-        return replys.map(reply => this.toDomain(reply));
+        return replys.map(reply => this.toDomainWithUser(reply));
     }
 
     async findAll(): Promise<ReplyModel[] | null> {

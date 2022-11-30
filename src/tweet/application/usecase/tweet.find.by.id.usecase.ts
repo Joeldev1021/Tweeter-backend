@@ -14,8 +14,8 @@ export class TweetFindByIdUseCase {
         this.tweetRepository = tweetRepository;
     }
 
-    public async execute(id: UuidVO): Promise<TweetWithUserModel | null> {
-        const tweetFound = await this.tweetRepository.findById(id);
+    public async execute(id: UuidVO): Promise<TweetWithUserModel> {
+        const tweetFound = await this.tweetRepository.findByIdWithOwner(id);
         if (!tweetFound) throw new TweetNotFoundException();
 
         return tweetFound;

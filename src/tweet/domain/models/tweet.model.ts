@@ -2,7 +2,7 @@ import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 import { ImageVO } from '../../../shared/domain/value-objects/image.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { OwnerData } from '../../../shared/infrastruture/types';
+import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 
 export class TweetModel {
     /**
@@ -32,6 +32,6 @@ export class TweetWithUserModel {
         public Reply: UuidVO[] | [],
         public likes: UuidVO[],
         public createdAt: CreatedAtVO,
-        public ownerId: OwnerData
+        public ownerId: IOwnerDataVO
     ) {}
 }

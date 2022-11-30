@@ -29,7 +29,6 @@ export class ReplyCreateController {
                 new UuidVO(tweetId),
                 new UuidVO(req.userId)
             );
-
             res.status(201).send(replyCreated);
         } catch (error) {
             next(error);
