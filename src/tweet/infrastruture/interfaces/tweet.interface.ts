@@ -7,15 +7,15 @@ export interface ITweet {
     ownerId: string;
     image?: string;
     likes?: string[];
-    replys?: string[];
+    replysId?: string[];
     createdAt: Date;
 }
 
 export interface ITweetUser extends Omit<ITweet, 'ownerId'> {
     ownerId: IUserDoc;
 }
-export interface ITweetWithReplys extends Omit<ITweetUser, 'replys'> {
-    replys: ITweetUser;
+export interface ITweetWithReplys extends Omit<ITweetUser, 'replysId'> {
+    replysId: ITweetUser;
 }
 
 export interface ITweetDoc extends LeanDocument<ITweet> {}

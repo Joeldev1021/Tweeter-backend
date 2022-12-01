@@ -8,7 +8,7 @@ const schema = new Schema<ITweetDoc>(
         image: { type: String, required: false },
         ownerId: { type: String, required: true, ref: 'User' },
         likes: [{ type: String, required: false, ref: 'User' }],
-        replys: [{ type: String, required: false, ref: 'Reply' }],
+        replysId: [{ type: String, required: false, ref: 'Reply' }],
         createdAt: { type: Date, required: true },
     },
     {

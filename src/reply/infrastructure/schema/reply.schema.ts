@@ -9,7 +9,8 @@ const schema = new Schema<IReplyDoc>(
         image: { type: String, required: false },
         ownerId: { type: String, required: true, ref: 'User' },
         likes: [{ type: String, required: false, ref: 'User' }],
-        replyId: [{ type: String, required: false, ref: 'Reply' }],
+        parentReplyId: { type: String, required: false, ref: 'Reply' },
+        replysId: [{ type: String, required: false, ref: 'Reply' }],
         createdAt: { type: Date, required: true },
     },
     {
