@@ -26,4 +26,13 @@ export interface IReplyRepository {
     findByTweetId(tweetId: UuidVO): Promise<ReplyWithUserModel[] | null>;
 
     like(tweetId: UuidVO, userId: UuidVO): Promise<ReplyModel | null>;
+
+    /**
+     * It finds a user by id.
+     * @param {UuidVO} id - UuidVO
+     * @returns A {TweeModel}
+     */
+    findByParentReplyId(
+        parentReplyId: UuidVO
+    ): Promise<ReplyWithUserModel[] | null>;
 }

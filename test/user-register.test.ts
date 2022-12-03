@@ -87,3 +87,4 @@ describe('Register test', () => {
         await api.post('/auth/register').send(userFail).expect(400);
     }); */
 });
+//todo info => npm test -- filename.test.ts | single test

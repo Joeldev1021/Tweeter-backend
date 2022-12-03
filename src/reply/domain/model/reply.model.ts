@@ -17,8 +17,9 @@ export class ReplyModel {
         public content: ContentVO,
         public tweetId: UuidVO,
         public ownerId: UuidVO,
+        public parentReply: UuidVO | null,
         public likes: UuidVO[] | [],
-        public replyId: UuidVO[] | [],
+        public replysId: UuidVO[] | [],
         public createdAt: CreatedAtVO
     ) {}
 }

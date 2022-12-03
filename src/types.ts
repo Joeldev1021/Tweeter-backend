@@ -21,6 +21,8 @@ const UseCases = {
     ReplyDeleteByIdUseCase: Symbol.for('ReplyDeleteByIdUseCase'),
     ReplyFindByOwnerIdUseCase: Symbol.for('ReplyFindByOwnerIdUseCase'),
     ReplyLikeUseCase: Symbol.for('ReplyLikeUseCase'),
+
+    ReplyCreateToReplyUseCase: Symbol.for('ReplyCreateToReplyUseCase'),
 };
 
 const Repositories = {

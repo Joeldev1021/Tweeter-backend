@@ -16,13 +16,12 @@ describe('TEST FOR REPLY', () => {
         const { body } = await api.post('/auth/register').send(userRegister);
         token = body.token;
     });
+    /* create tweet before test reply */
+    beforeEach(async () => {
+        await api.post('/tweet').set('Authorization', token).send(tweet);
+    });
 
     describe('POST create reply test', () => {
-        /* create tweet before test reply */
-        beforeEach(async () => {
-            await api.post('/tweet').set('Authorization', token).send(tweet);
-        });
-
         it('create reply successfully', async () => {
             await api
                 .post(`/reply/${tweet.id}`)
@@ -44,11 +43,6 @@ describe('TEST FOR REPLY', () => {
     });
 
     describe('DELETE reply test', () => {
-        /* create tweet before test reply */
-        beforeEach(async () => {
-            await api.post('/tweet').set('Authorization', token).send(tweet);
-        });
-
         it('DELETE reply successfully', async () => {
             await api
                 .post(`/reply/${tweet.id}`)
@@ -63,11 +57,6 @@ describe('TEST FOR REPLY', () => {
     });
 
     describe('GET reply test', () => {
-        /* create tweet before test reply */
-        beforeEach(async () => {
-            await api.post('/tweet').set('Authorization', token).send(tweet);
-        });
-
         it('find reply by ID successfully', async () => {
             await api
                 .post(`/reply/${tweet.id}`)
@@ -114,7 +103,6 @@ describe('TEST FOR REPLY', () => {
     describe('POST like reply test', () => {
         /* create tweet before test reply */
         beforeEach(async () => {
-            await api.post('/tweet').set('Authorization', token).send(tweet);
             await api
                 .post(`/reply/${tweet.id}`)
                 .set('Authorization', token)
@@ -136,6 +124,22 @@ describe('TEST FOR REPLY', () => {
                 .post(`/reply/like/${reply.id}`)
                 .set('Authorization', token)
                 .expect(200);
+        });
+    });
+
+    describe('POST - REPLY TO REPLY', () => {
+        it('create reply to reply', async () => {
+            const replyTo = generateTweetRandom();
+            await api
+                .post(`/reply/${tweet.id}`)
+                .set('Authorization', token)
+                .send(reply);
+
+            await api
+                .post(`/reply-to/${tweet.id}/${reply.id}`)
+                .set('Authorization', token)
+                .send(replyTo)
+                .expect(201);
         });
     });
 });

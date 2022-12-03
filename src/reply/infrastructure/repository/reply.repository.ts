@@ -21,20 +21,29 @@ export class ReplyRepository implements IReplyRepository {
     private toDomain(persistanceReply: IReplyDoc): ReplyModel {
         const { _id, content, tweetId, ownerId, likes, createdAt } =
             persistanceReply;
-        const arrayVO = likes ? likes.map(like => new UuidVO(like)) : [];
+        const arrayLikesVO = likes ? likes.map(like => new UuidVO(like)) : [];
 
         return new ReplyModel(
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
-            arrayVO,
+            null, //parent => reply
+            arrayLikesVO,
             [],
             //todo -> missing replys
             new CreatedAtVO(createdAt)
         );
     }
 
+    /**
+     * It takes a Mongoose document and returns a value object
+     * @param {IUserDoc} ownerData - IUserDoc - this is the data that we're going to convert.
+     * @returns An object with the following properties:
+     * - id: a UuidVO
+     * - username: a UsernameVO
+     * - avatar: a string
+     */
     private toDomainOwnerData(ownerData: IUserDoc): IOwnerDataVO {
         return {
             id: new UuidVO(ownerData._id),
@@ -42,6 +51,12 @@ export class ReplyRepository implements IReplyRepository {
             avatar: '',
         };
     }
+
+    /**
+     * It converts a reply with user data to a reply with user data
+     * @param {IReplyUser} reply - IReplyUser
+     * @returns A ReplyWithUserModel
+     */
 
     private toDomainWithUser(reply: IReplyUser): ReplyWithUserModel {
         const arrayLikesVO = reply.likes?.map(like => new UuidVO(like));
@@ -65,13 +80,25 @@ export class ReplyRepository implements IReplyRepository {
      * @returns a new object with the same properties as the domainReply object.
      */
     private toPersistance(domainReply: ReplyModel): IReplyDoc {
-        const { id, content, tweetId, ownerId, likes, createdAt } = domainReply;
+        const {
+            id,
+            content,
+            tweetId,
+            ownerId,
+            likes,
+            createdAt,
+            parentReply,
+            replysId,
+        } = domainReply;
         const likesValues = likes ? likes.map(like => like.value) : [];
+        const replys = replysId ? replysId.map(reply => reply.value) : [];
         return {
             _id: id.value,
             content: content.value,
             tweetId: tweetId.value,
             ownerId: ownerId.value,
+            parentReplyId: parentReply?.value,
+            replysId: replys,
             likes: likesValues,
             createdAt: createdAt.value,
         };
@@ -134,6 +161,24 @@ export class ReplyRepository implements IReplyRepository {
 
         if (!replys) return null;
         return replys.map(reply => this.toDomainWithUser(reply));
+    }
+
+    /**
+     * It finds all the replys that have the same parentReplyId as the one passed in, and then populates
+     * the ownerId field with the user data
+     * @param {UuidVO} parentReplyId - UuidVO
+     * @returns An array of ReplyWithUserModel objects.
+     */
+    async findByParentReplyId(
+        parentReplyId: UuidVO
+    ): Promise<ReplyWithUserModel[] | null> {
+        const replysFound = await ReplySchema.find({
+            parentReplyId: parentReplyId.value,
+        }).populate<{ ownerId: IUserDoc }>('ownerId');
+
+        if (!replysFound) return null;
+
+        return replysFound.map(reply => this.toDomainWithUser(reply));
     }
 
     async findAll(): Promise<ReplyModel[] | null> {

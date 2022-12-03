@@ -36,4 +36,4 @@ export const startApp = () => {
     return appServer;
 };
 
-//todo => find reply by tweet-id with owner-data
+//todo => find reply by parent-ReplyId with owner-data

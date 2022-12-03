@@ -10,7 +10,6 @@ import { ITweetDoc, ITweetUser } from '../interfaces/tweet.interface';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
 
 @injectable()
@@ -35,10 +34,10 @@ export class TweetRepository implements ITweetRepository {
      * @returns A TweetModel
      */
     private toDomainWithUser(persistanceTweet: ITweetUser): TweetWithUserModel {
-        const { _id, content, likes, createdAt, ownerId, replys } =
+        const { _id, content, likes, createdAt, ownerId, replysId } =
             persistanceTweet;
         const likesArrayVO = likes ? likes?.map(like => new UuidVO(like)) : [];
-        const replysIdVO = replys ? replys.map(rp => new UuidVO(rp)) : [];
+        const replysIdVO = replysId ? replysId.map(rp => new UuidVO(rp)) : [];
         const ownerData = this.todDomainOwnerData(ownerId);
 
         return new TweetWithUserModel(
@@ -59,7 +58,7 @@ export class TweetRepository implements ITweetRepository {
         );
 
         /* array replys Id VO */
-        const ReplyArrayVO = persistanceTweet.replys?.map(
+        const ReplyArrayVO = persistanceTweet.replysId?.map(
             (reply: string) => new UuidVO(reply)
         );
 
