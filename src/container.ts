@@ -28,6 +28,8 @@ import { ReplyLikeUseCase } from './reply/application/usecases/reply.like.usecas
 import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.find.by.tweet.usecase';
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyTo/reply.create.to.reply';
+import { IEventBus } from './shared/domain/events/event-bus.interface';
+import { EventBus } from './shared/infrastruture/event/event.bus';
 
 const container = new Container();
 
@@ -96,5 +98,9 @@ container
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
 container.bind<JwtService>(TYPES.JwtService).to(JwtService);
+
+/*======== event========  */
+
+container.bind<IEventBus>(TYPES.EventBus).to(EventBus);
 
 export { container };

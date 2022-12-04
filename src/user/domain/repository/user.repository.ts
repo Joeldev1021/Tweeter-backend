@@ -32,4 +32,6 @@ export interface IUserRepository {
      * @returns A UserModel ornull
      */
     findByUsername(username: UsernameVO): Promise<UserModel | null>;
+
+    update(user: UserModel): Promise<void>;
 }

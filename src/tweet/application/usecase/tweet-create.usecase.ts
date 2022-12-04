@@ -5,16 +5,17 @@ import { TYPES } from '../../../types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetIdAlreadyExist } from '../errors/tweet.id.already.exists.exception';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
+import { ITweetRepository } from '../../domain/repository/tweet.respository';
+import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
 
 @injectable()
 export class TweetCreateUseCase {
-    private tweetRepository: TweetRepository;
     constructor(
-        @inject(TYPES.TweetRepository) tweetRepository: TweetRepository
-    ) {
-        this.tweetRepository = tweetRepository;
-    }
+        @inject(TYPES.TweetRepository)
+        private tweetRepository: ITweetRepository,
+        @inject(TYPES.EventBus)
+        private _eventBus: IEventBus
+    ) {}
 
     public async execute(
         id: UuidVO,
@@ -22,17 +23,15 @@ export class TweetCreateUseCase {
         ownerId: UuidVO
     ): Promise<TweetModel | null> {
         const findTweet = await this.tweetRepository.findById(id);
+
         if (findTweet) throw new TweetIdAlreadyExist();
-        return await this.tweetRepository.create(
-            new TweetModel(
-                id,
-                content,
-                ownerId,
-                null,
-                [],
-                [],
-                new CreatedAtVO(new Date())
-            )
-        );
+
+        const tweet = TweetModel.create(id, content, ownerId);
+
+        const tweetSave = await this.tweetRepository.create(tweet);
+
+        this._eventBus.publisMany(tweet.getEvents());
+
+        return tweetSave;
     }
 }

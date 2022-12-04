@@ -16,17 +16,22 @@ export class UserModel {
         public readonly id: UuidVO,
         public username: UsernameVO,
         public email: EmailVO,
-        public password: PasswordVO //public followers: UuidVO[] | null
+        public password: PasswordVO, //public followers: UuidVO[] | null
+        public tweetIds: UuidVO[]
     ) {}
 
     static createUser(
         id: UuidVO,
         username: UsernameVO,
         email: EmailVO,
-        password: PasswordVO | null
-
+        password: PasswordVO,
+        tweetIds: UuidVO[]
         //followers: UuidVO[] | null
     ) {
-        return new UserModel(id, username, email, password!);
+        return new UserModel(id, username, email, password, []);
+    }
+
+    public addTweet(tweetId: UuidVO) {
+        this.tweetIds.push(tweetId);
     }
 }

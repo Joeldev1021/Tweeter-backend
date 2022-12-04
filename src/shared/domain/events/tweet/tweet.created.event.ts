@@ -1,0 +1,12 @@
+import { DomainEvent } from '../event';
+
+type Payload = {
+    tweetId: string;
+    ownerId: string;
+};
+
+export class TweetCreatedEvent extends DomainEvent {
+    constructor(public readonly payload: Payload) {
+        super(TweetCreatedEvent.name, payload);
+    }
+}

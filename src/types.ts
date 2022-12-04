@@ -39,11 +39,14 @@ const Services = {
     JwtService: Symbol.for('JwtService'),
 };
 
+const EventBus = Symbol.for('EventBust');
+
 const TYPES = {
     ...UseCases,
     ...Repositories,
     ...Middlewares,
     ...Services,
+    EventBus,
 };
 
 export { TYPES };

@@ -33,7 +33,7 @@ export class UserRegisterUseCase {
         if (userFoundEmail) throw new UserEmailAlreadyExistsException();
 
         const newUser = await this.userRepository.create(
-            new UserModel(id, username, email, password)
+            new UserModel(id, username, email, password, [])
         );
         if (!newUser) return null;
 

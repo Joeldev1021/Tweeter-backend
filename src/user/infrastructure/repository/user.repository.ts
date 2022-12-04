@@ -17,12 +17,13 @@ export class UserRepository implements IUserRepository {
      */
     /* TODO */
     private toDomain(persistanceUser: IUser): UserModel {
-        const { _id, username, email, password } = persistanceUser;
+        const { _id, username, email, password, tweetIds } = persistanceUser;
         return new UserModel(
             new UuidVO(_id),
             new UsernameVO(username),
             new EmailVO(email),
-            new PasswordVO(password)
+            new PasswordVO(password),
+            tweetIds ? tweetIds.map(tweetId => new UuidVO(tweetId)) : []
         );
     }
 
@@ -72,5 +73,10 @@ export class UserRepository implements IUserRepository {
         });
         if (!userFound) return null;
         return this.toDomain(userFound);
+    }
+
+    async update(user: UserModel): Promise<void> {
+        const { _id, ...rest } = this.toPersistance(user);
+        await UserSchema.findByIdAndUpdate(_id, rest);
     }
 }

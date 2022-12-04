@@ -6,6 +6,7 @@ export interface IUser {
     email: string;
     password: string;
     followersId?: string[];
+    tweetIds?: string[];
 }
 
 export interface IUserDoc extends LeanDocument<IUser> {}
