@@ -1,5 +1,6 @@
 import { generateRandomUser, generateTweetRandom } from './utils/generate.random.user'
 import { api } from './user-register.test'
+import { ITweet } from '../src/infrastruture/types/schemas/tweeter-doc.interface'
 
 describe('test for profile user', () => {
 
@@ -8,16 +9,14 @@ describe('test for profile user', () => {
 
     beforeEach(async () => {
         const userRegister = generateRandomUser()
-        await api.post('/auth/register').send(userRegister).expect(201)
-        const { email, password } = userRegister
-        const { body } = await api.post('/auth/login').send({ email, password })
+        const { body } = await api.post('/auth/register').send(userRegister).expect(201)
         token = body.token
         userName = userRegister.username
     })
 
     describe('GET profile ', () => {
 
-        let tweet
+        let tweet = generateTweetRandom()
         beforeEach(async () => {
             for (let index = 0; index < 3; index++) {
                 tweet = generateTweetRandom()
@@ -39,7 +38,5 @@ describe('test for profile user', () => {
         })
 
     })
-
-
 
 })

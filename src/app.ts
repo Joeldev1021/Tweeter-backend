@@ -1,38 +1,39 @@
-import "reflect-metadata";
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import { InversifyExpressServer } from 'inversify-express-utils'
+import 'reflect-metadata';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from './container';
 /*============== routes=========== */
-import './infrastruture/routes/index'
-import { errorMiddleware } from "./infrastruture/middlewares/error.middleware";
-import { connectDb } from "./connectDb";
+import './user/infrastructure/routers/index';
+import './tweet/infrastruture/routers/index';
+import './reply/infrastructure/routers/index';
+
 /*============== routes=========== */
-dotenv.config()
+import { errorMiddleware } from './shared/infrastruture/middlewares/error.middleware';
+import { connectDb } from './connectDb';
+dotenv.config();
 
 export const startApp = () => {
+    const app = express();
+    app.use(cors());
 
-    const app = express()
-    app.use(cors())
+    const server = new InversifyExpressServer(container);
 
-    const server = new InversifyExpressServer(container)
-
-    server.setConfig((app) => {
-        app.use(express.urlencoded({ extended: false }))
-        app.use(express.json())
+    server.setConfig(app => {
+        app.use(express.urlencoded({ extended: false }));
+        app.use(express.json());
     });
 
-    server.setErrorConfig((app) => {
+    server.setErrorConfig(app => {
         app.use(errorMiddleware);
     });
 
-    connectDb()
+    connectDb();
 
-    const appServer = server.build()
-    /*     const serverListen = appServer.listen(PORT, () => {
-            console.log(`Server running on port 🔥 ${PORT}`)
-        })
-     */
-    return appServer
-}
+    const appServer = server.build();
+
+    return appServer;
+};
+
+//todo do not implement ====> find reply by parent-ReplyId with owner-data
