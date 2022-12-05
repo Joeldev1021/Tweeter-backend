@@ -3,7 +3,7 @@ import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../../types';
-import { ReplyFindByParentReplyIdUseCase } from '../../../application/usecases/replyTo/reply.find.by.parent.reply.usecase';
+import { ReplyFindByParentReplyIdUseCase } from '../../../application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
 
 @controller('/reply-to')
 export class ReplyFindByParentReplyIdController {

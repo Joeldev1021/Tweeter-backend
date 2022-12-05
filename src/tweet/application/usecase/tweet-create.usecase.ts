@@ -30,7 +30,7 @@ export class TweetCreateUseCase {
 
         const tweetSave = await this.tweetRepository.create(tweet);
 
-        this._eventBus.publisMany(tweet.getEvents());
+        this._eventBus.publishMany(tweet.getEvents());
 
         return tweetSave;
     }

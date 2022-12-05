@@ -7,18 +7,16 @@ import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
+import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
 
 @injectable()
 export class ReplyCreateUseCase {
-    private tweetRepository: TweetRepository;
-    private replyRepository: ReplyRepository;
     constructor(
-        @inject(TYPES.TweetRepository) tweetRepository: TweetRepository,
-        @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
-    ) {
-        this.tweetRepository = tweetRepository;
-        this.replyRepository = replyRepository;
-    }
+        @inject(TYPES.ReplyRepository)
+        private _replyRepository: ReplyRepository,
+        @inject(TYPES.EventBus)
+        private _eventBust: IEventBus
+    ) {}
 
     public async execute(
         id: UuidVO,
@@ -26,20 +24,12 @@ export class ReplyCreateUseCase {
         tweeId: UuidVO,
         ownerId: UuidVO
     ): Promise<ReplyModel | null> {
-        const foundTweet = await this.tweetRepository.findById(tweeId);
-        if (!foundTweet) throw new TweetNotFoundException();
+        const reply = ReplyModel.create(id, content, tweeId, ownerId);
 
-        return this.replyRepository.create(
-            new ReplyModel(
-                id,
-                content,
-                tweeId,
-                ownerId,
-                null,
-                [], //likes
-                [], //replys
-                new CreatedAtVO(new Date())
-            )
-        );
+        return this._replyRepository.create(reply);
+
+        this._eventBust.publishMany(reply.getEvents());
+
+        return reply;
     }
 }

@@ -6,7 +6,7 @@ import { TYPES } from '../../../../types';
 import { TweetDtoType } from '../../../../shared/infrastruture/dtos/tweet.dto';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../../shared/domain/value-objects/content.vo';
-import { ReplyCreateToReplyUseCase } from '../../../application/usecases/replyTo/reply.create.to.reply';
+import { ReplyCreateToReplyUseCase } from '../../../application/usecases/replyToReply/reply.create.to.reply';
 
 @controller('/reply-to')
 export class ReplyCreateToReplyController {

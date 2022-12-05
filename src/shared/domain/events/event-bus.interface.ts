@@ -8,5 +8,5 @@ export interface IEventBus {
 
     publish(event: DomainEvent): void | Promise<void>;
 
-    publisMany(events: DomainEvent[]): void | Promise<void>;
+    publishMany(events: DomainEvent[]): void | Promise<void>;
 }

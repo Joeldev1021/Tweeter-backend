@@ -8,7 +8,6 @@ export class EventBus implements IEventBus {
     constructor() {
         this._eventEmitter = new EventEmitter2();
     }
-
     subscribe(eventName: string, handler: EventHandler): void {
         this._eventEmitter.on(eventName, handler);
     }
@@ -21,7 +20,7 @@ export class EventBus implements IEventBus {
         this._eventEmitter.emit(event.name, event);
     }
 
-    publisMany(events: DomainEvent[]): void | Promise<void> {
+    publishMany(events: DomainEvent[]): void | Promise<void> {
         events.forEach(event => {
             this._eventEmitter.emit(event.name, event);
         });

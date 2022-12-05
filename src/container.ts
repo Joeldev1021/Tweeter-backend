@@ -27,7 +27,7 @@ import { ReplyFindByOwnerIdUseCase } from './reply/application/usecases/reply.fi
 import { ReplyLikeUseCase } from './reply/application/usecases/reply.like.usecase';
 import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.find.by.tweet.usecase';
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
-import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyTo/reply.create.to.reply';
+import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyToReply/reply.create.to.reply';
 import { IEventBus } from './shared/domain/events/event-bus.interface';
 import { EventBus } from './shared/infrastruture/event/event.bus';
 

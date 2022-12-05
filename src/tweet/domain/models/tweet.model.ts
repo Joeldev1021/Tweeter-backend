@@ -48,6 +48,7 @@ export class TweetModel extends AggregateRoot {
     }
 }
 
+/* class Tweet with User Owner */
 export class TweetWithUserModel {
     constructor(
         public readonly id: UuidVO,
