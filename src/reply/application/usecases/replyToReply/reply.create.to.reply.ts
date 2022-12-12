@@ -32,7 +32,6 @@ export class ReplyCreateToReplyUseCase {
 
         const foundReply = await this.replyRepository.findById(parentReply);
         if (!foundReply) throw new TweetNotFoundException();
-
         return this.replyRepository.create(
             new ReplyModel(
                 id,

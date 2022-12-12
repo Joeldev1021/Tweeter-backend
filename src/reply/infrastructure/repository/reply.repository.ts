@@ -19,8 +19,15 @@ export class ReplyRepository implements IReplyRepository {
      * @returns A ReplyModel
      */
     private toDomain(persistanceReply: IReplyDoc): ReplyModel {
-        const { _id, content, tweetId, ownerId, likes, createdAt } =
-            persistanceReply;
+        const {
+            _id,
+            content,
+            tweetId,
+            ownerId,
+            likes,
+            createdAt,
+            parentReplyId,
+        } = persistanceReply;
         const arrayLikesVO = likes ? likes.map(like => new UuidVO(like)) : [];
 
         return new ReplyModel(
@@ -28,7 +35,7 @@ export class ReplyRepository implements IReplyRepository {
             new ContentVO(content),
             new UuidVO(tweetId),
             new UuidVO(ownerId),
-            null, //parent => reply
+            parentReplyId ? new UuidVO(parentReplyId) : null,
             arrayLikesVO,
             [],
             //todo -> missing replys
@@ -88,17 +95,17 @@ export class ReplyRepository implements IReplyRepository {
             likes,
             createdAt,
             parentReply,
-            replysId,
+            replyIds,
         } = domainReply;
         const likesValues = likes ? likes.map(like => like.value) : [];
-        const replys = replysId ? replysId.map(reply => reply.value) : [];
+        const replys = replyIds ? replyIds.map(reply => reply.value) : [];
         return {
             _id: id.value,
             content: content.value,
             tweetId: tweetId.value,
             ownerId: ownerId.value,
             parentReplyId: parentReply?.value,
-            replysId: replys,
+            replyIds: replys,
             likes: likesValues,
             createdAt: createdAt.value,
         };

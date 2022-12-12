@@ -8,7 +8,7 @@ export interface IReply {
     ownerId: string;
     image?: string;
     likes?: Array<string>;
-    replysId?: Array<string>; //replys id
+    replyIds?: Array<string>; //replys id
     parentReplyId?: string; // parent reply
     createdAt: Date;
 }

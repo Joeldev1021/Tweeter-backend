@@ -23,6 +23,9 @@ const UseCases = {
     ReplyLikeUseCase: Symbol.for('ReplyLikeUseCase'),
 
     ReplyCreateToReplyUseCase: Symbol.for('ReplyCreateToReplyUseCase'),
+    ReplyFindByParentReplyIdUseCase: Symbol.for(
+        'ReplyFindByParentReplyIdUseCase'
+    ),
 };
 
 const Repositories = {

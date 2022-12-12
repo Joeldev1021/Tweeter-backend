@@ -2,7 +2,10 @@ import { inject, injectable } from 'inversify';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { TweetNotFoundException } from '../../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../../types';
-import { ReplyModel } from '../../../domain/model/reply.model';
+import {
+    ReplyModel,
+    ReplyWithUserModel,
+} from '../../../domain/model/reply.model';
 import { ReplyRepository } from '../../../infrastructure/repository/reply.repository';
 
 @injectable()
@@ -14,10 +17,9 @@ export class ReplyFindByParentReplyIdUseCase {
         this.replyRepository = replyRepository;
     }
 
-    public async execute(id: UuidVO): Promise<ReplyModel | null> {
-        const replyFound = await this.replyRepository.findById(id);
+    public async execute(id: UuidVO): Promise<ReplyWithUserModel[] | null> {
+        const replyFound = await this.replyRepository.findByParentReplyId(id);
         if (!replyFound) throw new TweetNotFoundException();
-
         return replyFound;
     }
 }

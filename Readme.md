@@ -21,37 +21,22 @@ Directory structure based on Domain driver design
 ```tree
 .
 ├── src
-│   ├── application
-│   │   ├── errors
-│   │   └── usecases
-│   │       ├── auth
-│   │       ├── tweet
-│   │       ├── reply
-|   |       └──  user
-│   ├── domain 
-│   │   ├── contans
-│   │   ├── errors
-│   │   ├── repository
-│   │   └── value-objects
-│   └── infrastruture
-│       ├── controllers 
-│       │   ├── auth
-│       │   ├── tweet
-│       │   ├── reply
-│       │   └── user
-│       ├── dtos
-│       ├── errors
-│       ├── middlewares
-│       │   ├── error.middleware.ts
-│       │   └── auth.middleware.ts
-│       ├── repositories
-│       │   ├── user.repository.ts
-│       │   └── tweet.repository.ts
-│       ├── schemas
-│       │   ├── user.schema.ts
-│       │   └── tweet.schema.ts
-│       ├── services
-│       └── types
+│   ├── user 
+│   │   ├── application
+│   │   ├── domain
+│   │   └── infrastructure
+│   ├── tweet
+│   │   ├── application
+│   │   ├── domain
+│   │   └── infrastructure
+│   ├── reply
+│   │   ├── application
+│   │   ├── domain
+│   │   └── infrastructure
+│   └── shared
+│       ├── application
+│       ├── domain
+│       └── infrastructure
 ├── app.ts
 ├── containers.ts
 ├── index.ts
@@ -64,6 +49,7 @@ Directory structure based on Domain driver design
 To represent an User Model 
 
 ```ts
+
 export class UserModel {
 
     constructor(
@@ -72,7 +58,6 @@ export class UserModel {
         public email: EmailVO,
         public password: PasswordVO,
     ) { }
-
     
 }
 
@@ -115,8 +100,8 @@ MONGODB_HOSTNAME='localhost'
 MONGODB_PORT='27017'
 MONGODB_USER='root'
 MONGODB_PASSWORD='root'
-MONGODB_DATABASE_NAME='tweeter'
-MONGODB_URI=mongodb://root:root@localhost:27017/tweeter?authSource=admin
+MONGODB_DATABASE_NAME='name'
+MONGODB_URI=mongodb://root:root@localhost:27017/name?authSource=admin
 
 ```
 
@@ -167,4 +152,3 @@ npm run dev
 
    * User story(optional): I can search for a group
 
-#### Readme not completed 😢

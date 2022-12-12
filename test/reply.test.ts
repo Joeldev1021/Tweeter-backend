@@ -142,4 +142,25 @@ describe('TEST FOR REPLY', () => {
                 .expect(201);
         });
     });
+
+    describe('GET - FIND REPLY BY PARENT ID', () => {
+        it('Get replys by parent Id', async () => {
+            await api
+                .post(`/reply/${tweet.id}`)
+                .set('Authorization', token)
+                .send(reply);
+            for (let index = 0; index < 3; index++) {
+                const replyTo = generateTweetRandom();
+                await api
+                    .post(`/reply-to/${tweet.id}/${reply.id}`)
+                    .set('Authorization', token)
+                    .send(replyTo);
+            }
+
+            await api
+                .get(`/reply-parent/${reply.id}`)
+                .set('Authorization', token)
+                .expect(200);
+        });
+    });
 });

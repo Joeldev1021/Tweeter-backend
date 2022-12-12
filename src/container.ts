@@ -28,8 +28,7 @@ import { ReplyLikeUseCase } from './reply/application/usecases/reply.like.usecas
 import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.find.by.tweet.usecase';
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyToReply/reply.create.to.reply';
-import { IEventBus } from './shared/domain/events/event-bus.interface';
-import { EventBus } from './shared/infrastruture/event/event.bus';
+import { ReplyFindByParentReplyIdUseCase } from './reply/application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
 
 const container = new Container();
 
@@ -94,6 +93,12 @@ container
 container
     .bind<ReplyCreateToReplyUseCase>(TYPES.ReplyCreateToReplyUseCase)
     .to(ReplyCreateToReplyUseCase);
+
+container
+    .bind<ReplyFindByParentReplyIdUseCase>(
+        TYPES.ReplyFindByParentReplyIdUseCase
+    )
+    .to(ReplyFindByParentReplyIdUseCase);
 
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
