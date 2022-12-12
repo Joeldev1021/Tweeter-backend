@@ -15,7 +15,7 @@ export class ReplyCreateUseCase {
         @inject(TYPES.ReplyRepository)
         private _replyRepository: ReplyRepository,
         @inject(TYPES.EventBus)
-        private _eventBust: IEventBus
+        private _eventBus: IEventBus
     ) {}
 
     public async execute(
@@ -28,7 +28,7 @@ export class ReplyCreateUseCase {
 
         return this._replyRepository.create(reply);
 
-        this._eventBust.publishMany(reply.getEvents());
+        this._eventBus.publishMany(reply.getEvents());
 
         return reply;
     }

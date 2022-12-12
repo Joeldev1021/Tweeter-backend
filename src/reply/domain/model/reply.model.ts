@@ -54,7 +54,7 @@ export class ReplyModel extends AggregateRoot {
         return reply;
     }
     addReplyId(replyId: UuidVO) {
-        this.replysId.push(replyId);
+        this.replyIds.push(replyId);
     }
 }
 

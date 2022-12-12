@@ -29,6 +29,8 @@ import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.fi
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyToReply/reply.create.to.reply';
 import { ReplyFindByParentReplyIdUseCase } from './reply/application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
+import { IEventBus } from './shared/domain/events/event-bus.interface';
+import { EventBus } from './shared/infrastruture/event/event.bus';
 
 const container = new Container();
 

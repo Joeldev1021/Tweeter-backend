@@ -7,10 +7,7 @@ import { TweetDtoType } from '../../../../shared/infrastruture/dtos/tweet.dto';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../../shared/domain/value-objects/content.vo';
 import { ReplyCreateToReplyUseCase } from '../../../application/usecases/replyToReply/reply.create.to.reply';
-<<<<<<<< HEAD:src/reply/infrastructure/controllers/replyToReply/reply.create.to.reply.controller.ts
-========
 import { ReplyModel } from '../../../domain/model/reply.model';
->>>>>>>> feature/reply-to-reply:src/reply/infrastructure/controllers/replyToParentReply/reply.to.parent.reply.controller.ts
 
 @controller('/reply-to')
 export class ReplyCreateToReplyController {

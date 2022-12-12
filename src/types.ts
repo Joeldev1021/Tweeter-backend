@@ -42,7 +42,7 @@ const Services = {
     JwtService: Symbol.for('JwtService'),
 };
 
-const EventBus = Symbol.for('EventBust');
+const EventBus = Symbol.for('EventBus');
 
 const TYPES = {
     ...UseCases,
