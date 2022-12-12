@@ -3,20 +3,21 @@ import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../../types';
-import { ReplyFindByParentReplyIdUseCase } from '../../../application/usecases/replyTo/reply.find.by.parent.reply.usecase';
+import { ReplyFindByParentReplyIdUseCase } from '../../../application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
 
-@controller('/reply-to')
+@controller('/reply-parent')
 export class ReplyFindByParentReplyIdController {
     constructor(
-        @inject(TYPES.ReplyFindByIdUseCase)
-        private replyFindByParentReplyIdUseCase: ReplyFindByParentReplyIdUseCase
+        @inject(TYPES.ReplyFindByParentReplyIdUseCase)
+        private _replyFindByParentReplyIdUseCase: ReplyFindByParentReplyIdUseCase
     ) {}
-    @httpGet('/:parentReply', TYPES.AuthMiddleware)
+    @httpGet('/:parentReplyId', TYPES.AuthMiddleware)
     async execute(req: Request, res: Response, next: NextFunction) {
-        const parentReplyId = req.params.parentReply;
+        const parentReplyId = req.params.parentReplyId;
+        console.log('parent', parentReplyId);
         try {
             const replyFound =
-                await this.replyFindByParentReplyIdUseCase.execute(
+                await this._replyFindByParentReplyIdUseCase.execute(
                     new UuidVO(parentReplyId)
                 );
 

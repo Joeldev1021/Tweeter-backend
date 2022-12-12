@@ -88,17 +88,17 @@ export class ReplyRepository implements IReplyRepository {
             likes,
             createdAt,
             parentReply,
-            replysId,
+            replyIds,
         } = domainReply;
         const likesValues = likes ? likes.map(like => like.value) : [];
-        const replys = replysId ? replysId.map(reply => reply.value) : [];
+        const replys = replyIds ? replyIds.map(reply => reply.value) : [];
         return {
             _id: id.value,
             content: content.value,
             tweetId: tweetId.value,
             ownerId: ownerId.value,
             parentReplyId: parentReply?.value,
-            replysId: replys,
+            replyIds: replys,
             likes: likesValues,
             createdAt: createdAt.value,
         };
@@ -114,6 +114,7 @@ export class ReplyRepository implements IReplyRepository {
     async create(reply: ReplyModel): Promise<ReplyModel | null> {
         const replyPersistance = this.toPersistance(reply);
         const newReply = new ReplySchema(replyPersistance);
+
         return this.toDomain(await newReply.save());
     }
 
