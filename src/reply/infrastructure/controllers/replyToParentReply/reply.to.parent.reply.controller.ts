@@ -7,6 +7,7 @@ import { TweetDtoType } from '../../../../shared/infrastruture/dtos/tweet.dto';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../../shared/domain/value-objects/content.vo';
 import { ReplyCreateToReplyUseCase } from '../../../application/usecases/replyToReply/reply.create.to.reply';
+import { ReplyModel } from '../../../domain/model/reply.model';
 
 @controller('/reply-to')
 export class ReplyCreateToReplyController {
@@ -14,14 +15,14 @@ export class ReplyCreateToReplyController {
         @inject(TYPES.ReplyCreateToReplyUseCase)
         private replyCreateToReplyUseCase: ReplyCreateToReplyUseCase
     ) {}
-    @httpPost('/:tweetId/:replyId', TYPES.AuthMiddleware)
+    @httpPost('/:tweetId/:parentReplyId', TYPES.AuthMiddleware)
     async execute(
         req: TweetRequest<TweetDtoType>,
         res: Response,
         next: NextFunction
     ) {
         const tweetId = req.params.tweetId;
-        const replyId = req.params.replyId;
+        const parentReplyId = req.params.parentReplyId;
         const { id, content } = req.body;
         try {
             const replyCreated = await this.replyCreateToReplyUseCase.execute(
@@ -29,9 +30,8 @@ export class ReplyCreateToReplyController {
                 new ContentVO(content),
                 new UuidVO(tweetId),
                 new UuidVO(req.userId),
-                new UuidVO(replyId)
+                new UuidVO(parentReplyId)
             );
-
             res.status(201).send(replyCreated);
         } catch (error) {
             next(error);

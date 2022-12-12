@@ -20,7 +20,6 @@ export class ReplyFindByParentReplyIdUseCase {
     public async execute(id: UuidVO): Promise<ReplyWithUserModel[] | null> {
         const replyFound = await this.replyRepository.findByParentReplyId(id);
         if (!replyFound) throw new TweetNotFoundException();
-        console.log(replyFound);
         return replyFound;
     }
 }

@@ -14,7 +14,6 @@ export class ReplyFindByParentReplyIdController {
     @httpGet('/:parentReplyId', TYPES.AuthMiddleware)
     async execute(req: Request, res: Response, next: NextFunction) {
         const parentReplyId = req.params.parentReplyId;
-        console.log('parent', parentReplyId);
         try {
             const replyFound =
                 await this._replyFindByParentReplyIdUseCase.execute(
