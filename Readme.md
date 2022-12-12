@@ -152,4 +152,3 @@ npm run dev
 
    * User story(optional): I can search for a group
 
-#### Readme not completed 😢
