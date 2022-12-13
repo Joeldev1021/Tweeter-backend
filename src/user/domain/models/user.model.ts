@@ -17,7 +17,8 @@ export class UserModel {
         public username: UsernameVO,
         public email: EmailVO,
         public password: PasswordVO, //public followers: UuidVO[] | null
-        public tweetIds: UuidVO[]
+        public tweetIds: UuidVO[],
+        public followerIds: UuidVO[]
     ) {}
 
     static createUser(
@@ -25,10 +26,10 @@ export class UserModel {
         username: UsernameVO,
         email: EmailVO,
         password: PasswordVO,
-        tweetIds: UuidVO[]
-        //followers: UuidVO[] | null
+        tweetIds: UuidVO[],
+        followerIds: UuidVO[]
     ) {
-        return new UserModel(id, username, email, password, []);
+        return new UserModel(id, username, email, password, [], []);
     }
 
     public addTweet(tweetId: UuidVO) {

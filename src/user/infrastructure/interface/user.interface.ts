@@ -5,7 +5,8 @@ export interface IUser {
     username: string;
     email: string;
     password: string;
-    followersId?: string[];
+    followerIds?: string[];
+    followingIds?: string[];
     tweetIds?: string[];
 }
 

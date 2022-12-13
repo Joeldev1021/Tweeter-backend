@@ -7,7 +7,8 @@ const schema = new Schema<IUser>(
         username: { type: String, unique: true, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
-        followersId: [{ type: String, required: false }],
+        followerIds: [{ type: String, required: false }],
+        followingIds: [{ type: String, required: false }],
         tweetIds: [{ type: String, required: false }],
     },
     {

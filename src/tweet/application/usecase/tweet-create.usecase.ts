@@ -1,6 +1,5 @@
 import { inject, injectable } from 'inversify';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TweetModel } from '../../domain/models/tweet.model';

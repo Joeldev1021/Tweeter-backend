@@ -26,10 +26,10 @@ export class ReplyCreateUseCase {
     ): Promise<ReplyModel | null> {
         const reply = ReplyModel.create(id, content, tweeId, ownerId);
 
-        return this._replyRepository.create(reply);
+        const replySave = await this._replyRepository.create(reply);
 
         this._eventBus.publishMany(reply.getEvents());
 
-        return reply;
+        return replySave;
     }
 }

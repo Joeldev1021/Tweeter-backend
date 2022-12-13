@@ -2,6 +2,7 @@ const UseCases = {
     UserRegisterUseCase: Symbol.for('UserRegisterUseCase'),
     UserLoginUseCase: Symbol.for('UserLoginUseCase'),
     UserProfileUseCase: Symbol.for('UserProfileUseCase'),
+    UserFollowerUseCase: Symbol.for('UserFollowerUseCase'),
     ProfileFindByQueryFilterUseCase: Symbol.for(
         'ProfileFindByQueryFilterUseCase'
     ),

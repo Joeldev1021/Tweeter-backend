@@ -34,4 +34,6 @@ export interface IUserRepository {
     findByUsername(username: UsernameVO): Promise<UserModel | null>;
 
     update(user: UserModel): Promise<void>;
+
+    follower(userId: UuidVO, followerId: UuidVO): Promise<void>;
 }

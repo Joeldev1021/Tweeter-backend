@@ -1,8 +1,10 @@
 import { EventEmitter2 } from 'eventemitter2';
+import { injectable } from 'inversify';
 import { DomainEvent } from '../../domain/events/event';
 import { IEventBus } from '../../domain/events/event-bus.interface';
 import { EventHandler } from '../../domain/types/event';
 
+@injectable()
 export class EventBus implements IEventBus {
     private readonly _eventEmitter: EventEmitter2;
     constructor() {
