@@ -32,6 +32,7 @@ import { ReplyFindByParentReplyIdUseCase } from './reply/application/usecases/re
 import { IEventBus } from './shared/domain/events/event-bus.interface';
 import { EventBus } from './shared/infrastruture/event/event.bus';
 import { UserFollowerUseCase } from './user/application,/usecases/user.follower.usecase';
+import { UserFollowingUseCase } from './user/application,/usecases/user.following.usecase';
 
 const container = new Container();
 
@@ -52,6 +53,9 @@ container
 container
     .bind<UserFollowerUseCase>(TYPES.UserFollowerUseCase)
     .to(UserFollowerUseCase);
+container
+    .bind<UserFollowingUseCase>(TYPES.UserFollowingUseCase)
+    .to(UserFollowingUseCase);
 
 container
     .bind<ProfileFindByQueryFilterUseCase>(

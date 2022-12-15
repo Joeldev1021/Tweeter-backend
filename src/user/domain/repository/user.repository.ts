@@ -36,4 +36,6 @@ export interface IUserRepository {
     update(user: UserModel): Promise<void>;
 
     follower(userId: UuidVO, followerId: UuidVO): Promise<void>;
+
+    following(userId: UuidVO, followingId: UuidVO): Promise<void>;
 }

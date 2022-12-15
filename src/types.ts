@@ -3,6 +3,7 @@ const UseCases = {
     UserLoginUseCase: Symbol.for('UserLoginUseCase'),
     UserProfileUseCase: Symbol.for('UserProfileUseCase'),
     UserFollowerUseCase: Symbol.for('UserFollowerUseCase'),
+    UserFollowingUseCase: Symbol.for('UserFollowingUseCase'),
     ProfileFindByQueryFilterUseCase: Symbol.for(
         'ProfileFindByQueryFilterUseCase'
     ),

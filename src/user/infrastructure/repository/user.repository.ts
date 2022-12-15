@@ -17,15 +17,27 @@ export class UserRepository implements IUserRepository {
      */
     /* TODO */
     private toDomain(persistanceUser: IUser): UserModel {
-        const { _id, username, email, password, tweetIds, followerIds } =
-            persistanceUser;
+        const {
+            _id,
+            username,
+            email,
+            password,
+            tweetIds,
+            followerIds,
+            followingIds,
+        } = persistanceUser;
         return new UserModel(
             new UuidVO(_id),
             new UsernameVO(username),
             new EmailVO(email),
             new PasswordVO(password),
             tweetIds ? tweetIds.map(tweetId => new UuidVO(tweetId)) : [],
-            followerIds ? followerIds.map(follower => new UuidVO(follower)) : []
+            followerIds
+                ? followerIds.map(follower => new UuidVO(follower))
+                : [],
+            followingIds
+                ? followingIds.map(follower => new UuidVO(follower))
+                : []
         );
     }
 
@@ -81,16 +93,38 @@ export class UserRepository implements IUserRepository {
         const { _id, ...rest } = this.toPersistance(user);
         await UserSchema.findByIdAndUpdate(_id, rest);
     }
-
+    //todo i don't now is good
     async follower(userId: UuidVO, followerId: UuidVO): Promise<void> {
+        /* mis seguidores */
         const user = await UserSchema.findById(followerId.value);
         if (!user) return;
         if (user.followerIds?.includes(userId.value)) {
             user.followerIds = user.followerIds.filter(
-                follow => follow !== userId.value
+                follower => follower !== userId.value
             );
         } else {
             user.followerIds?.push(userId.value);
+        }
+    }
+
+    /**
+     * A function that allows you to follow a user.
+     * @param {UuidVO} userId - UuidVO, followingId: UuidVO
+     * @param {UuidVO} followingId - UuidVO
+     * @returns A promise of void
+     */
+    async following(userId: UuidVO, followingId: UuidVO): Promise<void> {
+        /* los que yo sigo */
+        const userFollow = await UserSchema.findById(userId.value);
+        if (!userFollow) return;
+        if (userFollow.followingIds?.includes(followingId.value)) {
+            /* remove followinId in my profile */
+            userFollow.followingIds = userFollow.followingIds.filter(
+                follow => follow !== userId.value
+            );
+        } else {
+            /* add followinId in my profile */
+            userFollow.followingIds?.push(userId.value);
         }
     }
 }
