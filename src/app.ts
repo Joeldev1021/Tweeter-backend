@@ -12,6 +12,7 @@ import './reply/infrastructure/routers/index';
 /*============== routes=========== */
 import { errorMiddleware } from './shared/infrastruture/middlewares/error.middleware';
 import { connectDb } from './connectDb';
+import { configureEventBus } from './configure.eventBus';
 dotenv.config();
 
 export const startApp = () => {
@@ -30,6 +31,8 @@ export const startApp = () => {
     });
 
     connectDb();
+
+    configureEventBus();
 
     const appServer = server.build();
 
