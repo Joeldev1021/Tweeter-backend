@@ -1,6 +1,10 @@
-import { randUuid, randEmail, randPassword, randParagraph, randFirstName } from '@ngneat/falso'
-
-
+import {
+    randUuid,
+    randEmail,
+    randPassword,
+    randParagraph,
+    randFirstName,
+} from '@ngneat/falso';
 
 export const generateRandomUser = () => ({
     id: randUuid(),
@@ -11,5 +15,5 @@ export const generateRandomUser = () => ({
 
 export const generateTweetRandom = () => ({
     id: randUuid(),
-    content: randParagraph()
-})
+    content: randParagraph(),
+});

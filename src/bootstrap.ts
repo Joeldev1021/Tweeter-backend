@@ -1,9 +1,31 @@
 import { config as dotenvConfig } from 'dotenv';
-import { startApp } from './app';
-
+import mongoose from 'mongoose';
+import { Server } from './server';
 
 dotenvConfig();
 
-const PORT = process.env.PORT || 3000
-const app = startApp();
-app.listen(PORT, () => console.log('server listening in port 🔥 ', PORT))
+export class Bootstrap {
+    server?: Server;
+
+    async start() {
+        const port = process.env.PORT || '3000';
+        this.server = new Server(port);
+        await this.connectDb();
+        await this.server.listen();
+    }
+
+    private async connectDb() {
+        if (process.env.NODE_ENV !== 'test') {
+            mongoose
+                .connect(process.env.MONGODB_URI!)
+                .then(() => console.log('Connected to Mongo'))
+                .catch(err => console.log('Failed to connect to Mongo', err));
+        }
+    }
+
+    private async configureEventBus() {
+        console.log('configuration event bus');
+    }
+}
+/// init application
+new Bootstrap().start();

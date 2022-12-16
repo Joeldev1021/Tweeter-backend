@@ -1,16 +1,17 @@
 import { connectDb, clear, closeDb } from './utils/setup-tests';
 import supertest from 'supertest';
 import { generateRandomUser } from './utils/generate.random.user';
-import { Server, IncomingMessage, ServerResponse } from 'http';
-import { startApp } from '../src/app';
+import * as http from 'http';
+import { Server as ServerApp } from '../src/server';
 import { Application } from 'express';
 
 export let api: supertest.SuperTest<supertest.Test>;
 let app: Application;
-let server: Server<typeof IncomingMessage, typeof ServerResponse>;
+let server: http.Server;
 
 beforeAll(async () => {
-    app = startApp();
+    // app = startApp();
+    app = new ServerApp().getApp();
     server = app.listen(5000, () =>
         console.log('server listenning in port 🔥 ', 5000)
     );
