@@ -1,4 +1,5 @@
 import uuid from 'uuid-random';
+
 export class DomainEvent<
     TPayload extends Record<string, any> = Record<string, any>
 > {

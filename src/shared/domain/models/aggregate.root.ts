@@ -1,12 +1,17 @@
-import { DomainEvent } from '../events/event';
+import { DomainEvent } from '../events/domain.event';
 
 export class AggregateRoot {
-    public readonly _events: DomainEvent[];
+    private _events: DomainEvent[];
 
     constructor() {
         this._events = [];
     }
 
+    pullDomainEvents(): DomainEvent[] {
+        const domainEvents = this._events.slice();
+        this._events = [];
+        return domainEvents;
+    }
     /* add domain event */
     apply(event: DomainEvent) {
         this._events.push(event);

@@ -1,6 +1,6 @@
 import { EventEmitter2 } from 'eventemitter2';
 import { injectable } from 'inversify';
-import { DomainEvent } from '../../domain/events/event';
+import { DomainEvent } from '../../domain/events/domain.event';
 import { IEventBus } from '../../domain/events/event-bus.interface';
 import { EventHandler } from '../../domain/types/event';
 
@@ -11,6 +11,8 @@ export class EventBus implements IEventBus {
         this._eventEmitter = new EventEmitter2();
     }
     subscribe(eventName: string, handler: EventHandler): void {
+        console.log(eventName);
+        console.log(handler);
         this._eventEmitter.on(eventName, handler);
     }
 

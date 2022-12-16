@@ -1,4 +1,4 @@
-import { DomainEvent } from '../event';
+import { DomainEvent } from '../domain.event';
 
 type Payload = {
     tweetId: string;

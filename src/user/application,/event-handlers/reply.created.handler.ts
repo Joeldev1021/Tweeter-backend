@@ -4,7 +4,7 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/user.repository';
 
-export class ReplyCreatedHanlder {
+export class ReplyCreatedHandler {
     constructor(
         @inject(TYPES.UserRepository)
         private _userRepository: IUserRepository

@@ -1,5 +1,5 @@
 import { EventHandler } from '../types/event';
-import { DomainEvent } from './event';
+import { DomainEvent } from './domain.event';
 
 export interface IEventBus {
     subscribe(eventName: string, handler: EventHandler): void;

@@ -33,6 +33,8 @@ import { IEventBus } from './shared/domain/events/event-bus.interface';
 import { EventBus } from './shared/infrastruture/event/event.bus';
 import { UserFollowerUseCase } from './user/application,/usecases/user.follower.usecase';
 import { UserFollowingUseCase } from './user/application,/usecases/user.following.usecase';
+import { TweetCreatedHandler } from './user/application,/event-handlers/tweet.created.handler';
+import { ReplyCreatedHandler } from './user/application,/event-handlers/reply.created.handler';
 
 const container = new Container();
 
@@ -119,5 +121,15 @@ container.bind<JwtService>(TYPES.JwtService).to(JwtService);
 /*======== event========  */
 
 container.bind<IEventBus>(TYPES.EventBus).to(EventBus);
+
+/* =========event handler ========= */
+
+container
+    .bind<TweetCreatedHandler>(TYPES.TweetCreatedHandler)
+    .to(TweetCreatedHandler);
+
+container
+    .bind<ReplyCreatedHandler>(TYPES.ReplyCreatedHandler)
+    .to(ReplyCreatedHandler);
 
 export { container };
