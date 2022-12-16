@@ -1,5 +1,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import mongoose from 'mongoose';
+import { connectionDb } from './connect.db';
+import { container } from './container';
 import { Server } from './server';
 
 dotenvConfig();
@@ -10,20 +12,17 @@ export class Bootstrap {
     async start() {
         const port = process.env.PORT || '3000';
         this.server = new Server(port);
-        await this.connectDb();
+        this.configureEventBus();
+        await this.dbConnection();
         await this.server.listen();
     }
 
-    private async connectDb() {
-        if (process.env.NODE_ENV !== 'test') {
-            mongoose
-                .connect(process.env.MONGODB_URI!)
-                .then(() => console.log('Connected to Mongo'))
-                .catch(err => console.log('Failed to connect to Mongo', err));
-        }
+    private async dbConnection() {
+        await connectionDb();
     }
 
     private async configureEventBus() {
+        const eventBus = container.get('EventBus');
         console.log('configuration event bus');
     }
 }
