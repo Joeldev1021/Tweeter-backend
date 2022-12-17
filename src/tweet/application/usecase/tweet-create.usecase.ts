@@ -28,7 +28,7 @@ export class TweetCreateUseCase {
         const tweet = TweetModel.create(id, content, ownerId);
 
         const tweetSave = await this.tweetRepository.create(tweet);
-        this._eventBus.publishMany(tweet.getEvents());
+        await this._eventBus.publish(tweet.pullDomainEvents());
 
         return tweetSave;
     }

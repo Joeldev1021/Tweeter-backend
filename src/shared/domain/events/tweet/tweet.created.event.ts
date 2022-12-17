@@ -6,6 +6,7 @@ type Payload = {
 };
 
 export class TweetCreatedEvent extends DomainEvent {
+    static readonly eventName = TweetCreatedEvent.name;
     constructor(public readonly payload: Payload) {
         super(TweetCreatedEvent.name, payload);
     }

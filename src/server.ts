@@ -12,6 +12,9 @@ import './reply/infrastructure/routers/index';
 /*============== routes=========== */
 import { errorMiddleware } from './shared/infrastruture/middlewares/error.middleware';
 import * as http from 'http';
+import { TYPES } from './types';
+import { IEventBus } from './shared/domain/events/event-bus.interface';
+import { DomainEventSubscriber } from './shared/infrastruture/event/domian.event.subscribers';
 dotenv.config();
 
 export class Server {
@@ -36,7 +39,13 @@ export class Server {
             app.use(errorMiddleware);
         });
 
+        this.configureEventBus();
         this.appBuild = this.server.build();
+    }
+
+    private async configureEventBus() {
+        const eventBus = container.get<IEventBus>(TYPES.EventBus);
+        eventBus.addSubscribers(DomainEventSubscriber.from(container));
     }
 
     async listen() {
