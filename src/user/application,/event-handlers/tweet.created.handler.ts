@@ -1,9 +1,10 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { TweetCreatedEvent } from '../../../shared/domain/events/tweet/tweet.created.event';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/user.repository';
 
+@injectable()
 export class TweetCreatedHandler {
     constructor(
         @inject(TYPES.UserRepository)

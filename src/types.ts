@@ -44,6 +44,14 @@ const Services = {
     JwtService: Symbol.for('JwtService'),
 };
 
+const event = {
+    TweetCreatedEvent: Symbol.for('TweetCreatedEvent'),
+};
+
+const eventHandler = {
+    TweetCreatedHandler: Symbol.for('TweetCreatedHandler'),
+};
+
 const EventBus = Symbol.for('EventBus');
 
 const TYPES = {
@@ -52,6 +60,8 @@ const TYPES = {
     ...Middlewares,
     ...Services,
     EventBus,
+    ...event,
+    ...eventHandler,
 };
 
 export { TYPES };

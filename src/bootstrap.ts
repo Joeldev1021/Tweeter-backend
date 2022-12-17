@@ -1,8 +1,11 @@
+import 'reflect-metadata';
 import { config as dotenvConfig } from 'dotenv';
 import mongoose from 'mongoose';
 import { connectionDb } from './connect.db';
 import { container } from './container';
 import { Server } from './server';
+import { IEventBus } from './shared/domain/events/event-bus.interface';
+import { TYPES } from './types';
 
 dotenvConfig();
 
@@ -22,8 +25,8 @@ export class Bootstrap {
     }
 
     private async configureEventBus() {
-        const eventBus = container.get('EventBus');
-        console.log('configuration event bus');
+        const eventBus = container.get<IEventBus>(TYPES.EventBus);
+        //eventBus.subscribe('TweetCreatedEvent', );
     }
 }
 /// init application
