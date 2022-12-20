@@ -16,7 +16,7 @@ export class Bootstrap {
     async start() {
         const port = process.env.PORT || '3000';
         this.server = new Server(port);
-        //        await this.configureEventBus();
+        await this.configureEventBus();
         await this.dbConnection();
         return this.server.listen();
     }
@@ -24,11 +24,10 @@ export class Bootstrap {
     private async dbConnection() {
         connectionDb();
     }
-    /*     private async configureEventBus() {
+    private async configureEventBus() {
         const eventBus = container.get<IEventBus>(TYPES.EventBus);
         eventBus.addSubscribers(DomainEventSubscriber.from(container));
     }
- */
     public getHttpServer() {
         return this.server?.getHttpServer();
     }
