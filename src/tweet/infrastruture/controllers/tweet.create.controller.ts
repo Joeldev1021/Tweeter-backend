@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import { controller, httpPost } from 'inversify-express-utils';
+import { controller, httpPost, requestBody } from 'inversify-express-utils';
 import { TweetRequest } from '../../../shared/infrastruture/types';
 import { inject } from 'inversify';
 import { TYPES } from '../../../types';
@@ -21,6 +21,7 @@ export class TweetCreateController {
         next: NextFunction
     ) {
         const { id, content } = req.body;
+
         try {
             const tweetCreated = await this.tweetCreateUseCase.execute(
                 new UuidVO(id),

@@ -1,7 +1,10 @@
 import { EventEmitter2 } from 'eventemitter2';
 import { injectable } from 'inversify';
+import { container } from '../../../container';
+import { IMyEventHandler } from '../../../evenHandler.interface';
 import { DomainEvent } from '../../domain/events/event';
 import { IEventBus } from '../../domain/events/event-bus.interface';
+import { TweetCreatedEvent } from '../../domain/events/tweet/tweet.created.event';
 import { EventHandler } from '../../domain/types/event';
 
 @injectable()

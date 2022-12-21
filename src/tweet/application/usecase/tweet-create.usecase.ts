@@ -6,7 +6,6 @@ import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetIdAlreadyExist } from '../errors/tweet.id.already.exists.exception';
 import { ITweetRepository } from '../../domain/repository/tweet.respository';
 import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
-
 @injectable()
 export class TweetCreateUseCase {
     constructor(
