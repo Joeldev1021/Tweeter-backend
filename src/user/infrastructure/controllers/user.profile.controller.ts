@@ -4,7 +4,7 @@ import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { controller, httpGet } from 'inversify-express-utils';
 import { AuthRequest } from '../../../shared/infrastruture/types';
 import { TYPES } from '../../../types';
-import { UserProfileUseCase } from '../../application,/usecases/user.profile.usecase';
+import { UserProfileUseCase } from '../../application/usecases/user.profile.usecase';
 
 @controller('/user')
 export class UserProfileController {

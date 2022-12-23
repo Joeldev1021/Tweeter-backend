@@ -44,7 +44,7 @@ export class ReplyModel extends AggregateRoot {
             new CreatedAtVO(new Date())
         );
 
-        reply.apply(
+        reply.record(
             new ReplyCreatedEvent({
                 ownerId: ownerId.value,
                 replyId: id.value,

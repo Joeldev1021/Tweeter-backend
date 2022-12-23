@@ -3,10 +3,11 @@ import { config as dotenvConfig } from 'dotenv';
 import { connectionDb } from './connect.db';
 import { container } from './container';
 import { Server } from './server';
-import { IEventBus } from './shared/domain/events/event-bus.interface';
-import { TYPES } from './types';
-import { DomainEventSubscriber } from './shared/infrastruture/event/domian.event.subscribers';
+import { EventBus } from './shared/domain/types/event-bus.interface';
+import { coreTypes, TYPES } from './types';
 import { Application } from 'express';
+import { EventHandler } from './shared/domain/types/event-handler.interface';
+import { DomainEventMapping } from './shared/infrastruture/event/domain-event-mapping';
 
 dotenvConfig();
 
@@ -25,8 +26,14 @@ export class Bootstrap {
         connectionDb();
     }
     private async configureEventBus() {
-        const eventBus = container.get<IEventBus>(TYPES.EventBus);
-        eventBus.addSubscribers(DomainEventSubscriber.from(container));
+        const eventBus = container.get<EventBus>(TYPES.EventBus);
+        const eventHandlers = container.getAll<EventHandler>(
+            coreTypes.EventHandler
+        );
+        const domainEventMapping = new DomainEventMapping(eventHandlers);
+        eventBus.setDomainEventMapping(domainEventMapping);
+        eventBus.addSubscribers(eventHandlers);
+        await eventBus.start();
     }
     public getHttpServer() {
         return this.server?.getHttpServer();

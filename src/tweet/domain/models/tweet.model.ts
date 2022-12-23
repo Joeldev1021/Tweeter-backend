@@ -38,7 +38,7 @@ export class TweetModel extends AggregateRoot {
             createdAt
         );
 
-        tweet.apply(
+        tweet.record(
             new TweetCreatedEvent({
                 tweetId: id.value,
                 ownerId: ownerId.value,

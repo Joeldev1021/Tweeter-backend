@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { TYPES } from './types';
+import { coreTypes, TYPES } from './types';
 
 import { IUserRepository } from './user/domain/repository/user.repository';
 import { AuthMiddleware } from './shared/infrastruture/middlewares/auth.middleware';
@@ -11,10 +11,10 @@ import { ReplyCreateUseCase } from './reply/application/usecases/reply.create.us
 import { IReplyRepository } from './reply/domain/repository/reply.repository';
 import { ReplyRepository } from './reply/infrastructure/repository/reply.repository';
 import { JwtService } from './shared/infrastruture/services/jwt.services';
-import { UserRegisterUseCase } from './user/application,/usecases/user.register.usecase';
-import { UserLoginUseCase } from './user/application,/usecases/user.login.usecase';
-import { UserProfileUseCase } from './user/application,/usecases/user.profile.usecase';
-import { ProfileFindByQueryFilterUseCase } from './user/application,/usecases/user.profile.find.query.filter.usecase';
+import { UserRegisterUseCase } from './user/application/usecases/user.register.usecase';
+import { UserLoginUseCase } from './user/application/usecases/user.login.usecase';
+import { UserProfileUseCase } from './user/application/usecases/user.profile.usecase';
+import { ProfileFindByQueryFilterUseCase } from './user/application/usecases/user.profile.find.query.filter.usecase';
 import { TweetCreateUseCase } from './tweet/application/usecase/tweet-create.usecase';
 import { TweetFindAllUseCase } from './tweet/application/usecase/tweet.find.all.usecase';
 import { TweetFindByOwnerIdUseCase } from './tweet/application/usecase/tweet.find.by.id.owner.usecase';
@@ -29,12 +29,11 @@ import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.fi
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyToReply/reply.create.to.reply';
 import { ReplyFindByParentReplyIdUseCase } from './reply/application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
-import { IEventBus } from './shared/domain/events/event-bus.interface';
-import { EventBus } from './shared/infrastruture/event/event.bus';
-import { UserFollowerUseCase } from './user/application,/usecases/user.follower.usecase';
-import { UserFollowingUseCase } from './user/application,/usecases/user.following.usecase';
-import { TweetCreatedHandler } from './user/application,/event-handlers/tweet.created.handler';
-import { ReplyCreatedHandler } from './user/application,/event-handlers/reply.created.handler';
+import { UserFollowerUseCase } from './user/application/usecases/user.follower.usecase';
+import { UserFollowingUseCase } from './user/application/usecases/user.following.usecase';
+import { TweetCreatedHandler } from './user/application/event-handlers/tweet.created.handler';
+import { ReplyCreatedHandler } from './user/application/event-handlers/reply.created.handler';
+import { InMemoryAsyncEventBus } from './shared/infrastruture/event/event.bus';
 
 const container = new Container();
 
@@ -120,16 +119,18 @@ container.bind<JwtService>(TYPES.JwtService).to(JwtService);
 
 /*======== event========  */
 
-container.bind<IEventBus>(TYPES.EventBus).to(EventBus);
+container.bind(TYPES.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 
 /* =========event handler ========= */
 
 container
-    .bind<TweetCreatedHandler>(TYPES.TweetCreatedHandler)
-    .to(TweetCreatedHandler);
+    .bind(coreTypes.EventHandler)
+    .to(TweetCreatedHandler)
+    .inSingletonScope();
 
 container
-    .bind<ReplyCreatedHandler>(TYPES.ReplyCreatedHandler)
-    .to(ReplyCreatedHandler);
+    .bind(coreTypes.EventHandler)
+    .to(ReplyCreatedHandler)
+    .inSingletonScope();
 
 export { container };

@@ -1,27 +1,26 @@
 import { inject, injectable } from 'inversify';
-import { DomainEventClass } from '../../../shared/domain/events/domain.event';
 import { TweetCreatedEvent } from '../../../shared/domain/events/tweet/tweet.created.event';
-import { IDomainEventSubscriber } from '../../../shared/domain/types/domain.event.subscriber';
+import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
+import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/user.repository';
 
 @injectable()
-export class TweetCreatedHandler
-    implements IDomainEventSubscriber<TweetCreatedEvent>
-{
+export class TweetCreatedHandler implements EventHandler {
     constructor(
         @inject(TYPES.UserRepository)
         private _userRepository: IUserRepository
     ) {}
 
-    subscribedTo(): DomainEventClass[] {
+    subscribedTo(): IDomainEventClass[] {
         return [TweetCreatedEvent];
     }
 
-    async on(event: TweetCreatedEvent): Promise<void> {
+    async handle(event: TweetCreatedEvent): Promise<void> {
+        console.log(TweetCreatedEvent.name);
+        console.log(event);
         const { ownerId, tweetId } = event.payload;
-        console.log('event -----------------------tweetCreated');
         const user = await this._userRepository.findById(new UuidVO(ownerId));
         if (!user) return;
 

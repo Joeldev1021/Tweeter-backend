@@ -4,7 +4,7 @@ import { inject } from 'inversify';
 import { TYPES } from '../../../types';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
-import { UserLoginUseCase } from '../../application,/usecases/user.login.usecase';
+import { UserLoginUseCase } from '../../application/usecases/user.login.usecase';
 import { UserRequest } from '../../../shared/infrastruture/types';
 import { UserLogintDtoType } from '../dtos/user-login.dto';
 

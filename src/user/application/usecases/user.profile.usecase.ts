@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { UserRepository } from '../../../user/infrastructure/repository/user.repository';
+import { UserRepository } from '../../infrastructure/repository/user.repository';
 import { TYPES } from '../../../types';
-import { UserModel } from '../../../user/domain/models/user.model';
+import { UserModel } from '../../domain/models/user.model';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { TweetRepository } from '../../../tweet/infrastruture/repository/tweet.repository';
 import { TweetWithUserModel } from '../../../tweet/domain/models/tweet.model';

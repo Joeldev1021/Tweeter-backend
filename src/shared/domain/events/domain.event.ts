@@ -1,35 +1,40 @@
 import uuid from 'uuid-random';
 
-export abstract class DomainEvent<
-    TPayload extends Record<string, any> = Record<string, any>
-> {
-    static readonly eventName: string;
-    static fromPrimitives: (params: {
-        eventId: string;
-        name: string;
-        issueAt: string;
-        attributes: DomainEventAttributes;
-    }) => DomainEvent;
-
-    public readonly eventId: string;
-    public readonly issuedAt: Date;
+export interface DomainEvent {
+    getPayloadPrimitives?(): object;
+}
+export abstract class DomainEvent {
+    static NAME: string;
+    static fromPrimitives: (...args: any[]) => any;
+    readonly aggregateId: string;
+    readonly eventId: string;
+    readonly timestamp: number;
+    readonly eventName: string;
+    readonly payload?: Record<string, any>;
 
     constructor(
-        public readonly name: string,
-        public readonly payload: TPayload
+        eventName: string,
+        aggregateId: string,
+        eventId?: string,
+        occurredOn?: number
     ) {
-        this.eventId = uuid();
-        this.issuedAt = new Date();
+        this.eventName = eventName;
+        this.aggregateId = aggregateId;
+        this.eventId = eventId || uuid();
+        this.timestamp = occurredOn || Date.now();
+    }
+
+    toPrimitives(): object {
+        return {
+            aggregateId: this.aggregateId,
+            eventName: this.eventName,
+            eventId: this.eventId,
+            timestamp: this.timestamp,
+            payload: this.getPayloadPrimitives?.call(this),
+        };
+    }
+
+    getPayload() {
+        return this.payload;
     }
 }
-
-export type DomainEventClass = {
-    eventName: string;
-    fromPrimitives(params: {
-        eventId: string;
-        issueAt: string;
-        attributes: DomainEventAttributes;
-    }): DomainEvent;
-};
-
-type DomainEventAttributes = any;

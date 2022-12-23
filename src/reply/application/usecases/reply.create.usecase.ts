@@ -7,7 +7,7 @@ import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
+import { EventBus } from '../../../shared/domain/types/event-bus.interface';
 
 @injectable()
 export class ReplyCreateUseCase {
@@ -15,7 +15,7 @@ export class ReplyCreateUseCase {
         @inject(TYPES.ReplyRepository)
         private _replyRepository: ReplyRepository,
         @inject(TYPES.EventBus)
-        private _eventBus: IEventBus
+        private _eventBus: EventBus
     ) {}
 
     public async execute(

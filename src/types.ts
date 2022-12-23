@@ -60,4 +60,9 @@ const TYPES = {
     EventBus,
 };
 
-export { TYPES };
+enum coreTypes {
+    EventBus = 'EventBus',
+    EventHandler = 'EventHandler',
+}
+
+export { TYPES, coreTypes };

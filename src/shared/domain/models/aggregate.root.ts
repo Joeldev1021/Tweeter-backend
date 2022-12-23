@@ -13,7 +13,7 @@ export class AggregateRoot {
         return domainEvents;
     }
     /* add domain event */
-    apply(event: DomainEvent) {
+    record(event: DomainEvent) {
         this._domainEvents.push(event);
     }
 

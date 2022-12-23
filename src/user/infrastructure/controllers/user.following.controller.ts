@@ -4,8 +4,8 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { controller, httpPost } from 'inversify-express-utils';
 import { AuthRequest } from '../../../shared/infrastruture/types';
 import { NextFunction, Response } from 'express';
-import { UserFollowerUseCase } from '../../application,/usecases/user.follower.usecase';
-import { UserFollowingUseCase } from '../../application,/usecases/user.following.usecase';
+import { UserFollowerUseCase } from '../../application/usecases/user.follower.usecase';
+import { UserFollowingUseCase } from '../../application/usecases/user.following.usecase';
 
 @controller('/user/')
 export class UserFollowingController {

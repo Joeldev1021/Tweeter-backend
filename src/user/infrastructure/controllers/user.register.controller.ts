@@ -8,7 +8,7 @@ import { EmailVO } from '../../domain/value-objects/email.vo';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { UserRegisterUseCase } from '../../application,/usecases/user.register.usecase';
+import { UserRegisterUseCase } from '../../application/usecases/user.register.usecase';
 import { UnnecesayFieldsExceptions } from '../../../shared/infrastruture/errors/unnecesay.fields.exception';
 
 @controller('/auth')
