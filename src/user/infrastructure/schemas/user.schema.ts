@@ -10,6 +10,7 @@ const schema = new Schema<IUser>(
         followerIds: [{ type: String, required: false }],
         followingIds: [{ type: String, required: false }],
         tweetIds: [{ type: String, required: false }],
+        replyIds: [{ type: String, required: false }],
     },
     {
         toJSON: {

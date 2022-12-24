@@ -23,6 +23,7 @@ export class UserRepository implements IUserRepository {
             email,
             password,
             tweetIds,
+            replyIds,
             followerIds,
             followingIds,
         } = persistanceUser;
@@ -32,6 +33,7 @@ export class UserRepository implements IUserRepository {
             new EmailVO(email),
             new PasswordVO(password),
             tweetIds ? tweetIds.map(tweetId => new UuidVO(tweetId)) : [],
+            replyIds ? replyIds.map(replyId => new UuidVO(replyId)) : [],
             followerIds
                 ? followerIds.map(follower => new UuidVO(follower))
                 : [],

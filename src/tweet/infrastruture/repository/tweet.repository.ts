@@ -138,17 +138,15 @@ export class TweetRepository implements ITweetRepository {
     /**
      * It updates a tweet by id.
      * @param {UuidVO} id - UuidVO - The id of the tweet to be updated
-     * @param {TweetModel} content - TweetModel - The tweet object that will be updated.
+     * @param {TweetModel} tweet - TweetModel - The tweet object that will be updated.
      * @returns The tweetUpdate is being returned.
      */
-    async update(id: UuidVO, content: ContentVO): Promise<TweetModel | null> {
-        const tweetUpdate = await TweetSchema.findOneAndUpdate(
-            { _id: id.value },
-            { content: content.value },
-            { new: true }
-        );
-        if (!tweetUpdate) return null;
-        return this.toDomain(tweetUpdate);
+    async update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | null> {
+        const tweetPersistance = this.toPersistance(tweet);
+        const { _id, ...rest } = tweetPersistance;
+
+        const tweetUpdate = TweetSchema.findByIdAndUpdate(_id, rest);
+        return this.toDomain(tweetPersistance);
     }
 
     /**

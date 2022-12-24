@@ -8,13 +8,16 @@ import { TweetCreatedEvent } from '../../../shared/domain/events/tweet/tweet.cre
 
 export class TweetModel extends AggregateRoot {
     /**
-     * The constructor function is a public function that takes in an id, tweet
-     * and sets them to the class properties
-     * @param {UuidVO} id - UuidVO
-     * @param {ContentVO} content - ContentVO
-     * @param {ownerId} ownerId - UuidVO
-     * @param {ImageVO} image - ImageVO
+     * A constructor function.
+     * @param {UuidVO} id - UuidVO - The id of the post
+     * @param {ContentVO} content - The content of the post.
+     * @param {UuidVO} ownerId - The user who created the post
+     * @param {ImageVO | null} image - ImageVO | null
+     * @param {UuidVO[]} likes - UuidVO[]
+     * @param {UuidVO[]} reply - UuidVO[]
+     * @param {CreatedAtVO} createdAt - CreatedAtVO
      */
+
     constructor(
         public readonly id: UuidVO,
         public content: ContentVO,
@@ -45,6 +48,10 @@ export class TweetModel extends AggregateRoot {
             })
         );
         return tweet;
+    }
+
+    public addReply(id: UuidVO) {
+        this.reply.push(id);
     }
 }
 

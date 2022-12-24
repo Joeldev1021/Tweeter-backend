@@ -2,9 +2,9 @@ import { DomainEventMapping } from '../../infrastruture/event/domain-event-mappi
 import { DomainEvent } from '../events/domain.event';
 import { EventHandler } from './event-handler.interface';
 
-export interface EventBus {
+export interface IEventBus {
     setDomainEventMapping(domainEventMapping: DomainEventMapping): void;
-    publish(events: Array<DomainEvent>): Promise<void>;
-    addSubscribers(subscribers: Array<EventHandler<DomainEvent>>): void;
+    publish(events: DomainEvent[]): Promise<void>;
+    addSubscribers(subscribers: EventHandler<DomainEvent>[]): void;
     start(): Promise<void>;
 }

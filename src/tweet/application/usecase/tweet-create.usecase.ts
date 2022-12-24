@@ -5,7 +5,7 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetIdAlreadyExist } from '../errors/tweet.id.already.exists.exception';
 import { ITweetRepository } from '../../domain/repository/tweet.respository';
-import { EventBus } from '../../../shared/domain/types/event-bus.interface';
+import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 
 @injectable()
 export class TweetCreateUseCase {
@@ -13,7 +13,7 @@ export class TweetCreateUseCase {
         @inject(TYPES.TweetRepository)
         private tweetRepository: ITweetRepository,
         @inject(TYPES.EventBus)
-        private _eventBus: EventBus
+        private _eventBus: IEventBus
     ) {}
 
     public async execute(

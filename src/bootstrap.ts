@@ -3,7 +3,7 @@ import { config as dotenvConfig } from 'dotenv';
 import { connectionDb } from './connect.db';
 import { container } from './container';
 import { Server } from './server';
-import { EventBus } from './shared/domain/types/event-bus.interface';
+import { IEventBus } from './shared/domain/types/event-bus.interface';
 import { coreTypes, TYPES } from './types';
 import { Application } from 'express';
 import { EventHandler } from './shared/domain/types/event-handler.interface';
@@ -26,7 +26,7 @@ export class Bootstrap {
         connectionDb();
     }
     private async configureEventBus() {
-        const eventBus = container.get<EventBus>(TYPES.EventBus);
+        const eventBus = container.get<IEventBus>(TYPES.EventBus);
         const eventHandlers = container.getAll<EventHandler>(
             coreTypes.EventHandler
         );

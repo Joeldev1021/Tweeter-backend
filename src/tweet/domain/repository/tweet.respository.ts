@@ -13,7 +13,7 @@ export interface ITweetRepository {
     /* Deleting a tweet by id. */
     delete(id: UuidVO): Promise<TweetModel | null>;
 
-    update(id: UuidVO, content: ContentVO): Promise<TweetModel | null>;
+    update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | null>;
 
     findById(id: UuidVO): Promise<TweetModel | null>;
 
