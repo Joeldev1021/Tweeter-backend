@@ -31,8 +31,11 @@ export class Bootstrap {
             coreTypes.EventHandler
         );
         const domainEventMapping = new DomainEventMapping(eventHandlers);
+
         eventBus.setDomainEventMapping(domainEventMapping);
+
         eventBus.addSubscribers(eventHandlers);
+
         await eventBus.start();
     }
     public getHttpServer() {

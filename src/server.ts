@@ -53,5 +53,3 @@ export class Server {
         return this.appBuild;
     }
 }
-
-//todo do not implement ====> find reply by parent-ReplyId with owner-data
