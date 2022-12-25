@@ -2,12 +2,12 @@ const UseCases = {
     UserRegisterUseCase: Symbol.for('UserRegisterUseCase'),
     UserLoginUseCase: Symbol.for('UserLoginUseCase'),
     UserProfileUseCase: Symbol.for('UserProfileUseCase'),
-    UserFollowerUseCase: Symbol.for('UserFollowerUseCase'),
     UserFollowingUseCase: Symbol.for('UserFollowingUseCase'),
     ProfileFindByQueryFilterUseCase: Symbol.for(
         'ProfileFindByQueryFilterUseCase'
     ),
 
+    UserUnfollowUseCase: Symbol.for('UserUnfollowUseCase'),
     TweetCreateUseCase: Symbol.for('TweetCreateUseCase'),
     TweetFindAllUseCase: Symbol.for('TweetFindAllUseCase'),
     TweetFindByIdUseCase: Symbol.for('TweetFindByIdUseCase'),
@@ -44,11 +44,13 @@ const Services = {
     JwtService: Symbol.for('JwtService'),
 };
 
-const EventHandler = {
-    TweetCreatedHandler: Symbol.for('TweetCreatedHandler'),
+/* const EventHandler = {
     ReplyCreatedHandler: Symbol.for('ReplyCreatedHandler'),
+    TweetCreatedHandler: Symbol.for('TweetCreatedHandler'),
+    UserFollowingAfterHandler: Symbol.for('UserFollowingAfterHandler'),
+    UserUnfollowHandler: Symbol.for('UserUnfollowHandler'),
 };
-
+ */
 const EventBus = Symbol.for('EventBus');
 
 const TYPES = {
@@ -56,7 +58,6 @@ const TYPES = {
     ...Repositories,
     ...Middlewares,
     ...Services,
-    ...EventHandler,
     EventBus,
 };
 

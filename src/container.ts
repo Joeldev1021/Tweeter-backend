@@ -29,11 +29,13 @@ import { ReplyFindByTweetIdUseCase } from './reply/application/usecases/reply.fi
 import { TweetFindByIdUseCase } from './tweet/application/usecase/tweet.find.by.id.usecase';
 import { ReplyCreateToReplyUseCase } from './reply/application/usecases/replyToReply/reply.create.to.reply';
 import { ReplyFindByParentReplyIdUseCase } from './reply/application/usecases/replyToReply/reply.find.by.parent.reply.usecase';
-import { UserFollowerUseCase } from './user/application/usecases/user.follower.usecase';
 import { UserFollowingUseCase } from './user/application/usecases/user.following.usecase';
 import { TweetCreatedHandler } from './user/application/event-handlers/tweet.created.handler';
 import { ReplyCreatedHandler } from './user/application/event-handlers/reply.created.handler';
 import { InMemoryAsyncEventBus } from './shared/infrastruture/event/event.bus';
+import { UserFollowingAfterHandler } from './user/application/event-handlers/user.following.after.handler';
+import { UserUnfollowedHandler } from './user/application/event-handlers/user.unfollowed.handler';
+import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
 
 const container = new Container();
 
@@ -52,8 +54,9 @@ container
     .to(UserProfileUseCase);
 
 container
-    .bind<UserFollowerUseCase>(TYPES.UserFollowerUseCase)
-    .to(UserFollowerUseCase);
+    .bind<UserUnfollowUseCase>(TYPES.UserUnfollowUseCase)
+    .to(UserUnfollowUseCase);
+
 container
     .bind<UserFollowingUseCase>(TYPES.UserFollowingUseCase)
     .to(UserFollowingUseCase);
@@ -131,6 +134,16 @@ container
 container
     .bind(coreTypes.EventHandler)
     .to(ReplyCreatedHandler)
+    .inSingletonScope();
+
+container
+    .bind(coreTypes.EventHandler)
+    .to(UserFollowingAfterHandler)
+    .inSingletonScope();
+
+container
+    .bind(coreTypes.EventHandler)
+    .to(UserUnfollowedHandler)
     .inSingletonScope();
 
 export { container };

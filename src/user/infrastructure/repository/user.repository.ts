@@ -56,21 +56,24 @@ export class UserRepository implements IUserRepository {
             username: domainUser.username.value,
             email: domainUser.email.value,
             password: domainUser.password?.value,
+            tweetIds: domainUser.tweetIds.map(id => id.value),
+            replyIds: domainUser.replyIds.map(id => id.value),
+            followerIds: domainUser.followerIds.map(id => id.value),
+            followingIds: domainUser.followingIds.map(id => id.value),
         };
     }
 
     async create(userModel: UserModel): Promise<UserModel | null> {
         const userPersistance = this.toPersistance(userModel);
         const user = new UserSchema(userPersistance);
-        const userSave = await user.save();
-        return this.toDomain(userSave);
+        return this.toDomain(await user.save());
     }
 
     async findById(id: UuidVO): Promise<UserModel | null> {
         const userFound = await UserSchema.findById(id.value);
         if (!userFound) return null;
-        const userDomain = this.toDomain(userFound);
-        return userDomain;
+
+        return this.toDomain(userFound);
     }
 
     async findByEmail(email: EmailVO): Promise<UserModel | null> {
@@ -95,18 +98,14 @@ export class UserRepository implements IUserRepository {
         const { _id, ...rest } = this.toPersistance(user);
         await UserSchema.findByIdAndUpdate(_id, rest);
     }
+
     //todo i don't now is good
-    async follower(userId: UuidVO, followerId: UuidVO): Promise<void> {
-        /* mis seguidores */
-        const user = await UserSchema.findById(followerId.value);
+    async following(userId: UuidVO, followingId: UuidVO): Promise<void> {
+        /* los que yo sigo */
+        const user = await UserSchema.findById(userId.value);
         if (!user) return;
-        if (user.followerIds?.includes(userId.value)) {
-            user.followerIds = user.followerIds.filter(
-                follower => follower !== userId.value
-            );
-        } else {
-            user.followerIds?.push(userId.value);
-        }
+        user.followingIds?.push(followingId.value);
+        await user.save();
     }
 
     /**
@@ -115,11 +114,11 @@ export class UserRepository implements IUserRepository {
      * @param {UuidVO} followingId - UuidVO
      * @returns A promise of void
      */
-    async following(userId: UuidVO, followingId: UuidVO): Promise<void> {
-        /* los que yo sigo */
+    async follower(userId: UuidVO, followerId: UuidVO): Promise<void> {
+        /* mis seguidores */
         const userFollow = await UserSchema.findById(userId.value);
         if (!userFollow) return;
-        if (userFollow.followingIds?.includes(followingId.value)) {
+        if (userFollow.followingIds?.includes(followerId.value)) {
             /* remove followinId in my profile */
             userFollow.followingIds = userFollow.followingIds.filter(
                 follow => follow !== userId.value
@@ -128,5 +127,14 @@ export class UserRepository implements IUserRepository {
             /* add followinId in my profile */
             userFollow.followingIds?.push(userId.value);
         }
+    }
+
+    async unfollow(userId: UuidVO, followingId: UuidVO): Promise<void> {
+        const user = await UserSchema.findById(userId.value);
+        if (!user) return;
+        user.followingIds = user.followingIds?.filter(
+            follow => follow !== userId.value
+        );
+        await user.save();
     }
 }

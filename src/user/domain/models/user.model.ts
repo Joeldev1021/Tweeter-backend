@@ -1,3 +1,5 @@
+import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user.follower.after.event';
+import { UserUnfollowedEvent } from '../../../shared/domain/events/user/user.unfollowed.event';
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { EmailVO } from '../value-objects/email.vo';
@@ -49,5 +51,30 @@ export class UserModel extends AggregateRoot {
 
     public addReply(replyId: UuidVO) {
         this.replyIds.push(replyId);
+    }
+    public followingUser(userId: UuidVO, followerId: UuidVO) {
+        this.record(
+            new UserFollowingAfterEvent({
+                userId: userId.value,
+                followerId: followerId.value,
+            })
+        );
+    }
+
+    public addFollower(userId: UuidVO) {
+        this.followerIds.push(userId);
+    }
+    public unfollowUser(userId: UuidVO, unfollowId: UuidVO) {
+        this.record(
+            new UserUnfollowedEvent({
+                userId: userId.value,
+                unfollowId: unfollowId.value,
+            })
+        );
+    }
+    public removeFollower(userId: UuidVO) {
+        this.followerIds = this.followerIds.filter(
+            follower => follower.value !== userId.value
+        );
     }
 }

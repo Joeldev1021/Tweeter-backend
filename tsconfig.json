@@ -1,5 +1,9 @@
 {
-    "include": ["src/**/*.ts"],
+    "include": [
+        "src/**/*.ts",
+        "src/user/application/event-handlers/user.follower.after..handlerts",
+        "src/user/application/event-handlers/user.follower.after..handlerts"
+    ],
     "compilerOptions": {
         "outDir": "dist",
         "lib": ["es2021", "DOM"],

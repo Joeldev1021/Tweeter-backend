@@ -12,7 +12,12 @@ export class UserFollowingUseCase {
         this._userRepository = userRepository;
     }
 
-    public async execute(userId: UuidVO, followerId: UuidVO): Promise<void> {
-        await this._userRepository.follower(userId, followerId);
+    public async execute(userId: UuidVO, followingId: UuidVO): Promise<void> {
+        const existUser = await this._userRepository.findById(followingId);
+        if (!existUser) throw new UserNotFoundException();
+
+        await this._userRepository.following(userId, followingId);
+
+        existUser.followingUser(userId, followingId);
     }
 }

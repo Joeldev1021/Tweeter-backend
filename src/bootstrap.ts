@@ -25,6 +25,7 @@ export class Bootstrap {
     private async dbConnection() {
         connectionDb();
     }
+
     private async configureEventBus() {
         const eventBus = container.get<IEventBus>(TYPES.EventBus);
         const eventHandlers = container.getAll<EventHandler>(
@@ -38,6 +39,7 @@ export class Bootstrap {
 
         await eventBus.start();
     }
+
     public getHttpServer() {
         return this.server?.getHttpServer();
     }

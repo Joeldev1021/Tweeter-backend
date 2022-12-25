@@ -38,4 +38,6 @@ export interface IUserRepository {
     follower(userId: UuidVO, followerId: UuidVO): Promise<void>;
 
     following(userId: UuidVO, followingId: UuidVO): Promise<void>;
+
+    unfollow(userId: UuidVO, followingId: UuidVO): Promise<void>;
 }
