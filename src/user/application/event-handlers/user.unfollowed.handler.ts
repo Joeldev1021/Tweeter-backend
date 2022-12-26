@@ -18,10 +18,10 @@ export class UserUnfollowedHandler implements EventHandler {
         return [UserUnfollowedEvent];
     }
 
-    async handle(event: UserFollowingAfterEvent): Promise<void> {
-        const { userId, followerId } = event.payload;
+    async handle(event: UserUnfollowedEvent): Promise<void> {
+        const { userId, unfollowId } = event.payload;
         const followingFound = await this._userRepository.findById(
-            new UuidVO(followerId)
+            new UuidVO(unfollowId)
         );
 
         if (!followingFound) return;

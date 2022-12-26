@@ -24,7 +24,7 @@ export class ReplyCreateUseCase {
 
         const replySave = await this._replyRepository.create(reply);
 
-        this._eventBus.publish(reply.getEvents());
+        this._eventBus.publish(reply.pullDomainEvents());
 
         return replySave;
     }

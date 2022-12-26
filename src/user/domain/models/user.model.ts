@@ -53,6 +53,7 @@ export class UserModel extends AggregateRoot {
         this.replyIds.push(replyId);
     }
     public followingUser(userId: UuidVO, followerId: UuidVO) {
+        /* create event userFollowingAfterEvent */
         this.record(
             new UserFollowingAfterEvent({
                 userId: userId.value,

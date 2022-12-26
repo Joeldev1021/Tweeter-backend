@@ -3,6 +3,7 @@ import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { InMemoryAsyncEventBus } from '../../../shared/infrastruture/event/event.bus';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/user.repository';
 

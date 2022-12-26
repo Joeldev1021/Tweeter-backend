@@ -32,12 +32,24 @@ export interface IUserRepository {
      * @returns A UserModel ornull
      */
     findByUsername(username: UsernameVO): Promise<UserModel | null>;
-
+    /**
+     * It updates the user in the database.
+     * @param {UserModel} user - UserModel - the user object to be updated
+     */
     update(user: UserModel): Promise<void>;
-
-    follower(userId: UuidVO, followerId: UuidVO): Promise<void>;
-
+    /**
+     * Add the followingId to the user's followingIds array.
+     * @param {UuidVO} userId - UuidVO
+     * @param {UuidVO} followingId - UuidVO
+     * @returns A promise of void
+     */
     following(userId: UuidVO, followingId: UuidVO): Promise<void>;
 
+    /**
+     * It finds a user by id, removes the user id from the user's followingIds array, and saves the user
+     * @param {UuidVO} userId - UuidVO - The userId of the user who is following
+     * @param {UuidVO} followingId - The userId of the user you want to unfollow.
+     * @returns A promise that resolves to void
+     */
     unfollow(userId: UuidVO, followingId: UuidVO): Promise<void>;
 }

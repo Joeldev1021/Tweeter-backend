@@ -4,11 +4,15 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserRepository } from '../../infrastructure/repository/user.repository';
 import { IUserRepository } from '../../domain/repository/user.repository';
 import { UserNotFoundException } from '../errors/user.not.found.exception';
+import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 
 @injectable()
 export class UserFollowingUseCase {
     private _userRepository: IUserRepository;
-    constructor(@inject(TYPES.UserRepository) userRepository: IUserRepository) {
+    constructor(
+        @inject(TYPES.UserRepository) private userRepository: IUserRepository,
+        @inject(TYPES.EventBus) private _eventBus: IEventBus
+    ) {
         this._userRepository = userRepository;
     }
 
@@ -19,5 +23,7 @@ export class UserFollowingUseCase {
         await this._userRepository.following(userId, followingId);
 
         existUser.followingUser(userId, followingId);
+        /* publish events */
+        this._eventBus.publish(existUser.pullDomainEvents());
     }
 }
