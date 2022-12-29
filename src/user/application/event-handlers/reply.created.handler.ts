@@ -19,7 +19,6 @@ export class ReplyCreatedHandler implements EventHandler {
         return [ReplyCreatedEvent];
     }
 
-    //name event ReplyCreateEvent
     async handle(event: ReplyCreatedEvent) {
         const { ownerId, replyId, tweetId } = event.payload;
 

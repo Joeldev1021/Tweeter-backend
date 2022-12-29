@@ -36,19 +36,29 @@ import { InMemoryAsyncEventBus } from './shared/infrastruture/event/event.bus';
 import { UserFollowingAfterHandler } from './user/application/event-handlers/user.following.after.handler';
 import { UserUnfollowedHandler } from './user/application/event-handlers/user.unfollowed.handler';
 import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
+import { BookMarkSaveUseCase } from './tweet/application/usecase/bookmark/book.mark.save.usecase';
+import { BookMarkRepository } from './tweet/infrastruture/repository/book.mark.repository';
 
 const container = new Container();
 
 /* ========== repository =========== */
 container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
+
 container.bind<ITweetRepository>(TYPES.TweetRepository).to(TweetRepository);
+
 container.bind<IReplyRepository>(TYPES.ReplyRepository).to(ReplyRepository);
+
+container
+    .bind<BookMarkRepository>(TYPES.BookMarkRepository)
+    .to(BookMarkRepository);
 
 /* ========== user usecase =========== */
 container
     .bind<UserRegisterUseCase>(TYPES.UserRegisterUseCase)
     .to(UserRegisterUseCase);
+
 container.bind<UserLoginUseCase>(TYPES.UserLoginUseCase).to(UserLoginUseCase);
+
 container
     .bind<UserProfileUseCase>(TYPES.UserProfileUseCase)
     .to(UserProfileUseCase);
@@ -66,6 +76,10 @@ container
         TYPES.ProfileFindByQueryFilterUseCase
     )
     .to(ProfileFindByQueryFilterUseCase);
+
+container
+    .bind<BookMarkSaveUseCase>(TYPES.BookMarkSaveUseCase)
+    .to(BookMarkSaveUseCase);
 
 /* ========== tweet usecase =========== */
 container

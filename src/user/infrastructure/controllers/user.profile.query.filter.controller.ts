@@ -9,8 +9,7 @@ import { QueryFilterVO } from '../../../shared/domain/value-objects/query-filter
 
 @controller('/user')
 export class ProfileFindQueryFilterController {
-    constructor() //private profileFindByQueryFilterUseCase: ProfileFindByQueryFilterUseCase //@inject(TYPES.ProfileFindByQueryFilterUseCase)
-    {}
+    constructor() {} //private profileFindByQueryFilterUseCase: ProfileFindByQueryFilterUseCase //@inject(TYPES.ProfileFindByQueryFilterUseCase)
     @httpGet('/:id?query=query', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,
@@ -21,11 +20,7 @@ export class ProfileFindQueryFilterController {
         const id = req.params.id;
         //todo -> get with id user
         try {
-            const user = await this.profileFindByQueryFilterUseCase.execute(
-                new UuidVO(id),
-                new QueryFilterVO(`${query}`)
-            );
-            res.status(200).send(user);
+            return res.send(req.query);
         } catch (error) {
             next(error);
         }
