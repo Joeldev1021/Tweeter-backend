@@ -7,6 +7,7 @@ import { IUserRepository } from '../../domain/repository/user.repository';
 import { IUser } from '../interface/user.interface';
 import { injectable } from 'inversify';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { BookMarkSchema } from '../../../tweet/infrastruture/schemas/book.mark.schema';
 
 @injectable()
 export class UserRepository implements IUserRepository {
@@ -108,5 +109,11 @@ export class UserRepository implements IUserRepository {
             follow => follow !== userId.value
         );
         await user.save();
+    }
+
+    async bookMark(userId: UuidVO, tweetId: UuidVO): Promise<void> {
+        const saveTweet = await BookMarkSchema.findOne({
+            ownerId: userId.value,
+        });
     }
 }

@@ -7,10 +7,10 @@ const schema = new Schema<IUser>(
         username: { type: String, unique: true, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
-        followerIds: [{ type: String, required: false }],
-        followingIds: [{ type: String, required: false }],
-        tweetIds: [{ type: String, required: false }],
-        replyIds: [{ type: String, required: false }],
+        followerIds: [{ type: String, required: false, ref: 'User' }],
+        followingIds: [{ type: String, required: false, ref: 'User' }],
+        tweetIds: [{ type: String, required: false, ref: 'Tweet' }],
+        replyIds: [{ type: String, required: false, ref: 'Reply' }],
     },
     {
         toJSON: {
