@@ -38,6 +38,8 @@ import { UserUnfollowedHandler } from './user/application/event-handlers/user.un
 import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
 import { BookMarkSaveUseCase } from './tweet/application/usecase/bookmark/book.mark.save.usecase';
 import { BookMarkRepository } from './tweet/infrastruture/repository/book.mark.repository';
+import { UserCreatedHandler } from './tweet/application/event-handler/user.created.handler';
+import { BookMarkRemoveUseCase } from './tweet/application/usecase/bookmark/book.mark.remove.usecase';
 
 const container = new Container();
 
@@ -76,10 +78,6 @@ container
         TYPES.ProfileFindByQueryFilterUseCase
     )
     .to(ProfileFindByQueryFilterUseCase);
-
-container
-    .bind<BookMarkSaveUseCase>(TYPES.BookMarkSaveUseCase)
-    .to(BookMarkSaveUseCase);
 
 /* ========== tweet usecase =========== */
 container
@@ -129,6 +127,13 @@ container
         TYPES.ReplyFindByParentReplyIdUseCase
     )
     .to(ReplyFindByParentReplyIdUseCase);
+/*================== bookmark usecases ================== */
+container
+    .bind<BookMarkSaveUseCase>(TYPES.BookMarkSaveUseCase)
+    .to(BookMarkSaveUseCase);
+container
+    .bind<BookMarkRemoveUseCase>(TYPES.BookMarkRemoveUseCase)
+    .to(BookMarkRemoveUseCase);
 
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
@@ -139,6 +144,10 @@ container.bind<JwtService>(TYPES.JwtService).to(JwtService);
 container.bind(TYPES.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 
 /* =========event handler ========= */
+container
+    .bind(coreTypes.EventHandler)
+    .to(UserCreatedHandler)
+    .inSingletonScope();
 
 container
     .bind(coreTypes.EventHandler)

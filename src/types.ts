@@ -7,8 +7,6 @@ const UseCases = {
         'ProfileFindByQueryFilterUseCase'
     ),
 
-    BookMarkSaveUseCase: Symbol.for('BookMarkSaveUseCase'),
-
     UserUnfollowUseCase: Symbol.for('UserUnfollowUseCase'),
     TweetCreateUseCase: Symbol.for('TweetCreateUseCase'),
     TweetFindAllUseCase: Symbol.for('TweetFindAllUseCase'),
@@ -30,6 +28,9 @@ const UseCases = {
     ReplyFindByParentReplyIdUseCase: Symbol.for(
         'ReplyFindByParentReplyIdUseCase'
     ),
+
+    BookMarkSaveUseCase: Symbol.for('BookMarkSaveUseCase'),
+    BookMarkRemoveUseCase: Symbol.for('BookMarkRemoveUseCase'),
 };
 
 const Repositories = {

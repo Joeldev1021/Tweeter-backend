@@ -7,7 +7,7 @@ import { ITweetRepository } from '../../../domain/repository/tweet.respository';
 import { TweetRepository } from '../../../infrastruture/repository/tweet.repository';
 
 @injectable()
-export class BookMarkSaveUseCase {
+export class BookMarkRemoveUseCase {
     private _tweetRepository: ITweetRepository;
     private _booMarkRepository: BookMarkRepository;
 
@@ -25,6 +25,6 @@ export class BookMarkSaveUseCase {
         const tweetFound = await this._tweetRepository.findById(userId);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        await this._booMarkRepository.save(userId, tweetId);
+        await this._booMarkRepository.remove(userId, tweetId);
     }
 }

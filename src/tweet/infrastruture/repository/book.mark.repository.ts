@@ -8,6 +8,11 @@ import { UserModel } from '../../../user/domain/models/user.model';
 
 @injectable()
 export class BookMarkRepository implements IBookMarkRepository {
+    /**
+     * It takes a BookMarkModel and returns an IBookMark
+     * @param {BookMarkModel} booKMark - BookMarkModel
+     * @returns An object IBookMarm
+     */
     toPersistance(booKMark: BookMarkModel): IBookMark {
         const { id, ownerId, tweetIds, replyIds } = booKMark;
         return {
@@ -22,7 +27,10 @@ export class BookMarkRepository implements IBookMarkRepository {
         const bookMark = await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
-        bookMark?.tweetIds?.push(tweetId.value);
+        if (!bookMark) return;
+
+        if (!bookMark.tweetIds?.includes(tweetId.value))
+            bookMark.tweetIds?.push(tweetId.value);
         await bookMark?.save();
     }
 
@@ -32,7 +40,7 @@ export class BookMarkRepository implements IBookMarkRepository {
 
     async create(bookMarkModel: BookMarkModel): Promise<void> {
         const bookMark = this.toPersistance(bookMarkModel);
-        const bookMarkCreated = await new BookMarkSchema(bookMark);
+        const bookMarkCreated = new BookMarkSchema(bookMark);
         await bookMarkCreated.save();
     }
 
@@ -40,7 +48,17 @@ export class BookMarkRepository implements IBookMarkRepository {
         return null;
     }
 
-    async remove(userId: UuidVO, tweetId: UuidVO): Promise<void> {}
+    async remove(userId: UuidVO, tweetId: UuidVO): Promise<void> {
+        const bookMark = await BookMarkSchema.findOne({
+            ownerId: userId.value,
+        });
+        if (!bookMark) return;
+
+        if (bookMark.tweetIds?.includes(tweetId.value))
+            bookMark?.tweetIds?.filter(tweet => tweet !== tweetId.value);
+
+        await bookMark?.save();
+    }
 
     async update(user: BookMarkModel): Promise<void> {}
 }
