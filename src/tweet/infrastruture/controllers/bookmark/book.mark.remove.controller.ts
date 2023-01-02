@@ -10,14 +10,15 @@ import { BookMarkRemoveUseCase } from '../../../application/usecase/bookmark/boo
 export class BookMarkRemoveController {
     constructor(
         @inject(TYPES.BookMarkSaveUseCase)
-        private _bookMarkRemoveUseCase: BookMarkRemoveUseCase
+        private readonly _bookMarkRemoveUseCase: BookMarkRemoveUseCase
     ) {}
+
     @httpPost('/remove/:id', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const userId = req.userId;
         const tweetId = req.params.id;
         try {

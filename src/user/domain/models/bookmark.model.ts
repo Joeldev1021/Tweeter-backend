@@ -11,12 +11,12 @@ export class BookMarkModel extends AggregateRoot {
         super();
     }
 
-    static createUser(
+    static createBookMark(
         id: UuidVO,
         ownerId: UuidVO,
         tweetIds: UuidVO[],
         replyIds: UuidVO[]
-    ) {
+    ): BookMarkModel {
         return new BookMarkModel(id, ownerId, tweetIds, replyIds);
     }
 }

@@ -10,14 +10,15 @@ import { BookMarkSaveUseCase } from '../../../application/usecase/bookmark/book.
 export class BookMarkSaveController {
     constructor(
         @inject(TYPES.BookMarkSaveUseCase)
-        private _bookMarkSaveUseCase: BookMarkSaveUseCase
+        private readonly _bookMarkSaveUseCase: BookMarkSaveUseCase
     ) {}
+
     @httpPost('/save/:id', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const userId = req.userId;
         const tweetId = req.params.id;
         try {

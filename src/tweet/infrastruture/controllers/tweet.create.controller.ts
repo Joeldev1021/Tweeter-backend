@@ -12,14 +12,15 @@ import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 export class TweetCreateController {
     constructor(
         @inject(TYPES.TweetCreateUseCase)
-        private tweetCreateUseCase: TweetCreateUseCase
+        private readonly tweetCreateUseCase: TweetCreateUseCase
     ) {}
+
     @httpPost('/', TYPES.AuthMiddleware)
     async execute(
         req: TweetRequest<TweetDtoType>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const { id, content } = req.body;
         try {
             const tweetCreated = await this.tweetCreateUseCase.execute(

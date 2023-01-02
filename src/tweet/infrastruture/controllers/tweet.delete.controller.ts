@@ -11,14 +11,15 @@ import { TweetDeleteByIdUseCase } from '../../application/usecase/tweet.delete.u
 export class TweetDeleteByIdController {
     constructor(
         @inject(TYPES.TweetDeleteByIdUseCase)
-        private tweetDeleteByIdUseCase: TweetDeleteByIdUseCase
+        private readonly tweetDeleteByIdUseCase: TweetDeleteByIdUseCase
     ) {}
+
     @httpDelete('/:id', TYPES.AuthMiddleware)
     async execute(
         req: TweetRequest<TweetDtoType>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const id = req.params.id;
         try {
             const tweetDelete = await this.tweetDeleteByIdUseCase.execute(

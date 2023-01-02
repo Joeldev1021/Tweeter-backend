@@ -1,10 +1,10 @@
 import { DomainEvent } from '../domain.event';
 import uuid from 'uuid-random';
 
-type IPayload = {
+interface IPayload {
     tweetId: string;
     ownerId: string;
-};
+}
 
 export class TweetCreatedEvent extends DomainEvent {
     static readonly NAME = TweetCreatedEvent.name;

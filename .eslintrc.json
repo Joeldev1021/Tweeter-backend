@@ -6,11 +6,20 @@
     "extends": ["standard-with-typescript", "eslint-config-prettier"],
     "overrides": [],
     "parserOptions": {
+        "project": "tsconfig.json",
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "rules": {
         "no-console": "warn",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "no-unused-expressions": "off",
+        "no-sequences": "off",
+        "spaced-comment": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/prefer-nullish-coalescing": "off"
     }
 }

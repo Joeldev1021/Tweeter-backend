@@ -5,11 +5,12 @@ import { TweetNotFoundException } from '../../errors/tweet.not.found.exception';
 import { BookMarkRepository } from '../../../infrastruture/repository/book.mark.repository';
 import { ITweetRepository } from '../../../domain/repository/tweet.respository';
 import { TweetRepository } from '../../../infrastruture/repository/tweet.repository';
+import { IBookMarkRepository } from '../../../domain/repository/book.mark.repository';
 
 @injectable()
 export class BookMarkSaveUseCase {
     private _tweetRepository: ITweetRepository;
-    private _booMarkRepository: BookMarkRepository;
+    private _booMarkRepository: IBookMarkRepository;
 
     constructor(
         @inject(TYPES.UserRepository)
