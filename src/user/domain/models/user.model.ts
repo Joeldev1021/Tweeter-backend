@@ -1,3 +1,4 @@
+import { UserCreatedEvent } from '../../../shared/domain/events/user/user.created.event';
 import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user.follower.after.event';
 import { UserUnfollowedEvent } from '../../../shared/domain/events/user/user.unfollowed.event';
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
@@ -41,8 +42,19 @@ export class UserModel extends AggregateRoot {
         tweetIds: UuidVO[],
         followerIds: UuidVO[],
         followingIds: UuidVO[]
-    ) {
-        return new UserModel(id, username, email, password, [], [], [], []);
+    ): UserModel {
+        const userModel = new UserModel(
+            id,
+            username,
+            email,
+            password,
+            [],
+            [],
+            [],
+            []
+        );
+        userModel.record(new UserCreatedEvent({ userId: id.value }));
+        return userModel;
     }
 
     public addTweet(tweetId: UuidVO) {
@@ -73,6 +85,7 @@ export class UserModel extends AggregateRoot {
             })
         );
     }
+
     public removeFollower(userId: UuidVO) {
         this.followerIds = this.followerIds.filter(
             follower => follower.value !== userId.value

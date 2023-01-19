@@ -28,12 +28,16 @@ const UseCases = {
     ReplyFindByParentReplyIdUseCase: Symbol.for(
         'ReplyFindByParentReplyIdUseCase'
     ),
+
+    BookMarkSaveUseCase: Symbol.for('BookMarkSaveUseCase'),
+    BookMarkRemoveUseCase: Symbol.for('BookMarkRemoveUseCase'),
 };
 
 const Repositories = {
     UserRepository: Symbol.for('UserRepository'),
     TweetRepository: Symbol.for('TweetRepository'),
     ReplyRepository: Symbol.for('ReplyRepository'),
+    BookMarkRepository: Symbol.for('BookMarkRepository'),
 };
 
 const Middlewares = {

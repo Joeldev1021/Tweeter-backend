@@ -8,7 +8,7 @@ import { UserFollowingUseCase } from '../../application/usecases/user.following.
 
 @controller('/user/')
 export class UserFollowingController {
-    private _userFollowingUseCase: UserFollowingUseCase;
+    private readonly _userFollowingUseCase: UserFollowingUseCase;
     constructor(
         @inject(TYPES.UserFollowingUseCase)
         userFollowingUseCase: UserFollowingUseCase
@@ -21,7 +21,7 @@ export class UserFollowingController {
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const followingId = req.params.id;
         const userId = req.userId;
         try {

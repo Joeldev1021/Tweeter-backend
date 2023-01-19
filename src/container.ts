@@ -36,19 +36,31 @@ import { InMemoryAsyncEventBus } from './shared/infrastruture/event/event.bus';
 import { UserFollowingAfterHandler } from './user/application/event-handlers/user.following.after.handler';
 import { UserUnfollowedHandler } from './user/application/event-handlers/user.unfollowed.handler';
 import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
+import { BookMarkSaveUseCase } from './tweet/application/usecase/bookmark/book.mark.save.usecase';
+import { BookMarkRepository } from './tweet/infrastruture/repository/book.mark.repository';
+import { UserCreatedHandler } from './tweet/application/event-handler/user.created.handler';
+import { BookMarkRemoveUseCase } from './tweet/application/usecase/bookmark/book.mark.remove.usecase';
 
 const container = new Container();
 
 /* ========== repository =========== */
 container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
+
 container.bind<ITweetRepository>(TYPES.TweetRepository).to(TweetRepository);
+
 container.bind<IReplyRepository>(TYPES.ReplyRepository).to(ReplyRepository);
+
+container
+    .bind<BookMarkRepository>(TYPES.BookMarkRepository)
+    .to(BookMarkRepository);
 
 /* ========== user usecase =========== */
 container
     .bind<UserRegisterUseCase>(TYPES.UserRegisterUseCase)
     .to(UserRegisterUseCase);
+
 container.bind<UserLoginUseCase>(TYPES.UserLoginUseCase).to(UserLoginUseCase);
+
 container
     .bind<UserProfileUseCase>(TYPES.UserProfileUseCase)
     .to(UserProfileUseCase);
@@ -115,6 +127,13 @@ container
         TYPES.ReplyFindByParentReplyIdUseCase
     )
     .to(ReplyFindByParentReplyIdUseCase);
+/*================== bookmark usecases ================== */
+container
+    .bind<BookMarkSaveUseCase>(TYPES.BookMarkSaveUseCase)
+    .to(BookMarkSaveUseCase);
+container
+    .bind<BookMarkRemoveUseCase>(TYPES.BookMarkRemoveUseCase)
+    .to(BookMarkRemoveUseCase);
 
 /* ========== middleware=========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
@@ -125,6 +144,10 @@ container.bind<JwtService>(TYPES.JwtService).to(JwtService);
 container.bind(TYPES.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 
 /* =========event handler ========= */
+container
+    .bind(coreTypes.EventHandler)
+    .to(UserCreatedHandler)
+    .inSingletonScope();
 
 container
     .bind(coreTypes.EventHandler)

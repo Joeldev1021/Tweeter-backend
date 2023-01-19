@@ -8,25 +8,25 @@ import { coreTypes, TYPES } from './types';
 import { Application } from 'express';
 import { EventHandler } from './shared/domain/types/event-handler.interface';
 import { DomainEventMapping } from './shared/infrastruture/event/domain-event-mapping';
-
+import * as http from 'http';
 dotenvConfig();
 
 export class Bootstrap {
     server?: Server;
 
-    async start() {
+    async start(): Promise<void> {
         const port = process.env.PORT || '3000';
         this.server = new Server(port);
-        await this.configureEventBus();
+
         await this.dbConnection();
-        return this.server.listen();
+        return await this.server.listen();
     }
 
-    private async dbConnection() {
+    private async dbConnection(): Promise<void> {
         connectionDb();
     }
 
-    private async configureEventBus() {
+    private async configureEventBus(): Promise<void> {
         const eventBus = container.get<IEventBus>(TYPES.EventBus);
         const eventHandlers = container.getAll<EventHandler>(
             coreTypes.EventHandler
@@ -40,7 +40,7 @@ export class Bootstrap {
         await eventBus.start();
     }
 
-    public getHttpServer() {
+    public getHttpServer(): http.Server | undefined {
         return this.server?.getHttpServer();
     }
 
@@ -49,4 +49,9 @@ export class Bootstrap {
     }
 }
 /// init application
-new Bootstrap().start();
+void new Bootstrap().start();
+//todo search user by username query
+
+//todo upload image
+
+//todo I can choose to Post is private or public

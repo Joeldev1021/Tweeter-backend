@@ -91,23 +91,11 @@ export class TweetRepository implements ITweetRepository {
         };
     }
 
-    /**
-     * It takes a TweetModel, converts it to a TweetPersistance, and then converts that TweetPersistance
-     * to a TweetModel
-     * @param {TweetModel} tweet - TweetModel - this is the tweet object that we are going to create.
-     * @returns A promise of a tweet model or null
-     */
     async create(tweet: TweetModel): Promise<TweetModel | null> {
         const tweetPersistance = this.toPersistance(tweet);
         const newTweet = new TweetSchema(tweetPersistance);
         return this.toDomain(await newTweet.save());
     }
-
-    /**
-     * > It finds a tweet by its id and returns it as a domain model
-     * @param {UuidVO} id - UuidVO - The id of the tweet we want to find.
-     * @returns TweetModel |null
-     */
 
     async findById(id: UuidVO): Promise<TweetModel | null> {
         //todo- the tweet should get 10 first replys
@@ -124,23 +112,12 @@ export class TweetRepository implements ITweetRepository {
         return this.toDomainWithUser(tweetFound);
     }
 
-    /**
-     * It deletes a tweet by id.
-     * @param {UuidVO} id - UuidVO
-     * @returns The tweet that was deleted.
-     */
     async delete(id: UuidVO): Promise<TweetModel | null> {
         const tweetDelete = await TweetSchema.findByIdAndDelete(id.value);
         if (!tweetDelete) return null;
         return this.toDomain(tweetDelete);
     }
 
-    /**
-     * It updates a tweet by id.
-     * @param {UuidVO} id - UuidVO - The id of the tweet to be updated
-     * @param {TweetModel} tweet - TweetModel - The tweet object that will be updated.
-     * @returns The tweetUpdate is being returned.
-     */
     async update(id: UuidVO, tweet: TweetModel): Promise<TweetModel | null> {
         const tweetPersistance = this.toPersistance(tweet);
         const { _id, ...rest } = tweetPersistance;
@@ -149,11 +126,6 @@ export class TweetRepository implements ITweetRepository {
         return this.toDomain(tweetPersistance);
     }
 
-    /**
-     * It returns a list of tweets that belong to a user
-     * @param {UuidVO} onwerId - UuidVO
-     * @returns A list of tweets
-     */
     async findByOwnerId(onwerId: UuidVO): Promise<TweetWithUserModel[] | null> {
         const tweets = await TweetSchema.find({
             ownerId: onwerId.value,
@@ -167,10 +139,6 @@ export class TweetRepository implements ITweetRepository {
         return tweets.map(tweet => this.toDomainWithUser(tweet));
     }
 
-    /**
-     * It returns all the tweets in the database.
-     * @returns An array of TweetModel objects.
-     */
     async findAll(): Promise<TweetWithUserModel[] | null> {
         //const tweets = await TweetSchema.find().skip(1).limit(10);
         const tweets = await TweetSchema.find().populate<{ ownerId: IUserDoc }>(
@@ -183,22 +151,24 @@ export class TweetRepository implements ITweetRepository {
         return tweets.map(tweet => this.toDomainWithUser(tweet));
     }
 
-    /**
-     * It finds a tweet by id, checks if the user has already liked it, if so, it removes the like,
-     * if not, it adds the like
-     * @param {UuidVO} tweetId - UuidVO - The tweet's id
-     * @param {UuidVO} userId - UuidVO
-     * @returns A tweet model
-     */
-    async like(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | null> {
+    async addLike(tweetId: UuidVO, userId: UuidVO): Promise<TweetModel | null> {
         const tweet = await TweetSchema.findById(tweetId.value);
         if (!tweet) return null;
 
-        if (tweet?.likes?.includes(userId.value)) {
-            tweet.likes = tweet.likes.filter(like => like !== userId.value);
-        } else {
+        if (!tweet?.likes?.includes(userId.value))
             tweet?.likes?.push(userId.value);
-        }
+        return this.toDomain(await tweet.save()!);
+    }
+
+    async removeLike(
+        tweetId: UuidVO,
+        userId: UuidVO
+    ): Promise<TweetModel | null> {
+        const tweet = await TweetSchema.findById(tweetId.value);
+        if (!tweet) return null;
+
+        if (tweet?.likes?.includes(userId.value))
+            tweet.likes = tweet.likes.filter(like => like !== userId.value);
         return this.toDomain(await tweet.save()!);
     }
 }

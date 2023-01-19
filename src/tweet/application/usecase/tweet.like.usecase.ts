@@ -21,6 +21,8 @@ export class TweetLikeUseCase {
         const tweetFound = await this.tweetRepository.findById(tweetId);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        return await this.tweetRepository.like(tweetId, userId);
+        if (!tweetFound.likes.includes(tweetId))
+            return await this.tweetRepository.addLike(tweetId, userId);
+        else return await this.tweetRepository.removeLike(tweetId, userId);
     }
 }
