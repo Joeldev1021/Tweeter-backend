@@ -18,7 +18,8 @@ export class TweetCreatedHandler implements EventHandler {
     }
 
     async handle(event: TweetCreatedEvent): Promise<void> {
-        console.log(event);
+        console.log('tweet event', event);
+
         const { ownerId, tweetId } = event.payload;
         const user = await this._userRepository.findById(new UuidVO(ownerId));
         if (!user) return;

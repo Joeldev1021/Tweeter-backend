@@ -17,9 +17,13 @@ export class EventEmitterBus {
         await Promise.all(
             events.map(event =>
                 Promise.all(
-                    this.subscribers.map(h => {
-                        h.handle(event);
-                    })
+                    this.subscribers
+                        .filter(sub =>
+                            sub
+                                .subscribedTo()
+                                .some(ev => ev.NAME === event.eventName)
+                        )
+                        .map(hndl => hndl.handle(event))
                 )
             )
         );

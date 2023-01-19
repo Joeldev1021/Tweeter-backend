@@ -12,6 +12,7 @@ export class ReplyCreatedHandler implements EventHandler {
     constructor(
         @inject(TYPES.UserRepository)
         private _userRepository: IUserRepository,
+        @inject(TYPES.TweetRepository)
         private _tweetRepository: ITweetRepository
     ) {}
 
@@ -22,7 +23,7 @@ export class ReplyCreatedHandler implements EventHandler {
     //name event ReplyCreateEvent
     async handle(event: ReplyCreatedEvent) {
         const { ownerId, replyId, tweetId } = event.payload;
-
+        console.log('event reply', event);
         const user = await this._userRepository.findById(new UuidVO(ownerId));
         const tweet = await this._tweetRepository.findById(new UuidVO(tweetId));
 

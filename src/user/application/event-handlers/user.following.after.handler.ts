@@ -18,6 +18,7 @@ export class UserFollowingAfterHandler implements EventHandler {
     }
 
     async handle(event: UserFollowingAfterEvent): Promise<void> {
+        console.log('event folow', event);
         const { userId, followerId } = event.payload;
         const followingFound = await this._userRepository.findById(
             new UuidVO(followerId)
