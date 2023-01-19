@@ -4,21 +4,22 @@ import { UserModel } from '../../domain/models/user.model';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
-import { UserRepository } from '../../infrastructure/repository/user.repository';
 import { TYPES } from '../../../types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserIdAlreadyExistsException } from '../errors/user.id.already.exists';
 import { UserEmailAlreadyExistsException } from '../errors/user.email.already.exists.exception';
+import { IUserRepository } from '../../domain/repository/user.repository';
+import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 
 @injectable()
 export class UserRegisterUseCase {
-    private userRepository: UserRepository;
     constructor(
-        @inject(TYPES.UserRepository) userRepository: UserRepository,
-        @inject(TYPES.JwtService) private readonly _jwtService: JwtService
-    ) {
-        this.userRepository = userRepository;
-    }
+        @inject(TYPES.UserRepository)
+        private readonly _userRepository: IUserRepository,
+        @inject(TYPES.JwtService)
+        private readonly _jwtService: JwtService,
+        @inject(TYPES.EventBus) private readonly _eventBus: IEventBus
+    ) {}
 
     public async execute(
         id: UuidVO,
@@ -26,21 +27,30 @@ export class UserRegisterUseCase {
         email: EmailVO,
         password: PasswordVO
     ): Promise<{ token: string } | null> {
-        const userFound = await this.userRepository.findById(id);
+        const userFound = await this._userRepository.findById(id);
         if (userFound) throw new UserIdAlreadyExistsException();
 
-        const userFoundEmail = await this.userRepository.findByEmail(email);
+        const userFoundEmail = await this._userRepository.findByEmail(email);
         if (userFoundEmail) throw new UserEmailAlreadyExistsException();
 
-        const newUser = await this.userRepository.create(
-            new UserModel(id, username, email, password, [], [], [], [])
+        const userModel = UserModel.createUser(
+            id,
+            username,
+            email,
+            password,
+            [],
+            [],
+            [],
+            []
         );
+        const newUser = await this._userRepository.create(userModel);
         if (!newUser) return null;
 
         const token = await this._jwtService.signToken(
             { id: newUser.id.value },
             { expiresIn: '1d' }
         );
+        await this._eventBus.publish(userModel.pullDomainEvents());
 
         return { token };
     }

@@ -40,6 +40,7 @@ export class UserModel extends AggregateRoot {
         email: EmailVO,
         password: PasswordVO,
         tweetIds: UuidVO[],
+        replyIds: UuidVO[],
         followerIds: UuidVO[],
         followingIds: UuidVO[]
     ): UserModel {
@@ -48,23 +49,24 @@ export class UserModel extends AggregateRoot {
             username,
             email,
             password,
-            [],
-            [],
-            [],
-            []
+            tweetIds,
+            replyIds,
+            followerIds,
+            followingIds
         );
         userModel.record(new UserCreatedEvent({ userId: id.value }));
         return userModel;
     }
 
-    public addTweet(tweetId: UuidVO) {
+    public addTweet(tweetId: UuidVO): void {
         this.tweetIds.push(tweetId);
     }
 
-    public addReply(replyId: UuidVO) {
+    public addReply(replyId: UuidVO): void {
         this.replyIds.push(replyId);
     }
-    public followingUser(userId: UuidVO, followerId: UuidVO) {
+
+    public followingUser(userId: UuidVO, followerId: UuidVO): void {
         /* create event userFollowingAfterEvent */
         this.record(
             new UserFollowingAfterEvent({
@@ -74,10 +76,11 @@ export class UserModel extends AggregateRoot {
         );
     }
 
-    public addFollower(userId: UuidVO) {
+    public addFollower(userId: UuidVO): void {
         this.followerIds.push(userId);
     }
-    public unfollowUser(userId: UuidVO, unfollowId: UuidVO) {
+
+    public unfollowUser(userId: UuidVO, unfollowId: UuidVO): void {
         this.record(
             new UserUnfollowedEvent({
                 userId: userId.value,
@@ -86,7 +89,7 @@ export class UserModel extends AggregateRoot {
         );
     }
 
-    public removeFollower(userId: UuidVO) {
+    public removeFollower(userId: UuidVO): void {
         this.followerIds = this.followerIds.filter(
             follower => follower.value !== userId.value
         );

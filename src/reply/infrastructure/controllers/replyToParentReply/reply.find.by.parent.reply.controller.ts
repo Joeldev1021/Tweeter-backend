@@ -9,10 +9,15 @@ import { ReplyFindByParentReplyIdUseCase } from '../../../application/usecases/r
 export class ReplyFindByParentReplyIdController {
     constructor(
         @inject(TYPES.ReplyFindByParentReplyIdUseCase)
-        private _replyFindByParentReplyIdUseCase: ReplyFindByParentReplyIdUseCase
+        private readonly _replyFindByParentReplyIdUseCase: ReplyFindByParentReplyIdUseCase
     ) {}
+
     @httpGet('/:parentReplyId', TYPES.AuthMiddleware)
-    async execute(req: Request, res: Response, next: NextFunction) {
+    async execute(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
         const parentReplyId = req.params.parentReplyId;
         try {
             const replyFound =

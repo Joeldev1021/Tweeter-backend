@@ -38,7 +38,7 @@ import { UserUnfollowedHandler } from './user/application/event-handlers/user.un
 import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
 import { BookMarkSaveUseCase } from './tweet/application/usecase/bookmark/book.mark.save.usecase';
 import { BookMarkRepository } from './tweet/infrastruture/repository/book.mark.repository';
-import { UserCreatedHandler } from './tweet/application/event-handler/user.created.handler';
+import { UserCreatedHandler } from './user/application/event-handlers/user.created.handler';
 import { BookMarkRemoveUseCase } from './tweet/application/usecase/bookmark/book.mark.remove.usecase';
 
 const container = new Container();

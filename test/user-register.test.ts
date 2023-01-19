@@ -3,7 +3,6 @@ import supertest from 'supertest';
 import { generateRandomUser } from './utils/generate.random.user';
 import * as http from 'http';
 import { Server as ServerApp } from '../src/server';
-import { Bootstrap } from '../src/bootstrap';
 import { Application } from 'express';
 
 export let api: supertest.SuperTest<supertest.Test>;
@@ -13,9 +12,10 @@ let server: http.Server;
 beforeAll(async () => {
     // app = startApp();
     app = new ServerApp().getApp();
-    server = app.listen(5000, () =>
+    server = await app.listen(5000, () =>
         console.log('server listenning in port 🔥 ', 5000)
     );
+    await ServerApp.testEventBus();
     api = supertest(app);
     await connectDb();
 });

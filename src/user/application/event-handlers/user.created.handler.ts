@@ -4,10 +4,10 @@ import { IDomainEventClass } from '../../../shared/domain/types/domain-event-cla
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../types';
-import { BookMarkModel } from '../../../user/domain/models/bookmark.model';
-import { BookMarkRepository } from '../../infrastruture/repository/book.mark.repository';
+import { BookMarkModel } from '../../domain/models/bookmark.model';
+import { BookMarkRepository } from '../../../tweet/infrastruture/repository/book.mark.repository';
 import uuid from 'uuid-random';
-import { BookMarkIdAlreadyExistException } from '../errors/book.mark.id.already.exist.exception';
+import { BookMarkIdAlreadyExistException } from '../../../tweet/application/errors/book.mark.id.already.exist.exception';
 
 @injectable()
 export class UserCreatedHandler implements EventHandler {

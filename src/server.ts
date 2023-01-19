@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
@@ -12,6 +13,10 @@ import './reply/infrastructure/routers/index';
 /*============== routes=========== */
 import { errorMiddleware } from './shared/infrastruture/middlewares/error.middleware';
 import * as http from 'http';
+import { IEventBus } from './shared/domain/types/event-bus.interface';
+import { EventHandler } from './shared/domain/types/event-handler.interface';
+import { coreTypes, TYPES } from './types';
+import { DomainEventMapping } from './shared/infrastruture/event/domain-event-mapping';
 dotenv.config();
 
 export class Server {
@@ -51,5 +56,20 @@ export class Server {
 
     getApp(): express.Application {
         return this.appBuild;
+    }
+
+    /* for test  */
+    static async testEventBus(): Promise<void> {
+        const eventBus = container.get<IEventBus>(TYPES.EventBus);
+        const eventHandlers = container.getAll<EventHandler>(
+            coreTypes.EventHandler
+        );
+        const domainEventMapping = new DomainEventMapping(eventHandlers);
+
+        eventBus.setDomainEventMapping(domainEventMapping);
+
+        eventBus.addSubscribers(eventHandlers);
+
+        await eventBus.start();
     }
 }

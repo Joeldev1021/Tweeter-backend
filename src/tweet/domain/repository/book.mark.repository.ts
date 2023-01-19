@@ -1,4 +1,3 @@
-import { UserModel } from '../../../user/domain/models/user.model';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { BookMarkModel } from '../../../user/domain/models/bookmark.model';
 import { IBookMark } from '../../../user/infrastructure/interface/save.tweet.interface';

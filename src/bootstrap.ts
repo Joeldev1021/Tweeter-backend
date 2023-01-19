@@ -27,7 +27,7 @@ export class Bootstrap {
         connectionDb();
     }
 
-    private async configureEventBus(): Promise<void> {
+    public async configureEventBus(): Promise<void> {
         const eventBus = container.get<IEventBus>(TYPES.EventBus);
         const eventHandlers = container.getAll<EventHandler>(
             coreTypes.EventHandler
@@ -51,6 +51,7 @@ export class Bootstrap {
 }
 /// init application
 void new Bootstrap().start();
+
 //todo search user by username query
 
 //todo upload image

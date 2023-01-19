@@ -13,14 +13,15 @@ import { ReplyModel } from '../../../domain/model/reply.model';
 export class ReplyCreateToReplyController {
     constructor(
         @inject(TYPES.ReplyCreateToReplyUseCase)
-        private replyCreateToReplyUseCase: ReplyCreateToReplyUseCase
+        private readonly replyCreateToReplyUseCase: ReplyCreateToReplyUseCase
     ) {}
+
     @httpPost('/:tweetId/:parentReplyId', TYPES.AuthMiddleware)
     async execute(
         req: TweetRequest<TweetDtoType>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const tweetId = req.params.tweetId;
         const parentReplyId = req.params.parentReplyId;
         const { id, content } = req.body;

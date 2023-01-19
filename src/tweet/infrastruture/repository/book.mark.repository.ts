@@ -4,7 +4,6 @@ import { BookMarkModel } from '../../../user/domain/models/bookmark.model';
 import { IBookMarkRepository } from '../../domain/repository/book.mark.repository';
 import { IBookMark } from '../../../user/infrastructure/interface/save.tweet.interface';
 import { BookMarkSchema } from '../schemas/book.mark.schema';
-import { UserModel } from '../../../user/domain/models/user.model';
 
 @injectable()
 export class BookMarkRepository implements IBookMarkRepository {

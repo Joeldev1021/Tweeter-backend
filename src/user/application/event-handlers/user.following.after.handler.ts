@@ -3,14 +3,14 @@ import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { InMemoryAsyncEventBus } from '../../../shared/infrastruture/event/event.bus';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/user.repository';
 
 @injectable()
 export class UserFollowingAfterHandler implements EventHandler {
     constructor(
-        @inject(TYPES.UserRepository) private _userRepository: IUserRepository
+        @inject(TYPES.UserRepository)
+        private readonly _userRepository: IUserRepository
     ) {}
 
     subscribedTo(): IDomainEventClass[] {
@@ -18,7 +18,6 @@ export class UserFollowingAfterHandler implements EventHandler {
     }
 
     async handle(event: UserFollowingAfterEvent): Promise<void> {
-        console.log('event folow', event);
         const { userId, followerId } = event.payload;
         const followingFound = await this._userRepository.findById(
             new UuidVO(followerId)
