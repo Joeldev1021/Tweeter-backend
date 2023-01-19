@@ -77,8 +77,9 @@ export class UserRepository implements IUserRepository {
         return this.toDomain(userFound);
     }
 
-    async findAll() {
-        return UserSchema.find();
+    async findAll(): Promise<UserModel[]> {
+        const users = await UserSchema.find();
+        return users.map(user => this.toDomain(user));
     }
 
     async findByUsername(username: UsernameVO): Promise<UserModel | null> {
@@ -97,14 +98,17 @@ export class UserRepository implements IUserRepository {
     async following(userId: UuidVO, followingId: UuidVO): Promise<void> {
         /* los que yo sigo */
         const user = await UserSchema.findById(userId.value);
-        if (!user) return;
+        /* validate if user exists and user already following */
+        if (!user || user.followerIds?.includes(followingId.value)) return;
+
         user.followingIds?.push(followingId.value);
         await user.save();
     }
 
     async unfollow(userId: UuidVO, followingId: UuidVO): Promise<void> {
         const user = await UserSchema.findById(userId.value);
-        if (!user) return;
+        if (!user || !user.followingIds?.includes(userId.value)) return;
+
         user.followingIds = user.followingIds?.filter(
             follow => follow !== userId.value
         );

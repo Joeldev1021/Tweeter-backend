@@ -6,7 +6,7 @@ import { AuthRequest } from '../../../shared/infrastruture/types';
 import { NextFunction, Response } from 'express';
 import { UserFollowingUseCase } from '../../application/usecases/user.following.usecase';
 
-@controller('/user/')
+@controller('/user')
 export class UserFollowingController {
     private readonly _userFollowingUseCase: UserFollowingUseCase;
     constructor(

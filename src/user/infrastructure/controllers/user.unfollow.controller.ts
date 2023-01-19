@@ -8,20 +8,17 @@ import { UserUnfollowUseCase } from '../../application/usecases/user.unfollow.us
 
 @controller('/user')
 export class UserUnfollowController {
-    private _userUnfollowUseCase: UserUnfollowUseCase;
     constructor(
         @inject(TYPES.UserUnfollowUseCase)
-        userUnfollowUseCase: UserUnfollowUseCase
-    ) {
-        this._userUnfollowUseCase = userUnfollowUseCase;
-    }
+        private readonly _userUnfollowUseCase: UserUnfollowUseCase
+    ) {}
 
     @httpPost('/unfollow/:id', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const unfollowId = req.params.id;
         const userId = req.userId;
         try {

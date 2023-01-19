@@ -11,16 +11,18 @@ import { BookMarkIdAlreadyExistException } from '../errors/book.mark.id.already.
 
 @injectable()
 export class UserCreatedHandler implements EventHandler {
-    private _bookMarkRepository: BookMarkRepository;
+    private readonly _bookMarkRepository: BookMarkRepository;
     constructor(
         @inject(TYPES.BookMarkRepository)
         bookMarkRepository: BookMarkRepository
     ) {
         this._bookMarkRepository = bookMarkRepository;
     }
+
     subscribedTo(): IDomainEventClass[] {
         return [UserCreatedEvent];
     }
+
     async handle(event: UserCreatedEvent): Promise<void> {
         const { userId } = event.payload;
         const onwerId = new UuidVO(userId);
@@ -29,7 +31,7 @@ export class UserCreatedHandler implements EventHandler {
         );
         if (bookMarkFound) throw new BookMarkIdAlreadyExistException();
 
-        this._bookMarkRepository.create(
+        await this._bookMarkRepository.create(
             new BookMarkModel(new UuidVO(uuid()), onwerId, [], [])
         );
     }
