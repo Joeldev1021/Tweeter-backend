@@ -11,9 +11,9 @@ import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 export class TweetCreateUseCase {
     constructor(
         @inject(TYPES.TweetRepository)
-        private tweetRepository: ITweetRepository,
+        private readonly tweetRepository: ITweetRepository,
         @inject(TYPES.EventBus)
-        private _eventBus: IEventBus
+        private readonly _eventBus: IEventBus
     ) {}
 
     public async execute(

@@ -10,7 +10,7 @@ import { IUserRepository } from '../../domain/repository/user.repository';
 export class TweetCreatedHandler implements EventHandler {
     constructor(
         @inject(TYPES.UserRepository)
-        private _userRepository: IUserRepository
+        private readonly _userRepository: IUserRepository
     ) {}
 
     subscribedTo(): IDomainEventClass[] {

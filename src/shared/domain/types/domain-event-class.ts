@@ -1,5 +1,5 @@
 import { DomainEvent } from '../events/domain.event';
-export type IDomainEventClass = {
+export interface IDomainEventClass {
     NAME: string;
-    fromPrimitives(...args: any[]): DomainEvent;
-};
+    fromPrimitives: (...args: any[]) => DomainEvent;
+}

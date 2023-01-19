@@ -11,16 +11,16 @@ import { IUserRepository } from '../../domain/repository/user.repository';
 export class ReplyCreatedHandler implements EventHandler {
     constructor(
         @inject(TYPES.UserRepository)
-        private _userRepository: IUserRepository,
+        private readonly _userRepository: IUserRepository,
         @inject(TYPES.TweetRepository)
-        private _tweetRepository: ITweetRepository
+        private readonly _tweetRepository: ITweetRepository
     ) {}
 
     subscribedTo(): IDomainEventClass[] {
         return [ReplyCreatedEvent];
     }
 
-    async handle(event: ReplyCreatedEvent) {
+    async handle(event: ReplyCreatedEvent): Promise<void> {
         const { ownerId, replyId, tweetId } = event.payload;
         console.log('event reply', event);
         const user = await this._userRepository.findById(new UuidVO(ownerId));

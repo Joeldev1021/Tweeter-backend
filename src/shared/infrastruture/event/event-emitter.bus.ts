@@ -8,23 +8,24 @@ export class EventEmitterBus {
         this.registerSubscribers(subscribers);
     }
 
-    registerSubscribers(subscribers?: EventHandler<DomainEvent>[]) {
+    registerSubscribers(subscribers?: Array<EventHandler<DomainEvent>>): void {
         this.subscribers.push(...(subscribers || []));
     }
 
-    async publish(events: DomainEvent[]) {
+    async publish(events: DomainEvent[]): Promise<void> {
         console.log(this.subscribers);
         await Promise.all(
-            events.map(event =>
-                Promise.all(
-                    this.subscribers
-                        .filter(sub =>
-                            sub
-                                .subscribedTo()
-                                .some(ev => ev.NAME === event.eventName)
-                        )
-                        .map(hndl => hndl.handle(event))
-                )
+            events.map(
+                async event =>
+                    await Promise.all(
+                        this.subscribers
+                            .filter(sub =>
+                                sub
+                                    .subscribedTo()
+                                    .some(ev => ev.NAME === event.eventName)
+                            )
+                            .map(hndl => hndl.handle(event))
+                    )
             )
         );
     }

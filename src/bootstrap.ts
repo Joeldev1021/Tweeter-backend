@@ -19,6 +19,7 @@ export class Bootstrap {
         this.server = new Server(port);
 
         await this.dbConnection();
+        await this.configureEventBus();
         return await this.server.listen();
     }
 
