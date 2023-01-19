@@ -26,7 +26,17 @@ export class TweetUpdateByIdUseCase {
 
         if (tweetFound.ownerId.value !== onwerId.value)
             throw new AppplicationUnauthorizedException();
+        //const tweetUpdate = { ...tweetFound, content: content };
+        const tweetUpdate = new TweetModel(
+            id,
+            content,
+            onwerId,
+            tweetFound.image,
+            tweetFound.likes,
+            tweetFound.reply,
+            tweetFound.createdAt
+        );
 
-        return this.tweetRepository.update(id, content);
+        return this.tweetRepository.update(id, tweetUpdate);
     }
 }

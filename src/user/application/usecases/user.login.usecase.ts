@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
-import { UserRepository } from '../../../user/infrastructure/repository/user.repository';
+import { UserRepository } from '../../infrastructure/repository/user.repository';
 import { TYPES } from '../../../types';
 import { JwtService } from '../../../shared/infrastruture/services/jwt.services';
 import { InvalidLoginException } from '../errors/invalid.login.exception';

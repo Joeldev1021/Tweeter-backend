@@ -8,10 +8,15 @@ import { TweetFindAllUseCase } from '../../application/usecase/tweet.find.all.us
 export class TweetFindAllController {
     constructor(
         @inject(TYPES.TweetFindAllUseCase)
-        private tweetFindAllUseCase: TweetFindAllUseCase
+        private readonly tweetFindAllUseCase: TweetFindAllUseCase
     ) {}
+
     @httpGet('/', TYPES.AuthMiddleware)
-    async execute(req: Request, res: Response, next: NextFunction) {
+    async execute(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
         try {
             const tweetsFound = await this.tweetFindAllUseCase.execute();
 

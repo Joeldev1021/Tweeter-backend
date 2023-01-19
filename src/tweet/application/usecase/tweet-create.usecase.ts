@@ -5,14 +5,15 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetIdAlreadyExist } from '../errors/tweet.id.already.exists.exception';
 import { ITweetRepository } from '../../domain/repository/tweet.respository';
-import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
+import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
+
 @injectable()
 export class TweetCreateUseCase {
     constructor(
         @inject(TYPES.TweetRepository)
-        private tweetRepository: ITweetRepository,
+        private readonly tweetRepository: ITweetRepository,
         @inject(TYPES.EventBus)
-        private _eventBus: IEventBus
+        private readonly _eventBus: IEventBus
     ) {}
 
     public async execute(
@@ -27,8 +28,7 @@ export class TweetCreateUseCase {
         const tweet = TweetModel.create(id, content, ownerId);
 
         const tweetSave = await this.tweetRepository.create(tweet);
-
-        this._eventBus.publishMany(tweet.getEvents());
+        await this._eventBus.publish(tweet.pullDomainEvents());
 
         return tweetSave;
     }

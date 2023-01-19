@@ -4,12 +4,11 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { controller, httpPost } from 'inversify-express-utils';
 import { AuthRequest } from '../../../shared/infrastruture/types';
 import { NextFunction, Response } from 'express';
-import { UserFollowerUseCase } from '../../application,/usecases/user.follower.usecase';
-import { UserFollowingUseCase } from '../../application,/usecases/user.following.usecase';
+import { UserFollowingUseCase } from '../../application/usecases/user.following.usecase';
 
 @controller('/user/')
 export class UserFollowingController {
-    private _userFollowingUseCase: UserFollowingUseCase;
+    private readonly _userFollowingUseCase: UserFollowingUseCase;
     constructor(
         @inject(TYPES.UserFollowingUseCase)
         userFollowingUseCase: UserFollowingUseCase
@@ -22,7 +21,7 @@ export class UserFollowingController {
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const followingId = req.params.id;
         const userId = req.userId;
         try {

@@ -3,6 +3,7 @@ import supertest from 'supertest';
 import { generateRandomUser } from './utils/generate.random.user';
 import * as http from 'http';
 import { Server as ServerApp } from '../src/server';
+import { Bootstrap } from '../src/bootstrap';
 import { Application } from 'express';
 
 export let api: supertest.SuperTest<supertest.Test>;

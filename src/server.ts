@@ -15,10 +15,10 @@ import * as http from 'http';
 dotenv.config();
 
 export class Server {
-    private app: express.Express;
-    private port?: string;
-    private server: InversifyExpressServer;
-    private appBuild: express.Application;
+    private readonly app: express.Express;
+    private readonly port?: string;
+    private readonly server: InversifyExpressServer;
+    private readonly appBuild: express.Application;
     private httpServer?: http.Server;
 
     constructor(port?: string) {
@@ -39,19 +39,17 @@ export class Server {
         this.appBuild = this.server.build();
     }
 
-    async listen() {
+    async listen(): Promise<void> {
         this.httpServer = this.appBuild.listen(this.port, () => {
             console.log('server listening in port 🔥 ', this.port);
         });
     }
 
-    getHttpServer() {
+    getHttpServer(): http.Server | undefined {
         return this.httpServer;
     }
 
-    getApp() {
+    getApp(): express.Application {
         return this.appBuild;
     }
 }
-
-//todo do not implement ====> find reply by parent-ReplyId with owner-data

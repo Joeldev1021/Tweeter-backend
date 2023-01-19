@@ -7,17 +7,15 @@ import { TweetWithUserModel } from '../../domain/models/tweet.model';
 
 @injectable()
 export class TweetSaveUseCase {
-    private tweetRepository: TweetRepository;
+    private readonly tweetRepository: TweetRepository;
     constructor(
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository
     ) {
         this.tweetRepository = tweetRepository;
     }
 
-    public async execute(id: UuidVO): Promise<TweetWithUserModel> {
-        const tweetFound = await this.tweetRepository.findByIdWithOwner(id);
+    public async execute(id: UuidVO): Promise<void> {
+        const tweetFound = await this.tweetRepository.findById(id);
         if (!tweetFound) throw new TweetNotFoundException();
-
-        return tweetFound;
     }
 }

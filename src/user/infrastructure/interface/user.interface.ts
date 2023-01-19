@@ -8,6 +8,7 @@ export interface IUser {
     followerIds?: string[];
     followingIds?: string[];
     tweetIds?: string[];
+    replyIds?: string[];
 }
 
 export interface IUserDoc extends LeanDocument<IUser> {}

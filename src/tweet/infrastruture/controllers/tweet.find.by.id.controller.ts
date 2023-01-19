@@ -9,13 +9,18 @@ import { TweetFindByIdUseCase } from '../../application/usecase/tweet.find.by.id
 export class TweetFindByIdController {
     constructor(
         @inject(TYPES.TweetFindByIdUseCase)
-        private TweetFindByIdUseCase: TweetFindByIdUseCase
+        private readonly _tweetFindByIdUseCase: TweetFindByIdUseCase
     ) {}
+
     @httpGet('/:id', TYPES.AuthMiddleware)
-    async execute(req: Request, res: Response, next: NextFunction) {
+    async execute(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
         const id = req.params.id;
         try {
-            const tweet = await this.TweetFindByIdUseCase.execute(
+            const tweet = await this._tweetFindByIdUseCase.execute(
                 new UuidVO(id)
             );
             res.status(200).send(tweet);

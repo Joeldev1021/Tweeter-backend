@@ -12,14 +12,15 @@ import { TweetUpdateByIdUseCase } from '../../application/usecase/tweet.update.u
 export class TweetUpdateByIdController {
     constructor(
         @inject(TYPES.TweetUpdateByIdUseCase)
-        private tweetUpdateByIdUseCase: TweetUpdateByIdUseCase
+        private readonly tweetUpdateByIdUseCase: TweetUpdateByIdUseCase
     ) {}
+
     @httpPut('/:id', TYPES.AuthMiddleware)
     async execute(
         req: TweetRequest<TweetDtoType>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const { content, id } = req.body;
         try {
             const tweetUpdate = await this.tweetUpdateByIdUseCase.execute(

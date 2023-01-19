@@ -10,22 +10,23 @@ import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 export class TweetLikeController {
     constructor(
         @inject(TYPES.TweetLikeUseCase)
-        private TweetLikeUseCase: TweetLikeUseCase
+        private readonly _tweetLikeUseCase: TweetLikeUseCase
     ) {}
+
     @httpPost('/like/:id', TYPES.AuthMiddleware)
     async execute(
         req: AuthRequest<Request>,
         res: Response,
         next: NextFunction
-    ) {
+    ): Promise<void> {
         const TweetId = req.params.id;
 
         try {
-            const tweetFound = await this.TweetLikeUseCase.execute(
+            const tweetFound = await this._tweetLikeUseCase.execute(
                 new UuidVO(TweetId),
                 new UuidVO(req.userId)
             );
-            res.status(200).send();
+            res.status(200).send(tweetFound);
         } catch (error) {
             next(error);
         }

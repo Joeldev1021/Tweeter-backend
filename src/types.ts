@@ -2,12 +2,12 @@ const UseCases = {
     UserRegisterUseCase: Symbol.for('UserRegisterUseCase'),
     UserLoginUseCase: Symbol.for('UserLoginUseCase'),
     UserProfileUseCase: Symbol.for('UserProfileUseCase'),
-    UserFollowerUseCase: Symbol.for('UserFollowerUseCase'),
     UserFollowingUseCase: Symbol.for('UserFollowingUseCase'),
     ProfileFindByQueryFilterUseCase: Symbol.for(
         'ProfileFindByQueryFilterUseCase'
     ),
 
+    UserUnfollowUseCase: Symbol.for('UserUnfollowUseCase'),
     TweetCreateUseCase: Symbol.for('TweetCreateUseCase'),
     TweetFindAllUseCase: Symbol.for('TweetFindAllUseCase'),
     TweetFindByIdUseCase: Symbol.for('TweetFindByIdUseCase'),
@@ -28,12 +28,16 @@ const UseCases = {
     ReplyFindByParentReplyIdUseCase: Symbol.for(
         'ReplyFindByParentReplyIdUseCase'
     ),
+
+    BookMarkSaveUseCase: Symbol.for('BookMarkSaveUseCase'),
+    BookMarkRemoveUseCase: Symbol.for('BookMarkRemoveUseCase'),
 };
 
 const Repositories = {
     UserRepository: Symbol.for('UserRepository'),
     TweetRepository: Symbol.for('TweetRepository'),
     ReplyRepository: Symbol.for('ReplyRepository'),
+    BookMarkRepository: Symbol.for('BookMarkRepository'),
 };
 
 const Middlewares = {
@@ -44,14 +48,13 @@ const Services = {
     JwtService: Symbol.for('JwtService'),
 };
 
-const event = {
-    TweetCreatedEvent: Symbol.for('TweetCreatedEvent'),
-};
-
-const eventHandler = {
+/* const EventHandler = {
+    ReplyCreatedHandler: Symbol.for('ReplyCreatedHandler'),
     TweetCreatedHandler: Symbol.for('TweetCreatedHandler'),
+    UserFollowingAfterHandler: Symbol.for('UserFollowingAfterHandler'),
+    UserUnfollowHandler: Symbol.for('UserUnfollowHandler'),
 };
-
+ */
 const EventBus = Symbol.for('EventBus');
 
 const TYPES = {
@@ -60,8 +63,11 @@ const TYPES = {
     ...Middlewares,
     ...Services,
     EventBus,
-    ...event,
-    ...eventHandler,
 };
 
-export { TYPES };
+enum coreTypes {
+    EventBus = 'EventBus',
+    EventHandler = 'EventHandler',
+}
+
+export { TYPES, coreTypes };

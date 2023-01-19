@@ -1,4 +1,5 @@
-import { DomainEvent } from '../event';
+import { DomainEvent } from '../domain.event';
+import uuid from 'uuid-random';
 
 interface IPayload {
     replyId: string;
@@ -7,7 +8,8 @@ interface IPayload {
 }
 
 export class ReplyCreatedEvent extends DomainEvent {
+    static readonly NAME = ReplyCreatedEvent.name;
     constructor(public payload: IPayload) {
-        super(ReplyCreatedEvent.name, payload);
+        super(ReplyCreatedEvent.NAME, uuid());
     }
 }

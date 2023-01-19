@@ -1,14 +1,10 @@
 import { inject, injectable } from 'inversify';
 import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
-import { TweetRepository } from '../../../tweet/infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { IEventBus } from '../../../shared/domain/events/event-bus.interface';
-
+import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 @injectable()
 export class ReplyCreateUseCase {
     constructor(
@@ -28,7 +24,7 @@ export class ReplyCreateUseCase {
 
         const replySave = await this._replyRepository.create(reply);
 
-        this._eventBus.publishMany(reply.getEvents());
+        this._eventBus.publish(reply.pullDomainEvents());
 
         return replySave;
     }

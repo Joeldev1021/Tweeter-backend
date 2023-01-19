@@ -1,33 +1,32 @@
-import { EventEmitter2 } from 'eventemitter2';
 import { injectable } from 'inversify';
-import { container } from '../../../container';
-import { IMyEventHandler } from '../../../evenHandler.interface';
-import { DomainEvent } from '../../domain/events/event';
-import { IEventBus } from '../../domain/events/event-bus.interface';
-import { TweetCreatedEvent } from '../../domain/events/tweet/tweet.created.event';
-import { EventHandler } from '../../domain/types/event';
+import { DomainEvent } from '../../domain/events/domain.event';
+import { IEventBus } from '../../domain/types/event-bus.interface';
+import { EventHandler } from '../../domain/types/event-handler.interface';
+import { DomainEventMapping } from './domain-event-mapping';
+import { EventEmitterBus } from './event-emitter.bus';
 
 @injectable()
-export class EventBus implements IEventBus {
-    private readonly _eventEmitter: EventEmitter2;
+export class InMemoryAsyncEventBus implements IEventBus {
+    private readonly bus: EventEmitterBus;
+
     constructor() {
-        this._eventEmitter = new EventEmitter2();
-    }
-    subscribe(eventName: string, handler: EventHandler): void {
-        this._eventEmitter.on(eventName, handler);
+        this.bus = new EventEmitterBus([]);
     }
 
-    unsubscribe(eventName: string, handler: EventHandler): void {
-        this._eventEmitter.off(eventName, handler);
+    async start(): Promise<void> {
+        /*  */
     }
 
-    publish(event: DomainEvent): void | Promise<void> {
-        this._eventEmitter.emit(event.name, event);
+    async publish(events: DomainEvent[]): Promise<void> {
+        return await this.bus.publish(events);
     }
 
-    publishMany(events: DomainEvent[]): void | Promise<void> {
-        events.forEach(event => {
-            this._eventEmitter.emit(event.name, event);
-        });
+    addSubscribers(subscribers: Array<EventHandler<DomainEvent>>) {
+        console.log('subcriber', subscribers);
+        this.bus.registerSubscribers(subscribers);
+    }
+
+    setDomainEventMapping(_domainEventMapping: DomainEventMapping): void {
+        /*  */
     }
 }

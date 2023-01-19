@@ -1,10 +1,10 @@
 import { JwtService } from '../../../shared/infrastruture/services/jwt.services';
 import { inject, injectable } from 'inversify';
-import { UserModel } from '../../../user/domain/models/user.model';
+import { UserModel } from '../../domain/models/user.model';
 import { EmailVO } from '../../domain/value-objects/email.vo';
 import { PasswordVO } from '../../domain/value-objects/password.vo';
 import { UsernameVO } from '../../domain/value-objects/username.vo';
-import { UserRepository } from '../../../user/infrastructure/repository/user.repository';
+import { UserRepository } from '../../infrastructure/repository/user.repository';
 import { TYPES } from '../../../types';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { UserIdAlreadyExistsException } from '../errors/user.id.already.exists';
@@ -33,7 +33,7 @@ export class UserRegisterUseCase {
         if (userFoundEmail) throw new UserEmailAlreadyExistsException();
 
         const newUser = await this.userRepository.create(
-            new UserModel(id, username, email, password, [], [], [])
+            new UserModel(id, username, email, password, [], [], [], [])
         );
         if (!newUser) return null;
 

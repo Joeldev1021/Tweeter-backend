@@ -15,6 +15,7 @@ describe('TEST FOR TWEET', () => {
     describe('create tweet test', () => {
         it('create tweet successfully', async () => {
             const tweet = generateTweetRandom();
+            console.log(token);
             await api
                 .post('/tweet')
                 .set('Authorization', token)
