@@ -12,8 +12,9 @@ export class AggregateRoot {
         this._domainEvents = [];
         return domainEvents;
     }
+
     /* add domain event */
-    record(event: DomainEvent) {
+    record(event: DomainEvent): void {
         this._domainEvents.push(event);
     }
 
