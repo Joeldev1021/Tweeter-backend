@@ -26,7 +26,7 @@ export class BookMarkSaveController {
                 new UuidVO(userId),
                 new UuidVO(tweetId)
             );
-            res.status(204).send(tweet);
+            res.status(200).send(tweet);
         } catch (error) {
             next(error);
         }

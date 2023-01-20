@@ -11,11 +11,12 @@ let server: http.Server;
 
 beforeAll(async () => {
     // app = startApp();
-    app = new ServerApp().getApp();
+    const serverApp = new ServerApp();
+    app = serverApp.getApp();
+    await serverApp.configureEventBus();
     server = await app.listen(5000, () =>
         console.log('server listenning in port 🔥 ', 5000)
     );
-    await ServerApp.testEventBus();
     api = supertest(app);
     await connectDb();
 });

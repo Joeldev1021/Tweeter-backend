@@ -59,7 +59,7 @@ export class Server {
     }
 
     /* for test  */
-    static async testEventBus(): Promise<void> {
+    async configureEventBus(): Promise<void> {
         const eventBus = container.get<IEventBus>(TYPES.EventBus);
         const eventHandlers = container.getAll<EventHandler>(
             coreTypes.EventHandler

@@ -22,7 +22,7 @@ export class UserLoginUseCase {
     ): Promise<{ token: string } | null> {
         const existsUser = await this.userRepository.findByEmail(email);
         if (!existsUser) throw new InvalidLoginException();
-        const passworMatch = await existsUser.password!.compare(password);
+        const passworMatch = await existsUser.password.compare(password);
         if (!passworMatch) throw new InvalidLoginException();
 
         const token = await this._jwtService.signToken(

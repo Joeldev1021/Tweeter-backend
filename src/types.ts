@@ -46,6 +46,7 @@ const Middlewares = {
 
 const Services = {
     JwtService: Symbol.for('JwtService'),
+    BookmarkVerifyTypeService: Symbol.for('BookmarkVerifyTypeService'),
 };
 
 /* const EventHandler = {

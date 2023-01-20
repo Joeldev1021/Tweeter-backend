@@ -1,4 +1,3 @@
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TweetModel, TweetWithUserModel } from '../models/tweet.model';
 

@@ -22,7 +22,7 @@ export interface IBookMarkRepository {
      * @param {UuidVO} tweetId - UuidVO
      * @returns A promise that resolves to void
      */
-    save(userId: UuidVO, tweetId: UuidVO, type: string): Promise<void>;
+    save(userId: UuidVO, id: UuidVO, type: string): Promise<void>;
 
     update(user: BookMarkModel): Promise<void>;
     /**
@@ -32,7 +32,7 @@ export interface IBookMarkRepository {
      * @param {UuidVO} tweetId - UuidVO
      * @returns A promise of void
      */
-    remove(userId: UuidVO, tweetId: UuidVO): Promise<void>;
+    remove(userId: UuidVO, id: UuidVO, type: string): Promise<void>;
     /**
      * "Find a BookMark by ownerId."
      *

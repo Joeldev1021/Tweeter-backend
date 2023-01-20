@@ -26,16 +26,36 @@ export class BookMarkRepository implements IBookMarkRepository {
         const bookMark = await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
+
         if (!bookMark) return;
         if (type === 'tweet') {
             if (!bookMark.tweetIds?.includes(id.value))
                 bookMark.tweetIds?.push(id.value);
         }
+
         if (type === 'reply') {
             if (!bookMark.replyIds?.includes(id.value))
                 bookMark.replyIds?.push(id.value);
         }
 
+        await bookMark?.save();
+    }
+
+    async remove(userId: UuidVO, id: UuidVO, type: string): Promise<void> {
+        const bookMark = await BookMarkSchema.findOne({
+            ownerId: userId.value,
+        });
+        if (!bookMark) return;
+        if (type === 'tweet') {
+            bookMark.tweetIds = bookMark?.tweetIds?.filter(
+                tweet => tweet !== id.value
+            );
+        }
+        if (type === 'reply') {
+            bookMark.replyIds = bookMark?.replyIds?.filter(
+                reply => reply !== id.value
+            );
+        }
         await bookMark?.save();
     }
 
@@ -51,20 +71,6 @@ export class BookMarkRepository implements IBookMarkRepository {
 
     async findById(id: UuidVO): Promise<BookMarkModel | null> {
         return null;
-    }
-
-    async remove(userId: UuidVO, tweetId: UuidVO): Promise<void> {
-        const bookMark = await BookMarkSchema.findOne({
-            ownerId: userId.value,
-        });
-        if (!bookMark) return;
-
-        if (bookMark.tweetIds?.includes(tweetId.value))
-            bookMark.tweetIds = bookMark?.tweetIds?.filter(
-                tweet => tweet !== tweetId.value
-            );
-
-        await bookMark?.save();
     }
 
     async update(user: BookMarkModel): Promise<void> {}

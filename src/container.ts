@@ -1,10 +1,8 @@
 import { Container } from 'inversify';
 import { coreTypes, TYPES } from './types';
-
 import { IUserRepository } from './user/domain/repository/user.repository';
 import { AuthMiddleware } from './shared/infrastruture/middlewares/auth.middleware';
 import { UserRepository } from './user/infrastructure/repository/user.repository';
-
 import { ITweetRepository } from './tweet/domain/repository/tweet.respository';
 import { TweetRepository } from './tweet/infrastruture/repository/tweet.repository';
 import { ReplyCreateUseCase } from './reply/application/usecases/reply.create.usecase';
@@ -41,6 +39,7 @@ import { UserCreatedHandler } from './user/application/event-handlers/user.creat
 import { IBookMarkRepository } from './tweet/domain/repository/book.mark.repository';
 import { BookMarkSaveUseCase } from './user/application/usecases/bookmark/book.mark.save.usecase';
 import { BookMarkRemoveUseCase } from './user/application/usecases/bookmark/book.mark.remove.usecase';
+import { BookmarkVerifyTypeService } from './user/application/services/bookmark.service';
 
 const container = new Container();
 
@@ -136,9 +135,12 @@ container
     .bind<BookMarkRemoveUseCase>(TYPES.BookMarkRemoveUseCase)
     .to(BookMarkRemoveUseCase);
 
-/* ========== middleware=========== */
+/* ========== middleware and Service =========== */
 container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
 container.bind<JwtService>(TYPES.JwtService).to(JwtService);
+container
+    .bind<BookmarkVerifyTypeService>(TYPES.BookmarkVerifyTypeService)
+    .to(BookmarkVerifyTypeService);
 
 /*======== event========  */
 

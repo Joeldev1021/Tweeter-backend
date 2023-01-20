@@ -16,13 +16,59 @@ describe('TEST FOR BOOKMARK', () => {
         await api.post('/tweet').set('Authorization', token).send(tweet);
     });
 
-    describe('Save Tweet Bookmark ', () => {
-        it('should save tweet successfully', async () => {
+    describe('Save Tweet and Reply Bookmark ', () => {
+        const reply = generateTweetRandom();
+
+        it('should save a tweet into bookmark successfully', async () => {
             await api
                 .post(`/bookmark/save/${tweet.id}`)
                 .set('Authorization', token)
+                .expect(200);
+        });
+
+        it('should save a reply into bookmark successfully', async () => {
+            /* create first reply */
+            await api
+                .post(`/reply/${tweet.id}`)
+                .set('Authorization', token)
+                .send(reply);
+            /* save reply into the bookmark */
+            await api
+                .post(`/bookmark/save/${reply.id}`)
+                .set('Authorization', token)
+                .expect(200);
+        });
+    });
+
+    describe('remove Tweet and Reply bookmark', () => {
+        beforeEach(async () => {
+            await api
+                .post(`/bookmark/save/${tweet.id}`)
+                .set('Authorization', token);
+        });
+        it('should remove tweet the bookmark', async () => {
+            await api
+                .post(`/bookmark/remove/${tweet.id}`)
+                .set('Authorization', token)
                 .expect(204);
         });
-        // it('unfollow successfully', async () => {});
+        it('should remove reply the bookmark', async () => {
+            const reply = generateTweetRandom();
+            /*  create reply  */
+            await api
+                .post(`/reply/${tweet.id}`)
+                .set('Authorization', token)
+                .send(reply);
+            /* save reply */
+            await api
+                .post(`/bookmark/save/${reply.id}`)
+                .set('Authorization', token);
+
+            /* remove reply */
+            await api
+                .post(`/bookmark/remove/${reply.id}`)
+                .set('Authorization', token)
+                .expect(204);
+        });
     });
 });

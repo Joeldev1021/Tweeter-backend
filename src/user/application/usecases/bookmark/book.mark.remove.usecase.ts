@@ -1,23 +1,23 @@
+import { BookmarkVerifyTypeService } from './../../services/bookmark.service';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../types';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { BookMarkRepository } from '../../../../user/infrastructure/repository/book.mark.repository';
-import { ITweetRepository } from '../../../../tweet/domain/repository/tweet.respository';
-import { TweetNotFoundException } from '../../../../tweet/application/errors/tweet.not.found.exception';
 
 @injectable()
 export class BookMarkRemoveUseCase {
     constructor(
-        @inject(TYPES.TweetRepository)
-        private readonly _booMarkRepository: BookMarkRepository,
+        @inject(TYPES.BookmarkVerifyTypeService)
+        private readonly _bookmarkVerifyType: BookmarkVerifyTypeService,
         @inject(TYPES.BookMarkRepository)
-        private readonly _tweetRepository: ITweetRepository
+        private readonly _booMarkRepository: BookMarkRepository
     ) {}
 
-    public async execute(userId: UuidVO, tweetId: UuidVO): Promise<void> {
-        const tweetFound = await this._tweetRepository.findById(userId);
-        if (!tweetFound) throw new TweetNotFoundException();
+    public async execute(userId: UuidVO, id: UuidVO): Promise<void> {
+        const foundModel = await this._bookmarkVerifyType.execute(id);
 
-        await this._booMarkRepository.remove(userId, tweetId);
+        if (!foundModel) throw new Error('not found');
+
+        await this._booMarkRepository.remove(userId, id, foundModel.type);
     }
 }

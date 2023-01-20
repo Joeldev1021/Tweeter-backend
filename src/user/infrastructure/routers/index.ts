@@ -4,4 +4,5 @@ import '../controllers/user.profile.controller';
 import '../controllers/user.following.controller';
 import '../controllers/user.unfollow.controller';
 import '../controllers/bookmark/book.mark.save.controller';
+import '../controllers/bookmark/book.mark.remove.controller';
 //import '../controllers/user.profile.query.filter.controller';
