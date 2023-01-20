@@ -21,8 +21,7 @@ export class InMemoryAsyncEventBus implements IEventBus {
         return await this.bus.publish(events);
     }
 
-    addSubscribers(subscribers: Array<EventHandler<DomainEvent>>) {
-        console.log('subcriber', subscribers);
+    addSubscribers(subscribers: Array<EventHandler<DomainEvent>>): void {
         this.bus.registerSubscribers(subscribers);
     }
 

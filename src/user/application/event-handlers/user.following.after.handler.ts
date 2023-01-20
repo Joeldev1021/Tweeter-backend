@@ -22,7 +22,6 @@ export class UserFollowingAfterHandler implements EventHandler {
         const followingFound = await this._userRepository.findById(
             new UuidVO(followerId)
         );
-
         if (!followingFound) return;
 
         followingFound.addFollower(new UuidVO(userId));

@@ -13,7 +13,6 @@ export class EventEmitterBus {
     }
 
     async publish(events: DomainEvent[]): Promise<void> {
-        console.log(this.subscribers);
         await Promise.all(
             events.map(
                 async event =>

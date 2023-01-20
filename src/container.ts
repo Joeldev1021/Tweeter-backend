@@ -36,10 +36,11 @@ import { InMemoryAsyncEventBus } from './shared/infrastruture/event/event.bus';
 import { UserFollowingAfterHandler } from './user/application/event-handlers/user.following.after.handler';
 import { UserUnfollowedHandler } from './user/application/event-handlers/user.unfollowed.handler';
 import { UserUnfollowUseCase } from './user/application/usecases/user.unfollow.usecase';
-import { BookMarkSaveUseCase } from './tweet/application/usecase/bookmark/book.mark.save.usecase';
-import { BookMarkRepository } from './tweet/infrastruture/repository/book.mark.repository';
+import { BookMarkRepository } from './user/infrastructure/repository/book.mark.repository';
 import { UserCreatedHandler } from './user/application/event-handlers/user.created.handler';
-import { BookMarkRemoveUseCase } from './tweet/application/usecase/bookmark/book.mark.remove.usecase';
+import { IBookMarkRepository } from './tweet/domain/repository/book.mark.repository';
+import { BookMarkSaveUseCase } from './user/application/usecases/bookmark/book.mark.save.usecase';
+import { BookMarkRemoveUseCase } from './user/application/usecases/bookmark/book.mark.remove.usecase';
 
 const container = new Container();
 
@@ -51,7 +52,7 @@ container.bind<ITweetRepository>(TYPES.TweetRepository).to(TweetRepository);
 container.bind<IReplyRepository>(TYPES.ReplyRepository).to(ReplyRepository);
 
 container
-    .bind<BookMarkRepository>(TYPES.BookMarkRepository)
+    .bind<IBookMarkRepository>(TYPES.BookMarkRepository)
     .to(BookMarkRepository);
 
 /* ========== user usecase =========== */

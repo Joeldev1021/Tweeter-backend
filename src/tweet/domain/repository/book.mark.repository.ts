@@ -22,7 +22,7 @@ export interface IBookMarkRepository {
      * @param {UuidVO} tweetId - UuidVO
      * @returns A promise that resolves to void
      */
-    save(userId: UuidVO, tweetId: UuidVO): Promise<void>;
+    save(userId: UuidVO, tweetId: UuidVO, type: string): Promise<void>;
 
     update(user: BookMarkModel): Promise<void>;
     /**

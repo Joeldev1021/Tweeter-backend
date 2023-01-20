@@ -22,7 +22,6 @@ export class ReplyCreatedHandler implements EventHandler {
 
     async handle(event: ReplyCreatedEvent): Promise<void> {
         const { ownerId, replyId, tweetId } = event.payload;
-        console.log('event reply', event);
         const user = await this._userRepository.findById(new UuidVO(ownerId));
         const tweet = await this._tweetRepository.findById(new UuidVO(tweetId));
 

@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { BookMarkModel } from '../../../user/domain/models/bookmark.model';
-import { IBookMarkRepository } from '../../domain/repository/book.mark.repository';
-import { IBookMark } from '../../../user/infrastructure/interface/save.tweet.interface';
+import { BookMarkModel } from '../../domain/models/bookmark.model';
+import { IBookMarkRepository } from '../../../tweet/domain/repository/book.mark.repository';
+import { IBookMark } from '../interface/save.tweet.interface';
 import { BookMarkSchema } from '../schemas/book.mark.schema';
 
 @injectable()
@@ -22,14 +22,20 @@ export class BookMarkRepository implements IBookMarkRepository {
         };
     }
 
-    async save(userId: UuidVO, tweetId: UuidVO): Promise<void> {
+    async save(userId: UuidVO, id: UuidVO, type: string): Promise<void> {
         const bookMark = await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
         if (!bookMark) return;
+        if (type === 'tweet') {
+            if (!bookMark.tweetIds?.includes(id.value))
+                bookMark.tweetIds?.push(id.value);
+        }
+        if (type === 'reply') {
+            if (!bookMark.replyIds?.includes(id.value))
+                bookMark.replyIds?.push(id.value);
+        }
 
-        if (!bookMark.tweetIds?.includes(tweetId.value))
-            bookMark.tweetIds?.push(tweetId.value);
         await bookMark?.save();
     }
 
@@ -54,7 +60,9 @@ export class BookMarkRepository implements IBookMarkRepository {
         if (!bookMark) return;
 
         if (bookMark.tweetIds?.includes(tweetId.value))
-            bookMark?.tweetIds?.filter(tweet => tweet !== tweetId.value);
+            bookMark.tweetIds = bookMark?.tweetIds?.filter(
+                tweet => tweet !== tweetId.value
+            );
 
         await bookMark?.save();
     }

@@ -5,7 +5,7 @@ import { EventHandler } from '../../../shared/domain/types/event-handler.interfa
 import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
 import { TYPES } from '../../../types';
 import { BookMarkModel } from '../../domain/models/bookmark.model';
-import { BookMarkRepository } from '../../../tweet/infrastruture/repository/book.mark.repository';
+import { BookMarkRepository } from '../../infrastructure/repository/book.mark.repository';
 import uuid from 'uuid-random';
 import { BookMarkIdAlreadyExistException } from '../../../tweet/application/errors/book.mark.id.already.exist.exception';
 

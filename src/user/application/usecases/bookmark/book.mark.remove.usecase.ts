@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../types';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
-import { TweetNotFoundException } from '../../errors/tweet.not.found.exception';
-import { BookMarkRepository } from '../../../infrastruture/repository/book.mark.repository';
-import { ITweetRepository } from '../../../domain/repository/tweet.respository';
+import { BookMarkRepository } from '../../../../user/infrastructure/repository/book.mark.repository';
+import { ITweetRepository } from '../../../../tweet/domain/repository/tweet.respository';
+import { TweetNotFoundException } from '../../../../tweet/application/errors/tweet.not.found.exception';
 
 @injectable()
 export class BookMarkRemoveUseCase {

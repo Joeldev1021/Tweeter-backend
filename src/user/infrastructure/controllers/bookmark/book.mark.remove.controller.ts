@@ -4,9 +4,9 @@ import { controller, httpPost } from 'inversify-express-utils';
 import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
 import { AuthRequest } from '../../../../shared/infrastruture/types';
 import { TYPES } from '../../../../types';
-import { BookMarkRemoveUseCase } from '../../../application/usecase/bookmark/book.mark.remove.usecase';
+import { BookMarkRemoveUseCase } from '../../../application/usecases/bookmark/book.mark.remove.usecase';
 
-@controller('/tweet')
+@controller('/bookmark')
 export class BookMarkRemoveController {
     constructor(
         @inject(TYPES.BookMarkSaveUseCase)
