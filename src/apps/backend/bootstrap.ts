@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { config as dotenvConfig } from 'dotenv';
-import { connectionDb } from './connect.db';
+import { connectionDb } from '../../Contexts/shared/infrastruture/persistence/connect.db';
 import { Server } from './server';
 import { Application } from 'express';
 import * as http from 'http';
@@ -30,7 +30,6 @@ export class Bootstrap {
         return this.server?.getApp();
     }
 }
-/// init application
 void new Bootstrap().start();
 
 //todo search user by username query

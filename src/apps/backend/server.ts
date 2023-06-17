@@ -1,22 +1,21 @@
-/* eslint-disable no-console */
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { InversifyExpressServer } from 'inversify-express-utils';
-import { container } from './container';
+import { container } from './dependency-injection/container';
 /*============== routes=========== */
 import './user/infrastructure/routers/index';
 import './tweet/infrastruture/routers/index';
 import './reply/infrastructure/routers/index';
 
 /*============== routes=========== */
-import { errorMiddleware } from './shared/infrastruture/middlewares/error.middleware';
 import * as http from 'http';
-import { IEventBus } from './shared/domain/types/event-bus.interface';
-import { EventHandler } from './shared/domain/types/event-handler.interface';
-import { coreTypes, TYPES } from './types';
-import { DomainEventMapping } from './shared/infrastruture/event/domain-event-mapping';
+import { errorMiddleware } from '../../Contexts/shared/infrastruture/middlewares/error.middleware';
+import { IEventBus } from '../../Contexts/shared/domain/types/event-bus.interface';
+import { EventHandler } from '../../Contexts/shared/domain/types/event-handler.interface';
+import { TYPES, coreTypes } from './dependency-injection/types';
+import { DomainEventMapping } from '../../Contexts/shared/infrastruture/event/domain-event-mapping';
 dotenv.config();
 
 export class Server {
