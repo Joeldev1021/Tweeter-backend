@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IBookMark } from '../interface/save.tweet.interface';
+import { IBookMark } from '../interface/IBookMark';
 
 const schema = new Schema<IBookMark>({
     _id: { type: String, id: false, required: true },

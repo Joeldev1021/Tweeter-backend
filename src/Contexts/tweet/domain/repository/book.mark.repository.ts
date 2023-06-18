@@ -1,6 +1,6 @@
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { BookMarkModel } from '../../../user/domain/models/bookmark.model';
-import { IBookMark } from '../../../user/infrastructure/interface/save.tweet.interface';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { BookMarkModel } from '../../../user/domain/models/BookMarkModel';
+import { IBookMark } from '../../../user/infrastructure/interface/IBookMark';
 
 export interface IBookMarkRepository {
     /**

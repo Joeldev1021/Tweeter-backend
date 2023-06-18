@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../types';
-import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../../shared/domain/value-objects/UuiValueObject';
 import { IBookMarkRepository } from '../../../../tweet/domain/repository/book.mark.repository';
 import { BookmarkVerifyTypeService } from '../../services/bookmark.service';
 

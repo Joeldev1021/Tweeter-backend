@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { AppplicationUnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';
@@ -8,7 +8,7 @@ import { ReplyRepository } from '../../infrastructure/repository/reply.repositor
 
 @injectable()
 export class ReplyDeleteByIdUseCase {
-    private replyRepository: ReplyRepository;
+    private readonly replyRepository: ReplyRepository;
     constructor(
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
     ) {
@@ -25,6 +25,6 @@ export class ReplyDeleteByIdUseCase {
         if (foundReply.ownerId.value !== ownerId.value)
             throw new AppplicationUnauthorizedException();
 
-        return this.replyRepository.delete(id);
+        return await this.replyRepository.delete(id);
     }
 }

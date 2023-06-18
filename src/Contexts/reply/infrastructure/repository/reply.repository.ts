@@ -1,10 +1,10 @@
 import { injectable } from 'inversify';
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
+import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
-import { UsernameVO } from '../../../user/domain/value-objects/username.vo';
-import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
+import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
+import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
 import { ReplyModel, ReplyWithUserModel } from '../../domain/model/reply.model';
 import { IReplyRepository } from '../../domain/repository/reply.repository';
 import { IReplyDoc, IReplyUser } from '../interface/reply.interface';

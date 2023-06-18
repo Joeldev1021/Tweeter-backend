@@ -1,8 +1,8 @@
 import { BookmarkVerifyTypeService } from './../../services/bookmark.service';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../types';
-import { UuidVO } from '../../../../shared/domain/value-objects/uuid.vo';
-import { BookMarkRepository } from '../../../../user/infrastructure/repository/book.mark.repository';
+import { UuidVO } from '../../../../shared/domain/value-objects/UuiValueObject';
+import { BookMarkRepository } from '../../../infrastructure/repository/BookMarkMongoRepository';
 
 @injectable()
 export class BookMarkRemoveUseCase {

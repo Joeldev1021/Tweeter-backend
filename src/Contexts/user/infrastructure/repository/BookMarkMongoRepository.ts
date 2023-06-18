@@ -1,12 +1,13 @@
 import { injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { BookMarkModel } from '../../domain/models/bookmark.model';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { BookMarkModel } from '../../domain/models/BookMarkModel';
 import { IBookMarkRepository } from '../../../tweet/domain/repository/book.mark.repository';
-import { IBookMark } from '../interface/save.tweet.interface';
-import { BookMarkSchema } from '../schemas/book.mark.schema';
+import { IBookMark } from '../interface/IBookMark';
+import { BookMarkSchema } from '../schemas/BookMarkSchema';
 
+//TODO: refactor valueObject bookMark
 @injectable()
-export class BookMarkRepository implements IBookMarkRepository {
+export class BookMarkMongoRepository implements IBookMarkRepository {
     /**
      * It takes a BookMarkModel and returns an IBookMark
      * @param {BookMarkModel} booKMark - BookMarkModel

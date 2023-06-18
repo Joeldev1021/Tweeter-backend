@@ -1,7 +1,7 @@
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { ImageVO } from '../../../shared/domain/value-objects/image.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
+import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
+import { ImageVO } from '../../../shared/domain/value-objects/ImageValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
 import { TweetCreatedEvent } from '../../../shared/domain/events/tweet/tweet.created.event';
@@ -29,6 +29,7 @@ export class TweetModel extends AggregateRoot {
     ) {
         super();
     }
+
     static create(id: UuidVO, content: ContentVO, ownerId: UuidVO): TweetModel {
         const createdAt = new CreatedAtVO(new Date());
         const tweet = new TweetModel(

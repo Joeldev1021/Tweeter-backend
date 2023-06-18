@@ -3,8 +3,8 @@ import { TweetRepository } from '../../../tweet/infrastruture/repository/tweet.r
 import { TweetWithUserModel } from '../../../tweet/domain/models/tweet.model';
 import { ReplyRepository } from '../../../reply/infrastructure/repository/reply.repository';
 import { ReplyWithUserModel } from '../../../reply/domain/model/reply.model';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { QueryFilterVO } from '../../../shared/domain/value-objects/query-filter.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { QueryFilterVO } from '../../../shared/domain/value-objects/QueryFilterValueObject';
 import { TYPES } from '../../../types';
 
 interface UserByFilter {
@@ -13,8 +13,8 @@ interface UserByFilter {
 
 @injectable()
 export class ProfileFindByQueryFilterUseCase {
-    private tweetRepository: TweetRepository;
-    private replyRepository: ReplyRepository;
+    private readonly tweetRepository: TweetRepository;
+    private readonly replyRepository: ReplyRepository;
 
     constructor(
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository,

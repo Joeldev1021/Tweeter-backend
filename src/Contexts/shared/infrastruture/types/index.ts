@@ -1,5 +1,5 @@
-import { UsernameVO } from '../../../user/domain/value-objects/username.vo';
-import { UuidVO } from '../../domain/value-objects/uuid.vo';
+import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
+import { UuidVO } from '../../domain/value-objects/UuiValueObject';
 import { Request } from 'express';
 
 export interface UserRequest<T> extends Request {

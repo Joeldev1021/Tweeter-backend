@@ -1,39 +1,39 @@
-import { UserModel } from '../../domain/models/user.model';
-import { UserSchema } from '../schemas/user.schema';
-import { UsernameVO } from '../../domain/value-objects/username.vo';
-import { PasswordVO } from '../../domain/value-objects/password.vo';
-import { EmailVO } from '../../domain/value-objects/email.vo';
-import { IUserRepository } from '../../domain/repository/user.repository';
-import { IUser } from '../interface/user.interface';
+import { UserModel } from '../../domain/models/UserModel';
+import { UserSchema } from '../schemas/UserSchema';
 import { injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { BookMarkSchema } from '../schemas/book.mark.schema';
+import { BookMarkSchema } from '../schemas/BookMarkSchema';
+import { UserEmail } from '../../domain/value-objects/UserEmail';
+import { UserPassword } from '../../domain/value-objects/UserPassword';
+import { UserUsername } from '../../domain/value-objects/UserUsername';
+import { IUser } from '../interface/IUser';
+import { UserRepository } from '../../domain/repository/UserRepository';
+import { UserId } from '../../../shared/domain/value-objects/UserId';
 
 @injectable()
-export class UserRepository implements IUserRepository {
+export class UserMongoRepository implements UserRepository {
     /**
      * It takes an object that implements the IUser interface and returns a UserModel object
-     * @param {IUser} persistanceUser - IUser - This is the user object that we get from the database.
+     * @param {IUser} persistenceUser - IUser - This is the user object that we get from the database.
      * @returns A UserModel
      */
     /* TODO */
     private toDomain(user: IUser): UserModel {
         return new UserModel(
-            new UuidVO(user._id),
-            new UsernameVO(user.username),
-            new EmailVO(user.email),
-            new PasswordVO(user.password),
+            new UserId(user._id),
+            new UserUsername(user.username),
+            new UserEmail(user.email),
+            new UserPassword(user.password),
             user.tweetIds
-                ? user.tweetIds.map(tweetId => new UuidVO(tweetId))
+                ? user.tweetIds.map(tweetId => new UserId(tweetId))
                 : [],
             user.replyIds
-                ? user.replyIds.map(replyId => new UuidVO(replyId))
+                ? user.replyIds.map(replyId => new UserId(replyId))
                 : [],
             user.followerIds
-                ? user.followerIds.map(follower => new UuidVO(follower))
+                ? user.followerIds.map(follower => new UserId(follower))
                 : [],
             user.followingIds
-                ? user.followingIds.map(follower => new UuidVO(follower))
+                ? user.followingIds.map(follower => new UserId(follower))
                 : []
         );
     }
@@ -64,14 +64,14 @@ export class UserRepository implements IUserRepository {
         return this.toDomain(await user.save());
     }
 
-    async findById(id: UuidVO): Promise<UserModel | null> {
+    async findById(id: UserId): Promise<UserModel | null> {
         const userFound = await UserSchema.findById(id.value);
         if (!userFound) return null;
 
         return this.toDomain(userFound);
     }
 
-    async findByEmail(email: EmailVO): Promise<UserModel | null> {
+    async findByEmail(email: UserEmail): Promise<UserModel | null> {
         const userFound = await UserSchema.findOne({ email: email.value });
         if (!userFound) return null;
         return this.toDomain(userFound);
@@ -82,7 +82,7 @@ export class UserRepository implements IUserRepository {
         return users.map(user => this.toDomain(user));
     }
 
-    async findByUsername(username: UsernameVO): Promise<UserModel | null> {
+    async findByUsername(username: UserUsername): Promise<UserModel | null> {
         const userFound = await UserSchema.findOne({
             username: username.value,
         });
@@ -95,7 +95,7 @@ export class UserRepository implements IUserRepository {
         await UserSchema.findByIdAndUpdate(_id, rest);
     }
 
-    async following(userId: UuidVO, followingId: UuidVO): Promise<void> {
+    async following(userId: UserId, followingId: UserId): Promise<void> {
         /* los que yo sigo */
         const user = await UserSchema.findById(userId.value);
         /* validate if user exists and user already following */
@@ -105,7 +105,7 @@ export class UserRepository implements IUserRepository {
         await user.save();
     }
 
-    async unfollow(userId: UuidVO, followingId: UuidVO): Promise<void> {
+    async unfollow(userId: UserId, followingId: UserId): Promise<void> {
         const user = await UserSchema.findById(userId.value);
         if (!user || !user.followingIds?.includes(userId.value)) return;
 
@@ -115,8 +115,8 @@ export class UserRepository implements IUserRepository {
         await user.save();
     }
 
-    async bookMark(userId: UuidVO, tweetId: UuidVO): Promise<void> {
-        const saveTweet = await BookMarkSchema.findOne({
+    async bookMark(userId: UserId, tweetId: UserId): Promise<void> {
+        await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
     }

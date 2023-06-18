@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 import { TweetWithUserModel } from '../../../tweet/domain/models/tweet.model';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { QueryFilterVO } from '../../../shared/domain/value-objects/query-filter.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { QueryFilterVO } from '../../../shared/domain/value-objects/QueryFilterValueObject';
 
 @injectable()
-export class UserSearchProfileUseCase {
+export class UserFindUseCase {
     constructor() {}
 
     public async execute(

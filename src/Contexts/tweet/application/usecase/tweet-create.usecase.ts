@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
+import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetIdAlreadyExist } from '../errors/tweet.id.already.exists.exception';
 import { ITweetRepository } from '../../domain/repository/tweet.respository';

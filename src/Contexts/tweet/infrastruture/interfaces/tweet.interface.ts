@@ -1,5 +1,5 @@
 import { LeanDocument } from 'mongoose';
-import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
+import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
 
 export interface ITweet {
     _id: string;

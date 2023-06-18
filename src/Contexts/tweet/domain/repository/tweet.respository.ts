@@ -1,4 +1,4 @@
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TweetModel, TweetWithUserModel } from '../models/tweet.model';
 
 export interface ITweetRepository {

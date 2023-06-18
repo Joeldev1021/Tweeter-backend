@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { IUserRepository } from '../../domain/repository/user.repository';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { IUserRepository } from '../../domain/repository/UserRepository';
 import { UserNotFoundException } from '../errors/user.not.found.exception';
 import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 

@@ -1,4 +1,4 @@
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { ReplyModel, ReplyWithUserModel } from '../model/reply.model';
 
 export interface IReplyRepository {

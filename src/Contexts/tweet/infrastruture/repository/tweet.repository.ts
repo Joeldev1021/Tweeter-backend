@@ -1,4 +1,4 @@
-import { UsernameVO } from '../../../user/domain/value-objects/username.vo';
+import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
 import { injectable } from 'inversify';
 import {
     TweetModel,
@@ -7,10 +7,10 @@ import {
 import { ITweetRepository } from '../../domain/repository/tweet.respository';
 import { TweetSchema } from '../schemas/tweet.schema';
 import { ITweetDoc, ITweetUser } from '../interfaces/tweet.interface';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/created-at.vo';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
-import { IUserDoc } from '../../../user/infrastructure/interface/user.interface';
+import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
+import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
 
 @injectable()
 export class TweetRepository implements ITweetRepository {

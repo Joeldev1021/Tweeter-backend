@@ -1,14 +1,14 @@
 import { JwtService } from '../../../shared/infrastruture/services/jwt.services';
 import { inject, injectable } from 'inversify';
-import { UserModel } from '../../domain/models/user.model';
-import { EmailVO } from '../../domain/value-objects/email.vo';
-import { PasswordVO } from '../../domain/value-objects/password.vo';
-import { UsernameVO } from '../../domain/value-objects/username.vo';
+import { UserModel } from '../../domain/models/UserModel';
+import { EmailVO } from '../../domain/value-objects/UserEmail';
+import { PasswordVO } from '../../domain/value-objects/UserPassword';
+import { UsernameVO } from '../../domain/value-objects/UserUsername';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { UserIdAlreadyExistsException } from '../errors/user.id.already.exists';
 import { UserEmailAlreadyExistsException } from '../errors/user.email.already.exists.exception';
-import { IUserRepository } from '../../domain/repository/user.repository';
+import { IUserRepository } from '../../domain/repository/UserRepository';
 import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 
 @injectable()

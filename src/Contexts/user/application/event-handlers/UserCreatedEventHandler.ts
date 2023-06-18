@@ -2,10 +2,10 @@ import { inject, injectable } from 'inversify';
 import { UserCreatedEvent } from '../../../shared/domain/events/user/user.created.event';
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TYPES } from '../../../types';
-import { BookMarkModel } from '../../domain/models/bookmark.model';
-import { BookMarkRepository } from '../../infrastructure/repository/book.mark.repository';
+import { BookMarkModel } from '../../domain/models/BookMarkModel';
+import { BookMarkRepository } from '../../infrastructure/repository/BookMarkMongoRepository';
 import uuid from 'uuid-random';
 import { BookMarkIdAlreadyExistException } from '../../../tweet/application/errors/book.mark.id.already.exist.exception';
 

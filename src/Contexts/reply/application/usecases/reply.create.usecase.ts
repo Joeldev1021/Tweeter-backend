@@ -2,16 +2,16 @@ import { inject, injectable } from 'inversify';
 import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
-import { ContentVO } from '../../../shared/domain/value-objects/content.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 @injectable()
 export class ReplyCreateUseCase {
     constructor(
         @inject(TYPES.ReplyRepository)
-        private _replyRepository: ReplyRepository,
+        private readonly _replyRepository: ReplyRepository,
         @inject(TYPES.EventBus)
-        private _eventBus: IEventBus
+        private readonly _eventBus: IEventBus
     ) {}
 
     public async execute(

@@ -1,8 +1,8 @@
 import { Container } from 'inversify';
 import { coreTypes, TYPES } from './types';
-import { IUserRepository } from '../../../Contexts/user/domain/repository/user.repository';
+import { IUserRepository } from '../../../Contexts/user/domain/repository/UserRepository';
 import { AuthMiddleware } from '../../../Contexts/shared/infrastruture/middlewares/auth.middleware';
-import { UserRepository } from '../../../Contexts/user/infrastructure/repository/user.repository';
+import { UserRepository } from '../../../Contexts/user/infrastructure/repository/UserMongoRepository';
 import { ITweetRepository } from '../../../Contexts/tweet/domain/repository/tweet.respository';
 import { TweetRepository } from '../../../Contexts/tweet/infrastruture/repository/tweet.repository';
 import { ReplyCreateUseCase } from '../../../Contexts/reply/application/usecases/reply.create.usecase';
@@ -34,7 +34,7 @@ import { InMemoryAsyncEventBus } from '../../../Contexts/shared/infrastruture/ev
 import { UserFollowingAfterHandler } from '../../../Contexts/user/application/event-handlers/user.following.after.handler';
 import { UserUnfollowedHandler } from '../../../Contexts/user/application/event-handlers/user.unfollowed.handler';
 import { UserUnfollowUseCase } from '../../../Contexts/user/application/usecases/user.unfollow.usecase';
-import { BookMarkRepository } from '../../../Contexts/user/infrastructure/repository/book.mark.repository';
+import { BookMarkRepository } from '../../../Contexts/user/infrastructure/repository/BookMarkMongoRepository';
 import { UserCreatedHandler } from '../../../Contexts/user/application/event-handlers/user.created.handler';
 import { IBookMarkRepository } from '../../../Contexts/tweet/domain/repository/book.mark.repository';
 import { BookMarkSaveUseCase } from '../../../Contexts/user/application/usecases/bookmark/book.mark.save.usecase';

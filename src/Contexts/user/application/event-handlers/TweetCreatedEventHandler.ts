@@ -2,12 +2,12 @@ import { inject, injectable } from 'inversify';
 import { TweetCreatedEvent } from '../../../shared/domain/events/tweet/tweet.created.event';
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TYPES } from '../../../types';
-import { IUserRepository } from '../../domain/repository/user.repository';
+import { IUserRepository } from '../../domain/repository/UserRepository';
 
 @injectable()
-export class TweetCreatedHandler implements EventHandler {
+export class TweetCreatedEventHandler implements EventHandler {
     constructor(
         @inject(TYPES.UserRepository)
         private readonly _userRepository: IUserRepository

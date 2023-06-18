@@ -1,4 +1,4 @@
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { IReplyRepository } from '../../../reply/domain/repository/reply.repository';
 import { ITweetRepository } from '../../../tweet/domain/repository/tweet.respository';
 import { inject, injectable } from 'inversify';

@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';
@@ -7,7 +7,7 @@ import { ReplyRepository } from '../../infrastructure/repository/reply.repositor
 
 @injectable()
 export class ReplyLikeUseCase {
-    private replyRepository: ReplyRepository;
+    private readonly replyRepository: ReplyRepository;
     constructor(
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
     ) {

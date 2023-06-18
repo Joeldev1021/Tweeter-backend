@@ -1,10 +1,10 @@
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UserId } from '../../../shared/domain/value-objects/UserId';
 
 export class BookMarkModel extends AggregateRoot {
     constructor(
         public readonly id: UuidVO,
-        public ownerId: UuidVO,
+        public ownerId: UserId,
         public tweetIds: UuidVO[],
         public replyIds: UuidVO[]
     ) {
@@ -13,7 +13,7 @@ export class BookMarkModel extends AggregateRoot {
 
     static createBookMark(
         id: UuidVO,
-        ownerId: UuidVO,
+        ownerId: UserId,
         tweetIds: UuidVO[],
         replyIds: UuidVO[]
     ): BookMarkModel {

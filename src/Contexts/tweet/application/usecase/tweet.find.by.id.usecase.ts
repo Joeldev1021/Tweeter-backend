@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify';
 import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/uuid.vo';
+import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
 import { TweetNotFoundException } from '../errors/tweet.not.found.exception';
 import { TweetWithUserModel } from '../../domain/models/tweet.model';
 
 @injectable()
 export class TweetFindByIdUseCase {
-    private tweetRepository: TweetRepository;
+    private readonly tweetRepository: TweetRepository;
     constructor(
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository
     ) {

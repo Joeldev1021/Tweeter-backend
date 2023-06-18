@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { UserRepository } from '../../infrastructure/repository/user.repository';
+import { UserRepository } from '../../infrastructure/repository/UserMongoRepository';
 import { TYPES } from '../../../types';
-import { UserModel } from '../../domain/models/user.model';
-import { UsernameVO } from '../../domain/value-objects/username.vo';
+import { UserModel } from '../../domain/models/UserModel';
+import { UsernameVO } from '../../domain/value-objects/UserUsername';
 import { TweetRepository } from '../../../tweet/infrastruture/repository/tweet.repository';
 import { TweetWithUserModel } from '../../../tweet/domain/models/tweet.model';
 import { UserNotFoundException } from '../errors/user.not.found.exception';
