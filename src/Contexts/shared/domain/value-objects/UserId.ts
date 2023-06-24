@@ -1,3 +1,3 @@
-import { UuidValueObject } from './UuiValueObject';
+import { Uuid } from './Uuid';
 
-export class UserId extends UuidValueObject {}
+export class UserId extends Uuid {}

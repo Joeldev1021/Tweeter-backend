@@ -5,7 +5,7 @@ import { JwtPayload } from '../types';
 const jwtSecret = process.env.JWT_SECRET_KEY || 'default_secret';
 
 @injectable()
-export class JwtService {
+export class JwtServices {
     async verifyToken(token: string): Promise<JwtPayload> {
         return jwt.verify(token, jwtSecret) as JwtPayload;
     }

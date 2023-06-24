@@ -1,9 +1,11 @@
 import { injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { BookMarkModel } from '../../domain/models/BookMarkModel';
 import { IBookMarkRepository } from '../../../tweet/domain/repository/book.mark.repository';
 import { IBookMark } from '../interface/IBookMark';
 import { BookMarkSchema } from '../schemas/BookMarkSchema';
+import { BookMarkId } from '../../domain/value-objects/BookMarkId';
+import { UserId } from '../../../shared/domain/value-objects/UserId';
 
 //TODO: refactor valueObject bookMark
 @injectable()
@@ -23,7 +25,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
         };
     }
 
-    async save(userId: UuidVO, id: UuidVO, type: string): Promise<void> {
+    async save(userId: UserId, id: TweetId, type: string): Promise<void> {
         const bookMark = await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
@@ -42,7 +44,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
         await bookMark?.save();
     }
 
-    async remove(userId: UuidVO, id: UuidVO, type: string): Promise<void> {
+    async remove(userId: UserId, id: TweetId, type: string): Promise<void> {
         const bookMark = await BookMarkSchema.findOne({
             ownerId: userId.value,
         });
@@ -60,7 +62,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
         await bookMark?.save();
     }
 
-    async findByOwnerId(ownerId: UuidVO): Promise<IBookMark | null> {
+    async findByOwnerId(ownerId: UserId): Promise<IBookMark | null> {
         return await BookMarkSchema.findOne({ ownerId: ownerId.value });
     }
 
@@ -70,7 +72,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
         await bookMarkCreated.save();
     }
 
-    async findById(id: UuidVO): Promise<BookMarkModel | null> {
+    async findById(id: BookMarkId): Promise<BookMarkModel | null> {
         return null;
     }
 

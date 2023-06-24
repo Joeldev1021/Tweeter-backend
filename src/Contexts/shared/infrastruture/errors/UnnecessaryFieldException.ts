@@ -1,6 +1,6 @@
 import { InfrastructureFormatException } from './infrastruture.format.exception';
 
-export class UnnecessaryFieldsExceptions extends InfrastructureFormatException {
+export class UnnecessaryFieldsException extends InfrastructureFormatException {
     constructor() {
         super('unnecessary fields ');
     }

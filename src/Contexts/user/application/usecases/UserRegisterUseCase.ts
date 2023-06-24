@@ -5,7 +5,7 @@ import { EmailVO } from '../../domain/value-objects/UserEmail';
 import { PasswordVO } from '../../domain/value-objects/UserPassword';
 import { UsernameVO } from '../../domain/value-objects/UserUsername';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { UserIdAlreadyExistsException } from '../errors/user.id.already.exists';
 import { UserEmailAlreadyExistsException } from '../errors/user.email.already.exists.exception';
 import { IUserRepository } from '../../domain/repository/UserRepository';

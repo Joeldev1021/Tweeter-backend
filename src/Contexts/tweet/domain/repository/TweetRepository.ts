@@ -1,7 +1,7 @@
 import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TweetModel, TweetWithUserModel } from '../models/tweet.model';
 
-export interface ITweetRepository {
+export interface TweetRepository {
     /**
      * It takes a TweetModel, converts it to a TweetPersistance, and then converts that TweetPersistance
      * to a TweetModel

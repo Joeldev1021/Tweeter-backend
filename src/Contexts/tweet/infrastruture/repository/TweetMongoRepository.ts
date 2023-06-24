@@ -13,7 +13,7 @@ import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObje
 import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
 
 @injectable()
-export class TweetRepository implements ITweetRepository {
+export class TweetMongoRepository implements ITweetRepository {
     /**
      * It takes a Mongoose document and returns a plain object
      * @param {IUserDoc} owner - IUserDoc - this is the owner of the domain.

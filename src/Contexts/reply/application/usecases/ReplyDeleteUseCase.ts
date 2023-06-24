@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { AppplicationUnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
+import { UnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
 import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';

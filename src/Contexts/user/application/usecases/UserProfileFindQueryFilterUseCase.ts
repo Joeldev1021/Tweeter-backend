@@ -3,7 +3,7 @@ import { TweetRepository } from '../../../tweet/infrastruture/repository/tweet.r
 import { TweetWithUserModel } from '../../../tweet/domain/models/tweet.model';
 import { ReplyRepository } from '../../../reply/infrastructure/repository/reply.repository';
 import { ReplyWithUserModel } from '../../../reply/domain/model/reply.model';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { QueryFilterVO } from '../../../shared/domain/value-objects/QueryFilterValueObject';
 import { TYPES } from '../../../types';
 

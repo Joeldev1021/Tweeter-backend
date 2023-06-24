@@ -5,8 +5,8 @@ export enum FORMAT_IMAGE {
 }
 
 export enum QUERY_FILTER {
-    tweets = 'tweet',
-    likes = 'likes',
-    replys = 'replys',
-    media = 'media',
+    TWEET= 'tweet',
+    LIKES= 'likes',
+    REPLY= 'reply',
+    MEDIA= 'media',
 }

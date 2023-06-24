@@ -2,7 +2,7 @@ import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { BookMarkModel } from '../../../user/domain/models/BookMarkModel';
 import { IBookMark } from '../../../user/infrastructure/interface/IBookMark';
 
-export interface IBookMarkRepository {
+export interface BookMarkRepository {
     /**
      * > This function returns a promise that resolves to a BookMarkModel or null
      * @param {UuidVO} id - UuidVO

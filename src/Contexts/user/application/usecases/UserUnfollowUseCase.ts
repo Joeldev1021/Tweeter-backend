@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { IUserRepository } from '../../domain/repository/UserRepository';
 import { UserNotFoundException } from '../errors/user.not.found.exception';
 

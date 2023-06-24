@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user.follower.after.event';
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/UserRepository';
 

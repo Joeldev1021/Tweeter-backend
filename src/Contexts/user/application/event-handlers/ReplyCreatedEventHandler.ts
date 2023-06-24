@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { ReplyCreatedEvent } from '../../../shared/domain/events/reply/reply.created.event';
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { ITweetRepository } from '../../../tweet/domain/repository/tweet.respository';
 import { TYPES } from '../../../types';
 import { IUserRepository } from '../../domain/repository/UserRepository';

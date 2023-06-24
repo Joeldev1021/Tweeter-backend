@@ -1,7 +1,7 @@
 import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { ReplyModel, ReplyWithUserModel } from '../model/reply.model';
 
-export interface IReplyRepository {
+export interface ReplyRepository {
     /**
      * It finds a user by id.
      * @param {UuidVO} id - UuidVO

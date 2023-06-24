@@ -6,7 +6,7 @@ import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
 
 @injectable()
-export class ReplyFindByIdUseCase {
+export class ReplyFindUseCase {
     private readonly replyRepository: ReplyRepository;
     constructor(
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
