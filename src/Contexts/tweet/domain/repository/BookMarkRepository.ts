@@ -1,4 +1,4 @@
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { BookMarkModel } from '../../../user/domain/models/BookMarkModel';
 import { IBookMark } from '../../../user/infrastructure/interface/IBookMark';
 

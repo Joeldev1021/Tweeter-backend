@@ -1,12 +1,12 @@
+import { AppplicationUnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
 import { inject, injectable } from 'inversify';
 import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetNotFoundException } from '../errors/tweet.not.found.exception';
-
 @injectable()
-export class TweetLikeUseCase {
+export class TweetDeleteByIdUseCase {
     private readonly tweetRepository: TweetRepository;
     constructor(
         @inject(TYPES.TweetRepository) tweetRepository: TweetRepository
@@ -15,14 +15,14 @@ export class TweetLikeUseCase {
     }
 
     public async execute(
-        tweetId: UuidVO,
-        userId: UuidVO
+        id: UuidVO,
+        ownerId: UuidVO
     ): Promise<TweetModel | null> {
-        const tweetFound = await this.tweetRepository.findById(tweetId);
+        const tweetFound = await this.tweetRepository.findById(id);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        if (!tweetFound.likes.includes(tweetId))
-            return await this.tweetRepository.addLike(tweetId, userId);
-        else return await this.tweetRepository.removeLike(tweetId, userId);
+        if (ownerId.value !== tweetFound.ownerId.value)
+            throw new AppplicationUnauthorizedException();
+        return await this.tweetRepository.delete(id);
     }
 }

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
 import { IUserDoc } from '../../../user/infrastructure/interface/IUser';

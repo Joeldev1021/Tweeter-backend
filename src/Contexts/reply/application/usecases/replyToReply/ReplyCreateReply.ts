@@ -4,7 +4,7 @@ import { ReplyRepository } from '../../../infrastructure/repository/reply.reposi
 import { TweetRepository } from '../../../../tweet/infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../../types';
 import { TweetNotFoundException } from '../../../../tweet/application/errors/tweet.not.found.exception';
-import { UuidVO } from '../../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../../shared/domain/value-objects/Uuid';
 import { ContentVO } from '../../../../shared/domain/value-objects/ContentValueObject';
 import { CreatedAtVO } from '../../../../shared/domain/value-objects/CreatedAtValueObject';
 

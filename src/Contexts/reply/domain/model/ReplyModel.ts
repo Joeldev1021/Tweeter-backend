@@ -2,7 +2,7 @@ import { ReplyCreatedEvent } from '../../../shared/domain/events/reply/reply.cre
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
 import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 
 export class ReplyModel extends AggregateRoot {

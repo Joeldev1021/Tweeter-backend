@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
 
 @injectable()
-export class ReplyLikeUseCase {
+export class ReplyFindByOwnerIdUseCase {
     private readonly replyRepository: ReplyRepository;
     constructor(
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
@@ -14,13 +14,10 @@ export class ReplyLikeUseCase {
         this.replyRepository = replyRepository;
     }
 
-    public async execute(
-        replyId: UuidVO,
-        userId: UuidVO
-    ): Promise<ReplyModel | null> {
-        const replyFound = await this.replyRepository.findById(replyId);
+    public async execute(ownerId: UuidVO): Promise<ReplyModel[] | null> {
+        const replyFound = await this.replyRepository.findByOwnerId(ownerId);
         if (!replyFound) throw new TweetNotFoundException();
 
-        return await this.replyRepository.like(replyId, userId);
+        return replyFound;
     }
 }

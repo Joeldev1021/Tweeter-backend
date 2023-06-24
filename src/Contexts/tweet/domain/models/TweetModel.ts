@@ -1,6 +1,6 @@
 import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { ImageVO } from '../../../shared/domain/value-objects/ImageValueObject';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';

@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
 @injectable()

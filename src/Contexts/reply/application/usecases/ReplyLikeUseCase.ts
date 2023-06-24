@@ -1,13 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { AppplicationUnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';
 import { ReplyRepository } from '../../infrastructure/repository/reply.repository';
 
 @injectable()
-export class ReplyDeleteByIdUseCase {
+export class ReplyLikeUseCase {
     private readonly replyRepository: ReplyRepository;
     constructor(
         @inject(TYPES.ReplyRepository) replyRepository: ReplyRepository
@@ -16,15 +15,12 @@ export class ReplyDeleteByIdUseCase {
     }
 
     public async execute(
-        id: UuidVO,
-        ownerId: UuidVO
+        replyId: UuidVO,
+        userId: UuidVO
     ): Promise<ReplyModel | null> {
-        const foundReply = await this.replyRepository.findById(id);
-        if (!foundReply) throw new TweetNotFoundException();
+        const replyFound = await this.replyRepository.findById(replyId);
+        if (!replyFound) throw new TweetNotFoundException();
 
-        if (foundReply.ownerId.value !== ownerId.value)
-            throw new AppplicationUnauthorizedException();
-
-        return await this.replyRepository.delete(id);
+        return await this.replyRepository.like(replyId, userId);
     }
 }

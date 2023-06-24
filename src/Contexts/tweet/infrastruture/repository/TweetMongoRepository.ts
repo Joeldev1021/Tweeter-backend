@@ -8,7 +8,7 @@ import { ITweetRepository } from '../../domain/repository/tweet.respository';
 import { TweetSchema } from '../schemas/tweet.schema';
 import { ITweetDoc, ITweetUser } from '../interfaces/tweet.interface';
 import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
-import { UuidVO } from '../../../shared/domain/value-objects/UuiValueObject';
+import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
 import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
 import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
 

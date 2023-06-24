@@ -23,7 +23,7 @@ export class EventEmitterBus {
                                     .subscribedTo()
                                     .some(ev => ev.NAME === event.eventName)
                             )
-                            .map(hndl => hndl.handle(event))
+                            .map(handle => handle.handle(event))
                     )
             )
         );
