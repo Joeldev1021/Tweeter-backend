@@ -1,31 +1,31 @@
-import { JwtService } from '../../../shared/infrastruture/services/jwt.services';
 import { inject, injectable } from 'inversify';
 import { UserModel } from '../../domain/models/UserModel';
-import { EmailVO } from '../../domain/value-objects/UserEmail';
-import { PasswordVO } from '../../domain/value-objects/UserPassword';
-import { UsernameVO } from '../../domain/value-objects/UserUsername';
-import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
-import { UserIdAlreadyExistsException } from '../errors/user.id.already.exists';
-import { UserEmailAlreadyExistsException } from '../errors/user.email.already.exists.exception';
-import { IUserRepository } from '../../domain/repository/UserRepository';
-import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
+import { TYPES } from '../../../../apps/backend/dependency-injection/Types';
+import { UserRepository } from '../../domain/repository/UserRepository';
+import { JwtServices } from '../../../shared/infrastruture/services/JwtServices';
+import { IEventBus } from '../../../shared/domain/types/IEventBus';
+import { UserUsername } from '../../domain/value-objects/UserUsername';
+import { UserEmail } from '../../domain/value-objects/UserEmail';
+import { UserPassword } from '../../domain/value-objects/UserPassword';
+import { UserIdAlreadyExistsException } from '../errors/UserIdAlreadyExistsException';
+import { UserEmailAlreadyExistsException } from '../errors/UserEmailAlreadyExistException';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
 
 @injectable()
 export class UserRegisterUseCase {
     constructor(
         @inject(TYPES.UserRepository)
-        private readonly _userRepository: IUserRepository,
+        private readonly _userRepository: UserRepository,
         @inject(TYPES.JwtService)
-        private readonly _jwtService: JwtService,
+        private readonly _jwtService: JwtServices,
         @inject(TYPES.EventBus) private readonly _eventBus: IEventBus
     ) {}
 
     public async execute(
-        id: UuidVO,
-        username: UsernameVO,
-        email: EmailVO,
-        password: PasswordVO
+        id: UserId,
+        username: UserUsername,
+        email: UserEmail,
+        password: UserPassword
     ): Promise<{ token: string } | null> {
         const userFound = await this._userRepository.findById(id);
         if (userFound) throw new UserIdAlreadyExistsException();

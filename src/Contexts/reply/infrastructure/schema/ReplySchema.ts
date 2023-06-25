@@ -7,7 +7,7 @@ const schema = new Schema<IReplyDoc>(
         content: { type: String, required: true },
         tweetId: { type: String, required: true, ref: 'Tweet' },
         image: { type: String, required: false },
-        ownerId: { type: String, required: true, ref: 'User' },
+        userId: { type: String, required: true, ref: 'User' },
         likes: [{ type: String, required: false, ref: 'User' }],
         parentReplyId: { type: String, required: false, ref: 'Reply' },
         replyIds: [{ type: String, required: false, ref: 'Reply' }],

@@ -2,7 +2,7 @@ import type { LeanDocument } from 'mongoose';
 
 export interface IBookMark {
     _id: string;
-    ownerId: string;
+    userId: string;
     tweetIds?: string[];
     replyIds?: string[];
 }

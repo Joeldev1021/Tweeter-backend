@@ -1,22 +1,23 @@
-import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
-import { UserId } from '../../../shared/domain/value-objects/UserId';
+import { AggregateRoot } from '../../../shared/domain/models/AggregateRoot';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
+import { BookMarkId } from '../value-objects/BookMarkId';
 
 export class BookMarkModel extends AggregateRoot {
     constructor(
-        public readonly id: UuidVO,
-        public ownerId: UserId,
-        public tweetIds: UuidVO[],
-        public replyIds: UuidVO[]
+        public readonly id: BookMarkId,
+        public userId: UserId,
+        public tweetIds: TweetId[],
+        public replyIds: ReplyId[]
     ) {
         super();
     }
 
     static createBookMark(
-        id: UuidVO,
-        ownerId: UserId,
-        tweetIds: UuidVO[],
-        replyIds: UuidVO[]
+        id: BookMarkId,
+        userId: UserId,
+        tweetIds: TweetId[],
+        replyIds: Reply[]
     ): BookMarkModel {
-        return new BookMarkModel(id, ownerId, tweetIds, replyIds);
+        return new BookMarkModel(id, userId, tweetIds, replyIds);
     }
 }

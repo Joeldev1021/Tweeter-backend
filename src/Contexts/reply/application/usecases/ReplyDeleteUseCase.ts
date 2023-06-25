@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { UnauthorizedException } from '../../../shared/application/errors/application.unauthorized.exception';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';
@@ -17,12 +17,12 @@ export class ReplyDeleteByIdUseCase {
 
     public async execute(
         id: UuidVO,
-        ownerId: UuidVO
+        userId: UuidVO
     ): Promise<ReplyModel | null> {
         const foundReply = await this.replyRepository.findById(id);
         if (!foundReply) throw new TweetNotFoundException();
 
-        if (foundReply.ownerId.value !== ownerId.value)
+        if (foundReply.userId.value !== userId.value)
             throw new AppplicationUnauthorizedException();
 
         return await this.replyRepository.delete(id);

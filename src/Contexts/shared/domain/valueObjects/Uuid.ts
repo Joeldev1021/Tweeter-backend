@@ -1,6 +1,6 @@
 import { validate } from 'uuid';
-import { VOFormatException } from '../errors/vo.format.exception';
-import { ValueObject } from './ValueObject';
+import { VOFormatException } from '../errors/VOFormatException';
+import { ValueObject } from './Value0bject';
 
 export class Uuid extends ValueObject<string> {
     public equals(valueObject: Uuid): boolean {

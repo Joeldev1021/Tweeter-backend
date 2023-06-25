@@ -1,11 +1,11 @@
 import { injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { BookMarkModel } from '../../domain/models/BookMarkModel';
 import { IBookMarkRepository } from '../../../tweet/domain/repository/book.mark.repository';
 import { IBookMark } from '../interface/IBookMark';
 import { BookMarkSchema } from '../schemas/BookMarkSchema';
 import { BookMarkId } from '../../domain/value-objects/BookMarkId';
-import { UserId } from '../../../shared/domain/value-objects/UserId';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
 
 //TODO: refactor valueObject bookMark
 @injectable()
@@ -16,10 +16,10 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
      * @returns An object IBookMarm
      */
     toPersistance(booKMark: BookMarkModel): IBookMark {
-        const { id, ownerId, tweetIds, replyIds } = booKMark;
+        const { id, userId, tweetIds, replyIds } = booKMark;
         return {
             _id: id.value,
-            ownerId: ownerId.value,
+            userId: userId.value,
             tweetIds: tweetIds ? tweetIds.map(tweet => tweet.value) : [],
             replyIds: replyIds ? replyIds.map(tweet => tweet.value) : [],
         };
@@ -27,7 +27,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
 
     async save(userId: UserId, id: TweetId, type: string): Promise<void> {
         const bookMark = await BookMarkSchema.findOne({
-            ownerId: userId.value,
+            userId: userId.value,
         });
 
         if (!bookMark) return;
@@ -46,7 +46,7 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
 
     async remove(userId: UserId, id: TweetId, type: string): Promise<void> {
         const bookMark = await BookMarkSchema.findOne({
-            ownerId: userId.value,
+            userId: userId.value,
         });
         if (!bookMark) return;
         if (type === 'tweet') {
@@ -62,8 +62,8 @@ export class BookMarkMongoRepository implements IBookMarkRepository {
         await bookMark?.save();
     }
 
-    async findByOwnerId(ownerId: UserId): Promise<IBookMark | null> {
-        return await BookMarkSchema.findOne({ ownerId: ownerId.value });
+    async findByOwnerId(userId: UserId): Promise<IBookMark | null> {
+        return await BookMarkSchema.findOne({ userId: userId.value });
     }
 
     async create(bookMarkModel: BookMarkModel): Promise<void> {

@@ -1,5 +1,5 @@
 import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
-import { UuidVO } from '../../domain/value-objects/Uuid';
+import { UuidVO } from '../../domain/valueObjects/Uuid';
 import { Request } from 'express';
 
 export interface UserRequest<T> extends Request {
@@ -16,9 +16,9 @@ export interface TweetRequest<T> extends Request {
     userId: string;
 }
 
-export type JwtPayload = {
+export interface JwtPayload {
     id: string;
-};
+}
 
 export interface IOwnerDataVO {
     id: UuidVO;

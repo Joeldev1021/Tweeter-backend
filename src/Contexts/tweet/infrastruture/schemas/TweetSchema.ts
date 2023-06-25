@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose';
-import { ITweetDoc } from '../interfaces/tweet.interface';
+import { ITweetDoc } from '../interfaces/TweetInterface';
 
 const schema = new Schema<ITweetDoc>(
     {
         _id: { type: String, id: false, required: true },
         content: { type: String, required: true },
         image: { type: String, required: false },
-        ownerId: { type: String, required: true, ref: 'User' },
+        userId: { type: String, required: true, ref: 'User' },
         likes: [{ type: String, required: false, ref: 'User' }],
-        replysId: [{ type: String, required: false, ref: 'Reply' }],
+        replyIds: [{ type: String, required: false, ref: 'Reply' }],
         createdAt: { type: Date, required: true },
     },
     {

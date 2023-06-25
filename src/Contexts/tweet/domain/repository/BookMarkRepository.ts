@@ -1,4 +1,4 @@
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { BookMarkModel } from '../../../user/domain/models/BookMarkModel';
 import { IBookMark } from '../../../user/infrastructure/interface/IBookMark';
 
@@ -34,11 +34,11 @@ export interface BookMarkRepository {
      */
     remove(userId: UuidVO, id: UuidVO, type: string): Promise<void>;
     /**
-     * "Find a BookMark by ownerId."
+     * "Find a BookMark by userId."
      *
      * The first line of the function is a comment. It's a good idea to add comments to your functions
-     * @param {UuidVO} ownerId - UuidVO
+     * @param {UuidVO} userId - UuidVO
      * @returns A BookMarkSchema object.
      */
-    findByOwnerId(ownerId: UuidVO): Promise<IBookMark | null>;
+    findByOwnerId(userId: UuidVO): Promise<IBookMark | null>;
 }

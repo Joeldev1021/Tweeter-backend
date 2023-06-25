@@ -33,7 +33,7 @@ export class TweetUpdateByIdController {
                 id: tweetUpdate?.id.value,
                 content: tweetUpdate?.content.value,
                 createAt: tweetUpdate?.createdAt.value,
-                ownerId: tweetUpdate?.ownerId.value,
+                userId: tweetUpdate?.userId.value,
             };
             res.status(200).send(tweet);
         } catch (error) {

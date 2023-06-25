@@ -1,8 +1,8 @@
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
-import { IReplyRepository } from '../../../reply/domain/repository/reply.repository';
-import { ITweetRepository } from '../../../tweet/domain/repository/tweet.respository';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../types';
+import { TYPES } from '../../../../apps/backend/dependency-injection/Types';
+import { TweetRepository } from '../../../tweet/domain/repository/TweetRepository';
+import { ReplyRepository } from '../../../reply/infrastructure/repository/ReplyMongoRepository';
+import { Uuid } from '../../../shared/domain/valueObjects/Uuid';
 
 export interface TypeModel {
     type: string;
@@ -12,13 +12,13 @@ export interface TypeModel {
 export class BookmarkVerifyTypeService {
     constructor(
         @inject(TYPES.TweetRepository)
-        private readonly _tweetRepository: ITweetRepository,
+        private readonly _tweetRepository: TweetRepository,
 
         @inject(TYPES.ReplyRepository)
-        private readonly _replyRepository: IReplyRepository
+        private readonly _replyRepository: ReplyRepository
     ) {}
 
-    async execute(id: UuidVO): Promise<TypeModel | null> {
+    async execute(id: Uuid): Promise<TypeModel | null> {
         const tweetFound = await this._tweetRepository.findById(id);
         if (tweetFound)
             return {

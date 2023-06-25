@@ -3,8 +3,8 @@ import { inject, injectable } from 'inversify';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
-import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
+import { ContentVO } from '../../../shared/domain/valueObjects/ContentValueObject';
 import { TweetNotFoundException } from '../errors/tweet.not.found.exception';
 
 @injectable()
@@ -24,7 +24,7 @@ export class TweetUpdateByIdUseCase {
         const tweetFound = await this.tweetRepository.findById(id);
         if (!tweetFound) throw new TweetNotFoundException();
 
-        if (tweetFound.ownerId.value !== onwerId.value)
+        if (tweetFound.userId.value !== onwerId.value)
             throw new AppplicationUnauthorizedException();
         //const tweetUpdate = { ...tweetFound, content: content };
         const tweetUpdate = new TweetModel(

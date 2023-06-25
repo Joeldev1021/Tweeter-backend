@@ -1,4 +1,4 @@
-import { UserId } from '../../../shared/domain/value-objects/UserId';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
 import { UserModel } from '../models/UserModel';
 import { UserEmail } from '../value-objects/UserEmail';
 import { UserUsername } from '../value-objects/UserUsername';

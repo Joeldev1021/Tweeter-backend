@@ -1,19 +1,19 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
-import { IUserRepository } from '../../domain/repository/UserRepository';
-import { UserNotFoundException } from '../errors/user.not.found.exception';
-import { IEventBus } from '../../../shared/domain/types/event-bus.interface';
+import { TYPES } from '../../../../apps/backend/dependency-injection/Types';
+import { UserRepository } from '../../domain/repository/UserRepository';
+import { IEventBus } from '../../../shared/domain/types/IEventBus';
+import { UserNotFoundException } from '../errors/UserNotFoundException';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
 
 @injectable()
 export class UserFollowingUseCase {
     constructor(
         @inject(TYPES.UserRepository)
-        private readonly _userRepository: IUserRepository,
+        private readonly _userRepository: UserRepository,
         @inject(TYPES.EventBus) private readonly _eventBus: IEventBus
     ) {}
 
-    public async execute(userId: UuidVO, followingId: UuidVO): Promise<void> {
+    public async execute(userId: UserId, followingId: UserId): Promise<void> {
         const userFound = await this._userRepository.findById(followingId);
         if (!userFound) throw new UserNotFoundException();
 

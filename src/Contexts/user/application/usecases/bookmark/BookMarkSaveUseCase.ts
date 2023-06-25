@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../types';
-import { UuidVO } from '../../../../shared/domain/value-objects/Uuid';
-import { IBookMarkRepository } from '../../../../tweet/domain/repository/book.mark.repository';
-import { BookmarkVerifyTypeService } from '../../services/bookmark.service';
+import { TYPES } from '../../../../../apps/backend/dependency-injection/Types';
+import { BookmarkVerifyTypeService } from '../../services/BookmarkVerifyTypeService';
+import { BookMarkRepository } from '../../../../tweet/domain/repository/BookMarkRepository';
+import { UserId } from '../../../../shared/domain/valueObjects/UserId';
 
 @injectable()
 export class BookMarkSaveUseCase {
@@ -10,10 +10,10 @@ export class BookMarkSaveUseCase {
         @inject(TYPES.BookmarkVerifyTypeService)
         private readonly _bookmarkVerifyType: BookmarkVerifyTypeService,
         @inject(TYPES.BookMarkRepository)
-        private readonly _booMarkRepository: IBookMarkRepository
+        private readonly _booMarkRepository: BookMarkRepository
     ) {}
 
-    public async execute(userId: UuidVO, id: UuidVO): Promise<void> {
+    public async execute(userId: UserId, id: UserId): Promise<void> {
         const foundModelType = await this._bookmarkVerifyType.execute(id);
 
         if (!foundModelType) throw new Error('model not found');

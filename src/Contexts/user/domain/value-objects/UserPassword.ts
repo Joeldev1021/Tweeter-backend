@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { ValueObject } from '../../../shared/domain/value-objects/Value0bject';
-import { VOFormatException } from '../../../shared/domain/errors/vo.format.exception';
+import { ValueObject } from '../../../shared/domain/valueObjects/Value0bject';
+import { VOFormatException } from '../../../shared/domain/errors/VOFormatException';
 
 export class UserPassword extends ValueObject<string> {
     public equals(valueObject: UserPassword): boolean {

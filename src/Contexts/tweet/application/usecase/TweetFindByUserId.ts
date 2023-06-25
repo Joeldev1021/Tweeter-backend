@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { TweetWithUserModel } from '../../domain/models/tweet.model';
 import { TweetNotFoundException } from '../errors/tweet.not.found.exception';
 
@@ -14,10 +14,8 @@ export class TweetFindByOwnerIdUseCase {
         this.tweetRepository = tweetRepository;
     }
 
-    public async execute(
-        ownerId: UuidVO
-    ): Promise<TweetWithUserModel[] | null> {
-        const tweetFounds = await this.tweetRepository.findByOwnerId(ownerId);
+    public async execute(userId: UuidVO): Promise<TweetWithUserModel[] | null> {
+        const tweetFounds = await this.tweetRepository.findByOwnerId(userId);
         if (!tweetFounds) throw new TweetNotFoundException();
 
         return tweetFounds;

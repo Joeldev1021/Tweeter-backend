@@ -3,7 +3,7 @@ import uuid from 'uuid-random';
 
 interface IPayload {
     tweetId: string;
-    ownerId: string;
+    userId: string;
 }
 
 export class TweetCreatedEvent extends DomainEvent {

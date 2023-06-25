@@ -1,5 +1,5 @@
-import { ValueObject } from '../../../shared/domain/value-objects/Value0bject';
-import { VOFormatException } from '../../../shared/domain/errors/vo.format.exception';
+import { VOFormatException } from '../../../shared/domain/errors/VOFormatException';
+import { ValueObject } from '../../../shared/domain/valueObjects/Value0bject';
 
 export class UserUsername extends ValueObject<string> {
     public equals(valueObject: UserUsername): boolean {

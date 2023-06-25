@@ -1,11 +1,11 @@
-import { UserCreatedEvent } from '../../../shared/domain/events/user/user.created.event';
-import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/user.follower.after.event';
-import { UserUnfollowedEvent } from '../../../shared/domain/events/user/user.unfollowed.event';
-import { AggregateRoot } from '../../../shared/domain/models/aggregate.root';
 import { UserEmail } from '../value-objects/UserEmail';
-import { UserId } from '../../../shared/domain/value-objects/UserId';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
 import { UserPassword } from '../value-objects/UserPassword';
 import { UserUsername } from '../value-objects/UserUsername';
+import { AggregateRoot } from '../../../shared/domain/models/AggregateRoot';
+import { UserCreatedEvent } from '../../../shared/domain/events/user/UserCreatedEvent';
+import { UserFollowingAfterEvent } from '../../../shared/domain/events/user/UserFollowerAfterEvent';
+import { UserUnfollowedEvent } from '../../../shared/domain/events/user/UserUnfollowedEvent';
 
 export class UserModel extends AggregateRoot {
     /**
@@ -56,14 +56,6 @@ export class UserModel extends AggregateRoot {
         );
         userModel.record(new UserCreatedEvent({ userId: id.value }));
         return userModel;
-    }
-
-    public addTweet(tweetId: UserId): void {
-        this.tweetIds.push(tweetId);
-    }
-
-    public addReply(replyId: UserId): void {
-        this.replyIds.push(replyId);
     }
 
     public followingUser(userId: UserId, followerId: UserId): void {

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TweetRepository } from '../../infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../types';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { TweetModel } from '../../domain/models/tweet.model';
 import { TweetNotFoundException } from '../errors/tweet.not.found.exception';
 

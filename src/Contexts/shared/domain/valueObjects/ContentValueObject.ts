@@ -1,5 +1,5 @@
+import { VOFormatException } from '../errors/VOFormatException';
 import { ValueObject } from './Value0bject';
-import { VOFormatException } from '../errors/vo.format.exception';
 
 export class ContentValueObject extends ValueObject<string> {
     public equals(valueObject: ContentValueObject): boolean {

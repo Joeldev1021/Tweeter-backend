@@ -5,16 +5,16 @@ export interface IReply {
     _id: string;
     content: string;
     tweetId: string;
-    ownerId: string;
+    userId: string;
     image?: string;
-    likes?: Array<string>;
-    replyIds?: Array<string>; //replys id
+    likes?: string[];
+    replyIds?: string[]; //replys id
     parentReplyId?: string; // parent reply
     createdAt: Date;
 }
 
-export interface IReplyUser extends Omit<IReply, 'ownerId'> {
-    ownerId: IUserDoc;
+export interface IReplyUser extends Omit<IReply, 'userId'> {
+    userId: IUserDoc;
 }
 
 export interface IReplyDoc extends LeanDocument<IReply> {}

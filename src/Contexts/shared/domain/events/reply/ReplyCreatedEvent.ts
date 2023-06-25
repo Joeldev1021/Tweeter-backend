@@ -3,7 +3,7 @@ import uuid from 'uuid-random';
 
 interface IPayload {
     replyId: string;
-    ownerId: string;
+    userId: string;
     tweetId: string;
 }
 

@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { UserCreatedEvent } from '../../../shared/domain/events/user/user.created.event';
 import { IDomainEventClass } from '../../../shared/domain/types/domain-event-class';
 import { EventHandler } from '../../../shared/domain/types/event-handler.interface';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { TYPES } from '../../../types';
 import { BookMarkModel } from '../../domain/models/BookMarkModel';
 import { BookMarkRepository } from '../../infrastructure/repository/BookMarkMongoRepository';

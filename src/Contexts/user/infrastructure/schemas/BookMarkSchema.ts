@@ -3,7 +3,7 @@ import { IBookMark } from '../interface/IBookMark';
 
 const schema = new Schema<IBookMark>({
     _id: { type: String, id: false, required: true },
-    ownerId: { type: String, required: true, ref: 'User' },
+    userId: { type: String, required: true, ref: 'User' },
     tweetIds: [{ type: String, required: false, ref: 'Tweet' }],
     replyIds: [{ type: String, required: false, ref: 'Reply' }],
 });

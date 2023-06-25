@@ -1,13 +1,13 @@
-import { UserModel } from '../../domain/models/UserModel';
-import { UserSchema } from '../schemas/UserSchema';
 import { injectable } from 'inversify';
-import { BookMarkSchema } from '../schemas/BookMarkSchema';
+import { UserId } from '../../../shared/domain/valueObjects/UserId';
+import { UserModel } from '../../domain/models/UserModel';
+import { UserRepository } from '../../domain/repository/UserRepository';
 import { UserEmail } from '../../domain/value-objects/UserEmail';
 import { UserPassword } from '../../domain/value-objects/UserPassword';
 import { UserUsername } from '../../domain/value-objects/UserUsername';
 import { IUser } from '../interface/IUser';
-import { UserRepository } from '../../domain/repository/UserRepository';
-import { UserId } from '../../../shared/domain/value-objects/UserId';
+import { UserSchema } from '../schemas/UserSchema';
+import { BookMarkSchema } from '../schemas/BookMarkSchema';
 
 @injectable()
 export class UserMongoRepository implements UserRepository {
@@ -117,7 +117,7 @@ export class UserMongoRepository implements UserRepository {
 
     async bookMark(userId: UserId, tweetId: UserId): Promise<void> {
         await BookMarkSchema.findOne({
-            ownerId: userId.value,
+            userId: userId.value,
         });
     }
 }

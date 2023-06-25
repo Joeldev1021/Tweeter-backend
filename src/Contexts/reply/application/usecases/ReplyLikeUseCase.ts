@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { TweetNotFoundException } from '../../../tweet/application/errors/tweet.not.found.exception';
 import { TYPES } from '../../../types';
 import { ReplyModel } from '../../domain/model/reply.model';

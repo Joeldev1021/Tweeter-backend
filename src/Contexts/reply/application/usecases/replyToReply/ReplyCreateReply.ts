@@ -4,9 +4,9 @@ import { ReplyRepository } from '../../../infrastructure/repository/reply.reposi
 import { TweetRepository } from '../../../../tweet/infrastruture/repository/tweet.repository';
 import { TYPES } from '../../../../types';
 import { TweetNotFoundException } from '../../../../tweet/application/errors/tweet.not.found.exception';
-import { UuidVO } from '../../../../shared/domain/value-objects/Uuid';
-import { ContentVO } from '../../../../shared/domain/value-objects/ContentValueObject';
-import { CreatedAtVO } from '../../../../shared/domain/value-objects/CreatedAtValueObject';
+import { UuidVO } from '../../../../shared/domain/valueObjects/Uuid';
+import { ContentVO } from '../../../../shared/domain/valueObjects/ContentValueObject';
+import { CreatedAtVO } from '../../../../shared/domain/valueObjects/CreatedAtVO';
 
 @injectable()
 export class ReplyCreateToReplyUseCase {
@@ -24,7 +24,7 @@ export class ReplyCreateToReplyUseCase {
         id: UuidVO,
         content: ContentVO,
         tweeId: UuidVO,
-        ownerId: UuidVO,
+        userId: UuidVO,
         parentReply: UuidVO
     ): Promise<ReplyModel | null> {
         const foundTweet = await this.tweetRepository.findById(tweeId);
@@ -37,7 +37,7 @@ export class ReplyCreateToReplyUseCase {
                 id,
                 content,
                 tweeId,
-                ownerId,
+                userId,
                 parentReply, //parent reply
                 [], //likes
                 [], //replys

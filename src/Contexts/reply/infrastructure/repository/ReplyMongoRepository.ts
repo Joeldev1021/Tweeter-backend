@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-import { ContentVO } from '../../../shared/domain/value-objects/ContentValueObject';
-import { CreatedAtVO } from '../../../shared/domain/value-objects/CreatedAtValueObject';
-import { UuidVO } from '../../../shared/domain/value-objects/Uuid';
+import { ContentVO } from '../../../shared/domain/valueObjects/ContentValueObject';
+import { CreatedAtVO } from '../../../shared/domain/valueObjects/CreatedAtVO';
+import { UuidVO } from '../../../shared/domain/valueObjects/Uuid';
 import { IOwnerDataVO } from '../../../shared/infrastruture/types';
 import { UsernameVO } from '../../../user/domain/value-objects/UserUsername';
 import { IUserDoc } from '../../../user/infrastructure/interface/IUser';
@@ -23,7 +23,7 @@ export class ReplyRepository implements IReplyRepository {
             _id,
             content,
             tweetId,
-            ownerId,
+            userId,
             likes,
             createdAt,
             parentReplyId,
@@ -34,7 +34,7 @@ export class ReplyRepository implements IReplyRepository {
             new UuidVO(_id),
             new ContentVO(content),
             new UuidVO(tweetId),
-            new UuidVO(ownerId),
+            new UuidVO(userId),
             parentReplyId ? new UuidVO(parentReplyId) : null,
             arrayLikesVO,
             [],
@@ -68,13 +68,13 @@ export class ReplyRepository implements IReplyRepository {
     private toDomainWithUser(reply: IReplyUser): ReplyWithUserModel {
         const arrayLikesVO = reply.likes?.map(like => new UuidVO(like));
 
-        const ownerData = this.toDomainOwnerData(reply.ownerId);
+        const ownerData = this.toDomainOwnerData(reply.userId);
 
         return new ReplyWithUserModel(
             new UuidVO(reply._id),
             new ContentVO(reply.content),
             new UuidVO(reply.tweetId),
-            arrayLikesVO!,
+            arrayLikesVO,
             ownerData,
             new CreatedAtVO(reply.createdAt)
         );
@@ -91,7 +91,7 @@ export class ReplyRepository implements IReplyRepository {
             id,
             content,
             tweetId,
-            ownerId,
+            userId,
             likes,
             createdAt,
             parentReply,
@@ -103,7 +103,7 @@ export class ReplyRepository implements IReplyRepository {
             _id: id.value,
             content: content.value,
             tweetId: tweetId.value,
-            ownerId: ownerId.value,
+            userId: userId.value,
             parentReplyId: parentReply?.value,
             replyIds: replys,
             likes: likesValues,
@@ -148,15 +148,16 @@ export class ReplyRepository implements IReplyRepository {
     }
 
     /**
-     * It finds all the replys that have the same ownerId as the one passed in.
+     * It finds all the replys that have the same userId as the one passed in.
      * @param {UuidVO} onwerId - UuidVO
      * @returns ReplyModel[] |null
      */
 
     async findByOwnerId(onwerId: UuidVO): Promise<ReplyModel[]> {
-        const replys = await ReplySchema.find({ onwerId: onwerId });
+        const replys = await ReplySchema.find({ onwerId });
         return replys.map(reply => this.toDomain(reply));
     }
+
     /**
      * It returns a list of all the replys in the database
      * @returns ReplyModel[] |null
@@ -164,7 +165,7 @@ export class ReplyRepository implements IReplyRepository {
     async findByTweetId(tweetId: UuidVO): Promise<ReplyWithUserModel[] | null> {
         const replys = await ReplySchema.find({
             tweetId: tweetId.value,
-        }).populate<{ ownerId: IUserDoc }>('ownerId');
+        }).populate<{ userId: IUserDoc }>('userId');
 
         if (!replys) return null;
         return replys.map(reply => this.toDomainWithUser(reply));
@@ -172,7 +173,7 @@ export class ReplyRepository implements IReplyRepository {
 
     /**
      * It finds all the replys that have the same parentReplyId as the one passed in, and then populates
-     * the ownerId field with the user data
+     * the userId field with the user data
      * @param {UuidVO} parentReplyId - UuidVO
      * @returns An array of ReplyWithUserModel objects.
      */
@@ -181,7 +182,7 @@ export class ReplyRepository implements IReplyRepository {
     ): Promise<ReplyWithUserModel[] | null> {
         const replysFound = await ReplySchema.find({
             parentReplyId: parentReplyId.value,
-        }).populate<{ ownerId: IUserDoc }>('ownerId');
+        }).populate<{ userId: IUserDoc }>('userId');
 
         if (!replysFound) return null;
 

@@ -1,8 +1,8 @@
-import { BookmarkVerifyTypeService } from './../../services/bookmark.service';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../types';
-import { UuidVO } from '../../../../shared/domain/value-objects/Uuid';
-import { BookMarkRepository } from '../../../infrastructure/repository/BookMarkMongoRepository';
+import { TYPES } from '../../../../../apps/backend/dependency-injection/Types';
+import { BookmarkVerifyTypeService } from '../../services/BookmarkVerifyTypeService';
+import { BookMarkRepository } from '../../../../tweet/domain/repository/BookMarkRepository';
+import { UserId } from '../../../../shared/domain/valueObjects/UserId';
 
 @injectable()
 export class BookMarkRemoveUseCase {
@@ -13,7 +13,7 @@ export class BookMarkRemoveUseCase {
         private readonly _booMarkRepository: BookMarkRepository
     ) {}
 
-    public async execute(userId: UuidVO, id: UuidVO): Promise<void> {
+    public async execute(userId: UserId, id: UserId): Promise<void> {
         const foundModel = await this._bookmarkVerifyType.execute(id);
 
         if (!foundModel) throw new Error('not found');
